@@ -1,0 +1,19 @@
+{
+    "name": "municipio-se/eslov-customisation",
+    "description": "DB migration CLI and runtime shims for Eslöv Municipio deployment",
+    "type": "wordpress-plugin",
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "EslovCustomisation\\": "source/php/"
+        }
+    },
+    "require": {
+        "php": ">=8.0"
+    },
+    "config": {
+        "optimize-autoloader": true
+    }
+}
