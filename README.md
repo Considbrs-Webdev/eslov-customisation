@@ -47,9 +47,30 @@ ddev wp eslov migrate options
 2. Register hooks in `__construct()`.
 3. Add the class to `App::registerInstances()`.
 
+## Plugin layout (Piteå-style)
+
+```
+source/php/
+  AcfFields/           # ACF field groups (e.g. ModNavigationFields)
+  Cli/                 # WP-CLI migration commands
+  Customisations/      # Runtime hooks and core module tweaks
+  Migration/           # Pure transform logic for CLI
+  Modules/             # Custom Modularity modules
+    Navigation/        # mod-navigation (LTS fork)
+      Navigation.php
+      ItemResolver.php
+      views/           # mod-navigation.blade.php + navigation/*
+  Navigation/          # Article-level nav helpers (not Modularity)
+views/
+  partials/            # Theme overrides (taglist, child buttons)
+```
+
+Custom Modularity modules register in `eslov-customisation.php` (`init` priority 5), same pattern as Piteå `AccButtons`.
+
 ## Blade view overrides
 
-Place templates under `views/`. `Customisations\Templates` registers that path on `Municipio/viewPaths`.
+- **Theme:** `views/partials/` — registered on `Municipio/viewPaths` via `Customisations\Templates`.
+- **Modules:** `source/php/Modules/{Name}/views/` — registered on `/Modularity/externalViewPath`.
 
 ## Assets (future)
 
