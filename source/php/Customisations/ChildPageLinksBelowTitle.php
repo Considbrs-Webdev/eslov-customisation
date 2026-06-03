@@ -2,7 +2,7 @@
 
 namespace EslovCustomisation\Customisations;
 
-use EslovCustomisation\Navigation\TaglistRenderer;
+use EslovCustomisation\Navigation\ChildPageButtonsRenderer;
 
 /**
  * Child page links below the article title (LTS municipio-extended button-navigation.php).
@@ -33,14 +33,14 @@ class ChildPageLinksBelowTitle
             return;
         }
 
-        $tags = $this->buildChildPageTags($postId, (string) get_post_type($postId));
-        TaglistRenderer::render($tags);
+        $items = $this->buildChildPageItems($postId, (string) get_post_type($postId));
+        ChildPageButtonsRenderer::render($items);
     }
 
     /**
      * @return array<int, array{label: string, href: string}>
      */
-    private function buildChildPageTags(int $parentId, string $postType): array
+    private function buildChildPageItems(int $parentId, string $postType): array
     {
         $childPosts = get_posts([
             'post_parent' => $parentId,
@@ -63,18 +63,18 @@ class ChildPageLinksBelowTitle
             ],
         ]);
 
-        $tags = [];
+        $items = [];
         foreach ($childPosts as $child) {
             $title = function_exists('get_field')
                 ? (get_field('custom_menu_title', $child->ID) ?: $child->post_title)
                 : $child->post_title;
 
-            $tags[] = [
+            $items[] = [
                 'label' => $title,
                 'href' => (string) get_permalink($child),
             ];
         }
 
-        return $tags;
+        return $items;
     }
 }
