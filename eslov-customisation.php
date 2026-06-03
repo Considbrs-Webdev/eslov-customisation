@@ -25,6 +25,32 @@ if (file_exists(ESLOV_CUSTOMISATION_PATH . 'vendor/autoload.php')) {
 
 new App();
 
+add_action(
+    'init',
+    static function (): void {
+        if (!function_exists('modularity_register_module')) {
+            return;
+        }
+
+        modularity_register_module(
+            ESLOV_CUSTOMISATION_PATH . 'source/php/Modules/Navigation',
+            'Navigation',
+        );
+    },
+    5,
+);
+
+add_filter(
+    '/Modularity/externalViewPath',
+    static function (array $paths): array {
+        $paths['mod-navigation'] = ESLOV_CUSTOMISATION_PATH . 'source/php/Modules/Navigation/views';
+
+        return $paths;
+    },
+    10,
+    3,
+);
+
 if (defined('WP_CLI') && WP_CLI) {
     CliBootstrap::register();
 }

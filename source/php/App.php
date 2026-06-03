@@ -22,6 +22,7 @@ class App
         $classes = [
             Customisations\Config::class,
             Customisations\Templates::class,
+            AcfFields\ModNavigationFields::class,
             Customisations\ChildPageLinksBelowTitle::class,
             Customisations\TaxonomyTaglist::class,
         ];
