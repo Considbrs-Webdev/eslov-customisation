@@ -3,7 +3,7 @@
 namespace EslovCustomisation\Navigation;
 
 /**
- * Renders linked tag pills via Municipio @tags (replaces LTS mxui.taglist + tailwind wrapper).
+ * Renders taxonomy pills using component-library c-tags__tag markup (replaces LTS mxui.taglist).
  */
 class TaglistRenderer
 {
