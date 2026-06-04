@@ -3,7 +3,7 @@
         'display' => 'flex',
         'flexWrap' => 'wrap',
         'gap' => 2,
-        'classList' => ['mod-navigation__buttons'],
+        'classList' => ['mod-navigation__buttons']
     ])
         @foreach ($items as $item)
             @php
@@ -14,7 +14,7 @@
                     default => 'default',
                 };
                 $style = $variant === 'default' ? 'basic' : 'filled';
-                $icon = \EslovCustomisation\Modules\Navigation\IconNormalizer::forComponent($item['icon'] ?? null);
+                $icon = \EslovCustomisation\Modules\Navigation\IconNormalizer::forButton($item['icon'] ?? null);
             @endphp
             @button([
                 'text' => $item['title'] ?? '',

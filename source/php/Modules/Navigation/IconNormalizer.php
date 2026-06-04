@@ -37,6 +37,16 @@ class IconNormalizer
         return $icon;
     }
 
+    /**
+     * Material icon name for @button (expects string|false, not an icon array).
+     */
+    public static function forButton(mixed $icon, string $default = ''): string|false
+    {
+        $name = self::resolveName($icon, $default);
+
+        return $name !== '' ? $name : false;
+    }
+
     public static function resolveName(mixed $icon, string $default = 'arrow_forward'): string
     {
         if (is_array($icon)) {

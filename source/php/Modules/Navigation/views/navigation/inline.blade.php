@@ -9,7 +9,7 @@
         ])
             @foreach ($items as $item)
                 @php
-                    $icon = \EslovCustomisation\Modules\Navigation\IconNormalizer::forComponent($item['icon'] ?? null);
+                    $icon = \EslovCustomisation\Modules\Navigation\IconNormalizer::forButton($item['icon'] ?? null);
                 @endphp
                 @button([
                     'text' => $item['title'] ?? '',
