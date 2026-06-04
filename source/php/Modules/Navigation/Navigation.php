@@ -37,6 +37,18 @@ class Navigation extends \Modularity\Module
     }
 
     /**
+     * Enqueue module CSS only when this module is rendered on the page.
+     */
+    public function style(): void
+    {
+        $this->wpEnqueue?->add(
+            'css/mod-navigation.css',
+            [],
+            defined('ESLOV_CUSTOMISATION_VERSION') ? ESLOV_CUSTOMISATION_VERSION : '0.1.0',
+        );
+    }
+
+    /**
      * @return array<string, mixed>
      */
     public function data(): array

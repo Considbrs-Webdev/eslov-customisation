@@ -1,0 +1,122 @@
+/**
+ * mod-navigation — scoped to the Modularity wrapper (enqueued via Navigation::style()).
+ * Uses Municipio CSS variables (--color--*, --base, --font-*) — no hard-coded brand hex.
+ */
+@layer theme {
+    .modularity-mod-navigation {
+        /* Tree child links: flex + wrap; wide horizontal gap, tight vertical gap */
+        .mod-navigation__tree-children {
+            display: flex;
+            flex-wrap: wrap;
+            row-gap: calc(var(--base) * 2);
+            column-gap: calc(var(--base) * 7);
+            margin-top: calc(var(--base) * 2);
+            padding: 0;
+            list-style: none;
+        }
+
+        .mod-navigation__tree-child-link {
+            color: var(--color--primary);
+            text-decoration: underline;
+
+            &:hover,
+            &:focus-visible,
+            &:visited {
+                color: var(--color--primary);
+            }
+        }
+
+        /* Footer / bar formats — layout and hover parity with LTS. */
+        .mod-navigation__bar-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 7rem), 1fr));
+            gap: 0;
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            justify-content: center;
+        }
+
+        .mod-navigation__bar-item--contents {
+            display: contents;
+        }
+
+        .mod-navigation__bar--solid .mod-navigation__bar-link,
+        .mod-navigation__bar--outline .mod-navigation__bar-link {
+            display: grid;
+            grid-template-rows: auto auto;
+            gap: calc(var(--base) * 2);
+            align-items: center;
+            justify-items: center;
+            text-align: center;
+            width: 100%;
+            min-height: 100%;
+            background-color: transparent;
+            transition: color 0.1s ease;
+        }
+
+        .mod-navigation__bar--solid .mod-navigation__bar-link {
+            padding: calc(var(--base) * 5) calc(var(--base) * 2);
+        }
+
+        .mod-navigation__bar-icon {
+            display: block;
+            font-size: 3.375rem;
+            line-height: 1;
+            width: 1em;
+            margin-inline: auto;
+        }
+
+        .mod-navigation__bar-icon .c-icon {
+            display: block;
+            font-size: 1em;
+            line-height: 1;
+            margin: 0;
+            color: inherit;
+        }
+
+        .mod-navigation__bar-icon .c-icon.c-icon--material::after {
+            vertical-align: 0;
+            line-height: 1;
+            width: 1em;
+            height: 1em;
+        }
+
+        .mod-navigation__bar-label {
+            font-size: var(--font-size-90, 0.875rem);
+            font-weight: var(--font-weight-medium, 500);
+            line-height: 1.25;
+            text-decoration: underline;
+        }
+
+        .mod-navigation__bar--solid .mod-navigation__bar-link:hover,
+        .mod-navigation__bar--solid .mod-navigation__bar-link:focus-visible {
+            background-color: color-mix(in srgb, #000 22%, var(--color--primary));
+            color: var(--color--primary-contrast);
+        }
+
+        .mod-navigation__bar--solid .mod-navigation__bar-link:visited:hover,
+        .mod-navigation__bar--solid .mod-navigation__bar-link:visited:focus-visible {
+            color: var(--color--primary-contrast);
+        }
+
+        .mod-navigation__bar-list--outline {
+            gap: calc(var(--base) * 2);
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 7rem), 10rem));
+        }
+
+        .mod-navigation__bar-link--outline {
+            padding: calc(var(--base) * 3);
+        }
+
+        .mod-navigation__bar-link--outline .mod-navigation__bar-icon {
+            font-size: 2.5rem;
+        }
+
+        .mod-navigation__bar-link--outline:hover,
+        .mod-navigation__bar-link--outline:focus-visible {
+            background-color: color-mix(in srgb, var(--color--primary) 6%, transparent);
+        }
+    }
+}
+    

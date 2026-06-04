@@ -72,9 +72,17 @@ Custom Modularity modules register in `eslov-customisation.php` (`init` priority
 - **Theme:** `views/partials/` — registered on `Municipio/viewPaths` via `Customisations\Templates`.
 - **Modules:** `source/php/Modules/{Name}/views/` — registered on `/Modularity/externalViewPath`.
 
-## Assets (future)
+## Module assets (Vite)
 
-When style overrides are needed, add Vite + `Helpers/CacheBust` (see Piteå `pitea-customisation`) and wire `enqueueAssets()` in `App.php`. Placeholders: `source/sass/`, `source/js/`.
+`mod-navigation` ships scoped CSS built with Vite (same pattern as `modularity-recommend`):
+
+```bash
+cd wp-content/plugins/eslov-customisation
+npm install
+npm run build   # writes assets/dist/ + manifest.json
+```
+
+`Modules/Navigation/Navigation.php` implements `style()` so CSS loads **only when the module is on the page**. Styles live in `source/sass/mod-navigation.scss`, scoped under `.modularity-mod-navigation`, using Municipio tokens (`var(--color--primary)`, etc.).
 
 ## License
 
