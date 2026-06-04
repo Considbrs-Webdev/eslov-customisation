@@ -13,24 +13,7 @@
                     'hasPlaceholder' => empty($item['image']),
                 ])
                 @endcard
-                @if (!empty($item['children']))
-                    @group([
-                        'display' => 'flex',
-                        'flexWrap' => 'wrap',
-                        'gap' => 2,
-                        'classList' => ['mod-navigation__tree-children', 'u-margin__top--1'],
-                    ])
-                        @foreach ($item['children'] as $child)
-                            @button([
-                                'text' => $child['title'] ?? '',
-                                'href' => $child['href'] ?? '',
-                                'color' => 'secondary',
-                                'style' => 'basic',
-                            ])
-                            @endbutton
-                        @endforeach
-                    @endgroup
-                @endif
+                @include('navigation.tree.partials.child-links', ['children' => $item['children'] ?? []])
             </li>
         @endforeach
     </ul>

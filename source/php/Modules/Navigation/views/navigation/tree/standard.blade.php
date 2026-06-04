@@ -26,9 +26,9 @@
                         @if (!empty($item['children']))
                             @group([
                                 'display' => 'flex',
-                                'flexWrap' => 'wrap',
-                                'gap' => 1,
-                                'classList' => ['mod-navigation__tree-children', 'u-margin__top--1'],
+                                'wrap' => 'wrap',
+                                'gap' => 2,
+                                'classList' => ['mod-navigation__tree-children', 'mod-navigation__tree-children--standard', 'u-margin__top--1'],
                             ])
                                 @foreach ($item['children'] as $child)
                                     @button([
