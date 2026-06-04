@@ -4,21 +4,14 @@
         'arrow_forward',
     );
     if ($icon) {
-        $icon['size'] = 'lg';
+        $icon['size'] = 'inherit';
+        $icon['classList'] = array_merge($icon['classList'] ?? [], ['mod-navigation__bar-icon__glyph']);
     }
 @endphp
 @if ($icon)
-    @icon($icon)
-    @endicon
+    <span class="mod-navigation__bar-icon" aria-hidden="true">
+        @icon($icon)
+        @endicon
+    </span>
 @endif
-@typography([
-    'element' => 'span',
-    'variant' => 'meta',
-    'classList' => array_filter([
-        'mod-navigation__bar-label',
-        'u-text-decoration--underline',
-        $labelClass ?? null,
-    ]),
-])
-    {{ $item['title'] ?? '' }}
-@endtypography
+<span class="mod-navigation__bar-label">{{ $item['title'] ?? '' }}</span>
