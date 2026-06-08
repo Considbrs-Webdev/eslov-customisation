@@ -5,7 +5,7 @@
             'flexWrap' => 'wrap',
             'gap' => 1,
             'justifyContent' => 'center',
-            'classList' => ['mod-navigation__inline-row'],
+            'classList' => ['mod-navigation__inline-row', 'c-group--skip-child-normalization'],
         ])
             @foreach ($items as $item)
                 @php

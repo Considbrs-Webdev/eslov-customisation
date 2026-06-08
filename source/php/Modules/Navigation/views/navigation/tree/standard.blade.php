@@ -28,7 +28,7 @@
                                 'display' => 'flex',
                                 'wrap' => 'wrap',
                                 'gap' => 2,
-                                'classList' => ['mod-navigation__tree-children', 'mod-navigation__tree-children--standard', 'u-margin__top--1'],
+                                'classList' => ['mod-navigation__tree-children', 'mod-navigation__tree-children--standard', 'u-margin__top--1', 'c-group--skip-child-normalization'],
                             ])
                                 @foreach ($item['children'] as $child)
                                     @button([

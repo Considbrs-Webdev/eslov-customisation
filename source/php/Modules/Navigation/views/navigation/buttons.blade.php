@@ -3,7 +3,7 @@
         'display' => 'flex',
         'flexWrap' => 'wrap',
         'gap' => 2,
-        'classList' => ['mod-navigation__buttons']
+        'classList' => ['mod-navigation__buttons', 'c-group--skip-child-normalization'],
     ])
         @foreach ($items as $item)
             @php

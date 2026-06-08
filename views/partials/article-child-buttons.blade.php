@@ -2,7 +2,7 @@
     'display' => 'flex',
     'flexWrap' => 'wrap',
     'gap' => 2,
-    'classList' => ['u-margin__bottom--2', 'eslov-child-page-buttons'],
+    'classList' => ['u-margin__bottom--2', 'eslov-child-page-buttons', 'c-group--skip-child-normalization'],
 ])
     @foreach ($items as $item)
         @button([
