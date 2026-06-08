@@ -1,5 +1,5 @@
 @if (!empty($items))
-    <div class="o-grid mod-navigation__grid mod-navigation__grid--blocks">
+    <div class="o-grid mod-navigation__grid mod-navigation__grid--blocks u-margin__top--4">
         @foreach ($items as $item)
             <div class="o-grid-4@md mod-navigation__grid-block">
                 @card([

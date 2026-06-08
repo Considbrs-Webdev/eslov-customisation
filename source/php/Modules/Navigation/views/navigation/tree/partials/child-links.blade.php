@@ -1,5 +1,5 @@
 @if (!empty($children))
-    <ul class="mod-navigation__tree-children">
+    <ul class="mod-navigation__tree-children unlist">
         @foreach ($children as $child)
             <li>
                 @link([

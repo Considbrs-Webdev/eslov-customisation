@@ -1,5 +1,5 @@
 @if (!empty($items))
-    <div class="o-grid mod-navigation__grid mod-navigation__grid--default">
+    <div class="o-grid mod-navigation__grid mod-navigation__grid--default u-margin__top--4">
         @foreach ($items as $item)
             @php
                 $icon = \EslovCustomisation\Modules\Navigation\IconNormalizer::forComponent($item['icon'] ?? null);
