@@ -23,6 +23,7 @@ class App
             Customisations\Config::class,
             Customisations\ModularityColumnWidth::class,
             Customisations\Templates::class,
+            Customisations\TopSidebarLayout::class,
             AcfFields\ModNavigationFields::class,
             Customisations\ChildPageLinksBelowTitle::class,
             Customisations\TaxonomyTaglist::class,
