@@ -21,6 +21,7 @@ class App
     {
         $classes = [
             Customisations\Config::class,
+            Customisations\ModularityColumnWidth::class,
             Customisations\Templates::class,
             AcfFields\ModNavigationFields::class,
             Customisations\ChildPageLinksBelowTitle::class,
