@@ -24,11 +24,11 @@ class ModularityColumnWidth
     public function normalizeModuleClasses(array $classes, array $args, string $postType, int $moduleId): array
     {
         foreach ($classes as $index => $class) {
-            if (!$this->isColumnWidthClass($class)) {
+            if (!$this->isColumnWidthClass(is_string($class) ? $class : null)) {
                 continue;
             }
 
-            $classes[$index] = $this->normalizeColumnWidth($class, []);
+            $classes[$index] = $this->normalizeColumnWidth(is_string($class) ? $class : '', []);
         }
 
         return $classes;
@@ -49,9 +49,9 @@ class ModularityColumnWidth
         return $columnWidth;
     }
 
-    private function isColumnWidthClass(string $class): bool
+    private function isColumnWidthClass(?string $class): bool
     {
-        if ($class === '') {
+        if ($class === null || $class === '') {
             return true;
         }
 

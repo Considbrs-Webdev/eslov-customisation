@@ -38,6 +38,11 @@ class StatusCommand extends AbstractMigrateCommand
                 'status' => 'planned',
             ],
             [
+                'command' => 'eslov migrate widgets',
+                'description' => 'Classic modularity-module widgets → block shortcode widgets',
+                'status' => 'ready',
+            ],
+            [
                 'command' => 'eslov migrate modules',
                 'description' => 'Transform Modularity module slugs/JSON',
                 'status' => 'planned',
