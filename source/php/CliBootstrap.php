@@ -8,6 +8,14 @@ class CliBootstrap
     {
         \WP_CLI::add_command('eslov migrate status', Cli\Migrate\StatusCommand::class);
         \WP_CLI::add_command('eslov migrate widgets', Cli\Migrate\WidgetsCommand::class);
+        \WP_CLI::add_command(
+            'eslov migrate mod-posts-taxonomy-display',
+            Cli\Migrate\ModPostsTaxonomyDisplayCommand::class
+        );
+        \WP_CLI::add_command(
+            'eslov migrate design-tokens',
+            Cli\Migrate\DesignTokensCommand::class
+        );
         // \WP_CLI::add_command('eslov migrate meta-keys', Cli\Migrate\MetaKeysCommand::class);
     }
 }

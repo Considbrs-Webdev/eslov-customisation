@@ -43,6 +43,16 @@ class StatusCommand extends AbstractMigrateCommand
                 'status' => 'ready',
             ],
             [
+                'command' => 'eslov migrate mod-posts-taxonomy-display',
+                'description' => 'LTS taxonomy_selection_in_fields → taxonomy_display on mod-posts',
+                'status' => 'ready',
+            ],
+            [
+                'command' => 'eslov migrate design-tokens',
+                'description' => 'Kirki typography_button / search_form_shape → Design Builder tokens',
+                'status' => 'ready',
+            ],
+            [
                 'command' => 'eslov migrate modules',
                 'description' => 'Transform Modularity module slugs/JSON',
                 'status' => 'planned',
