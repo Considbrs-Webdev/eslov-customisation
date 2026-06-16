@@ -21,6 +21,7 @@ class App
     {
         $classes = [
             Customisations\Config::class,
+            Customisations\SiteStyles::class,
             Customisations\ModularityColumnWidth::class,
             Customisations\Templates::class,
             Customisations\TopSidebarLayout::class,

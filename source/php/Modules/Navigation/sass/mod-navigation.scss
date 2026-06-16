@@ -117,6 +117,10 @@
         .mod-navigation__bar-link--outline:focus-visible {
             background-color: color-mix(in srgb, var(--color--primary) 6%, transparent);
         }
+
+        /* Block widget Shortcode blocks wrap [modularity] in wpautop <p> tags. */
+        @at-root .widget_block:has(> .mod-navigation #{&}) > p:empty {
+            margin: 0;
+        }
     }
 }
-    

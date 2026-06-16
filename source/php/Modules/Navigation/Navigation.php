@@ -41,8 +41,22 @@ class Navigation extends \Modularity\Module
      */
     public function style(): void
     {
-        $this->wpEnqueue?->add(
-            'css/mod-navigation.css',
+        $manifestPath = $this->getModulePath() . '/assets/dist/manifest.json';
+        if (!is_readable($manifestPath)) {
+            return;
+        }
+
+        $manifest = json_decode(file_get_contents($manifestPath), true);
+        if (!is_array($manifest) || !isset($manifest['css/mod-navigation.css'])) {
+            return;
+        }
+
+        $relativePath = 'source/php/Modules/Navigation/assets/dist/' . $manifest['css/mod-navigation.css'];
+        $url = plugins_url($relativePath, ESLOV_CUSTOMISATION_PATH . 'eslov-customisation.php');
+
+        wp_enqueue_style(
+            'eslov-mod-navigation',
+            $url,
             [],
             defined('ESLOV_CUSTOMISATION_VERSION') ? ESLOV_CUSTOMISATION_VERSION : '0.1.0',
         );

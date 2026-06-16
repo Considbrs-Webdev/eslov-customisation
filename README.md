@@ -50,19 +50,24 @@ ddev wp eslov migrate options
 ## Plugin layout (Piteå-style)
 
 ```
-source/php/
-  AcfFields/           # ACF field groups (e.g. ModNavigationFields)
-  Cli/                 # WP-CLI migration commands
-  Customisations/      # Runtime hooks and core module tweaks
-  Migration/           # Pure transform logic for CLI
-  Modules/             # Custom Modularity modules
-    Navigation/        # mod-navigation (LTS fork)
-      Navigation.php
-      ItemResolver.php
-      views/           # mod-navigation.blade.php + navigation/*
-  Navigation/          # Article-level nav helpers (not Modularity)
+source/
+  sass/                # Site-wide CSS overrides (enqueued globally)
+    site-overrides.scss
+    components/        # Per-component override partials
+  php/
+    AcfFields/         # ACF field groups (e.g. ModNavigationFields)
+    Cli/               # WP-CLI migration commands
+    Customisations/    # Runtime hooks and core module tweaks
+    Migration/         # Pure transform logic for CLI
+    Modules/           # Custom Modularity modules
+      Navigation/      # mod-navigation (LTS fork)
+        Navigation.php
+        sass/          # Module SCSS source
+        assets/dist/   # Module built CSS + manifest.json
+        views/         # mod-navigation.blade.php + navigation/*
 views/
-  partials/            # Theme overrides (taglist, child buttons)
+  partials/            # Theme blade overrides (taglist, child buttons)
+assets/dist/           # Site overrides built CSS + manifest.json
 ```
 
 Custom Modularity modules register in `eslov-customisation.php` (`init` priority 5), same pattern as Piteå `AccButtons`.
@@ -72,17 +77,22 @@ Custom Modularity modules register in `eslov-customisation.php` (`init` priority
 - **Theme:** `views/partials/` — registered on `Municipio/viewPaths` via `Customisations\Templates`.
 - **Modules:** `source/php/Modules/{Name}/views/` — registered on `/Modularity/externalViewPath`.
 
-## Module assets (Vite)
+## Assets (Vite)
 
-`mod-navigation` ships scoped CSS built with Vite (same pattern as `modularity-recommend`):
+Site overrides and module styles use **separate Vite builds** and manifests:
 
 ```bash
 cd wp-content/plugins/eslov-customisation
 npm install
-npm run build   # writes assets/dist/ + manifest.json
+npm run build
 ```
 
-`Modules/Navigation/Navigation.php` implements `style()` so CSS loads **only when the module is on the page**. Styles live in `source/sass/mod-navigation.scss`, scoped under `.modularity-mod-navigation`, using Municipio tokens (`var(--color--primary)`, etc.).
+| Build | Config | Output | Enqueued by |
+|-------|--------|--------|-------------|
+| Site overrides | `vite.config.mjs` | `assets/dist/` | `Customisations\SiteStyles` (global) |
+| mod-navigation | `vite.navigation.config.mjs` | `Modules/Navigation/assets/dist/` | `Navigation::style()` (on-page only) |
+
+Site overrides live in `source/sass/` (`site-overrides.scss` imports `components/*`). Module SCSS lives beside the module (`Modules/Navigation/sass/mod-navigation.scss`), scoped under `.modularity-mod-navigation`, using Municipio tokens (`var(--color--primary)`, etc.).
 
 ## License
 

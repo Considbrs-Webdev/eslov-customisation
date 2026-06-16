@@ -1,10 +1,10 @@
 import { createViteConfig } from "vite-config-factory";
 
 const entries = {
-    "css/site-overrides": "./source/sass/site-overrides.scss",
+    "css/mod-navigation": "./source/php/Modules/Navigation/sass/mod-navigation.scss",
 };
 
 export default createViteConfig(entries, {
-    outDir: "assets/dist",
+    outDir: "source/php/Modules/Navigation/assets/dist",
     manifestFile: "manifest.json",
 });
