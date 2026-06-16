@@ -25,6 +25,9 @@ class App
             Customisations\Templates::class,
             Customisations\TopSidebarLayout::class,
             AcfFields\ModNavigationFields::class,
+            AcfFields\ModPostsFilteringFields::class,
+            Customisations\ModPostsTaxonomyFiltering::class,
+            Customisations\ModPostsHideTermIcons::class,
             Customisations\ChildPageLinksBelowTitle::class,
             Customisations\TaxonomyTaglist::class,
         ];
