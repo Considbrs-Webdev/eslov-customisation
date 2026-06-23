@@ -3,6 +3,7 @@
 namespace EslovCustomisation\Cli\Migrate;
 
 use EslovCustomisation\Cli\AbstractMigrateCommand;
+use EslovCustomisation\Migration\MigrationRegistry;
 
 class StatusCommand extends AbstractMigrateCommand
 {
@@ -26,44 +27,18 @@ class StatusCommand extends AbstractMigrateCommand
         $this->parseMigrateFlags($assocArgs);
         $this->logDryRunNotice();
 
-        $registry = [
-            [
-                'command' => 'eslov migrate status',
-                'description' => 'List migration tasks (this command)',
-                'status' => 'scaffold',
-            ],
-            [
-                'command' => 'eslov migrate meta-keys',
-                'description' => 'Rewrite legacy post meta keys',
-                'status' => 'planned',
-            ],
-            [
-                'command' => 'eslov migrate widgets',
-                'description' => 'Classic modularity-module widgets → block shortcode widgets',
-                'status' => 'ready',
-            ],
-            [
-                'command' => 'eslov migrate mod-posts-taxonomy-display',
-                'description' => 'LTS taxonomy_selection_in_fields → taxonomy_display on mod-posts',
-                'status' => 'ready',
-            ],
-            [
-                'command' => 'eslov migrate design-tokens',
-                'description' => 'Kirki typography_button / search_form_shape → Design Builder tokens',
-                'status' => 'ready',
-            ],
-            [
-                'command' => 'eslov migrate modules',
-                'description' => 'Transform Modularity module slugs/JSON',
-                'status' => 'planned',
-            ],
-            [
-                'command' => 'eslov migrate options',
-                'description' => 'Migrate site options',
-                'status' => 'planned',
-            ],
-        ];
+        \WP_CLI\Utils\format_items(
+            'table',
+            MigrationRegistry::all(),
+            ['command', 'description', 'status'],
+        );
+    }
 
-        \WP_CLI\Utils\format_items('table', $registry, ['command', 'description', 'status']);
+    /**
+     * @param array<string, mixed> $assocArgs
+     */
+    public function runTask(array $assocArgs): void
+    {
+        // Not used — status is read-only.
     }
 }

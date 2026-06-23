@@ -23,10 +23,11 @@ ddev wp plugin activate eslov-customisation
 
 ```bash
 ddev wp eslov migrate status
-ddev wp eslov migrate status --dry-run
+ddev wp eslov migrate all --dry-run
+ddev wp eslov migrate all
 ```
 
-Future commands (add as migration work proceeds):
+Individual commands (also run by `migrate all` when status is `ready`):
 
 ```bash
 ddev wp eslov migrate meta-keys --dry-run
@@ -39,7 +40,7 @@ ddev wp eslov migrate options
 1. Add transform logic in `source/php/Migration/` (pure PHP, no WP-CLI coupling).
 2. Add `source/php/Cli/Migrate/YourCommand.php` extending `AbstractMigrateCommand`.
 3. Register in `CliBootstrap::register()`.
-4. Add a row to the migration registry in `StatusCommand` (or drive from a shared list).
+4. Add an entry to `Migration/MigrationRegistry.php` (set `run_order` when status is `ready`).
 
 ## Adding a runtime shim
 
