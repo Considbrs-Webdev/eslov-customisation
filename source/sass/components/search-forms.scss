@@ -61,7 +61,9 @@ $search-field-radius: var(
 #header-search-form__submit,
 #mobile-search-form__submit,
 #drawer-search-form__submit,
-#drawer-search-form .c-button {
+#drawer-search-form .c-button,
+.collapsible-search-form__submit-icon,
+.collapsible-search-form__form .c-group > .c-button.collapsible-search-form__submit-icon {
     border-top-left-radius: 0 !important;
     border-bottom-left-radius: 0 !important;
     border-top-right-radius: $search-button-radius !important;

@@ -29,6 +29,10 @@ class PostObjectWithoutIcon extends AbstractPostObjectDecorator implements PostO
                 : false;
         }
 
+        if (property_exists($this->postObject, $name)) {
+            return $this->postObject->{$name};
+        }
+
         return parent::__get($name);
     }
 

@@ -1,0 +1,14 @@
+/**
+ * Header basic/default buttons on primary background.
+ *
+ * Scoped design-builder tokens (component.scope:s-header.button) are emitted on
+ * [data-scope*="s-header;"], but __general__ .c-button { --c-button--* } wins
+ * the cascade when set directly on the element. Wire basic buttons to header text
+ * color instead — same outcome as LTS tabmenu_button_color=default on primary header.
+ */
+.c-header--primary {
+    [data-component='button'].c-button__basic {
+        --c-button--color--surface-contrast: var(--c-header--color);
+        --c-button-contrast: var(--c-header--color);
+    }
+}
