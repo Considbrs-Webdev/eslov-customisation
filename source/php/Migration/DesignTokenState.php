@@ -81,6 +81,42 @@ class DesignTokenState
     }
 
     /**
+     * @param string[] $path
+     * @param string[] $replaceableValues
+     */
+    public function applyChangeWhenUnsetOrCurrentIn(
+        array $path,
+        string $value,
+        array $replaceableValues,
+        string $description,
+    ): void {
+        $current = $this->getValue($path);
+
+        if ($current === null) {
+            $this->applyChange($path, $value, $description);
+
+            return;
+        }
+
+        $normalizedCurrent = $this->normalizeDecimal($current);
+        $normalizedReplaceable = array_map(
+            fn (string $replaceableValue): string => $this->normalizeDecimal($replaceableValue),
+            $replaceableValues,
+        );
+
+        if (!$this->force && !in_array($normalizedCurrent, $normalizedReplaceable, true)) {
+            return;
+        }
+
+        if ($normalizedCurrent === $this->normalizeDecimal($value)) {
+            return;
+        }
+
+        $this->setNestedValue($this->tokens, $path, $value);
+        $this->changes[] = sprintf('%s (was %s)', $description, $current);
+    }
+
+    /**
      * @param array<string, mixed> $patch
      */
     public function mergePatch(array $patch, string $pathPrefix = ''): void
@@ -176,5 +212,12 @@ class DesignTokenState
         }
 
         $current = $value;
+    }
+
+    private function normalizeDecimal(string $value): string
+    {
+        $float = (float) $value;
+
+        return rtrim(rtrim(number_format($float, 3, '.', ''), '0'), '.');
     }
 }

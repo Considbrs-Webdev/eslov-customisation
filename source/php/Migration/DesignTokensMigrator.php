@@ -4,8 +4,10 @@ namespace EslovCustomisation\Migration;
 
 use EslovCustomisation\Migration\DesignTokenCorrections\BoldFontWeightCorrection;
 use EslovCustomisation\Migration\DesignTokenCorrections\ButtonFontWeightCorrection;
+use EslovCustomisation\Migration\DesignTokenCorrections\FontSizeScaleRatioCorrection;
 use EslovCustomisation\Migration\DesignTokenCorrections\FooterLinkContrastCorrection;
 use EslovCustomisation\Migration\DesignTokenCorrections\PrimaryPaletteCorrection;
+use EslovCustomisation\Migration\DesignTokenCorrections\SearchFieldBorderRadiusCorrection;
 use EslovCustomisation\Migration\DesignTokenCorrections\SearchFormShapeCorrection;
 
 class DesignTokensMigrator
@@ -21,7 +23,9 @@ class DesignTokensMigrator
         $this->corrections = [
             new ButtonFontWeightCorrection(),
             new BoldFontWeightCorrection(),
+            new FontSizeScaleRatioCorrection(),
             new SearchFormShapeCorrection(),
+            new SearchFieldBorderRadiusCorrection(),
             new PrimaryPaletteCorrection(),
             new FooterLinkContrastCorrection(),
         ];
