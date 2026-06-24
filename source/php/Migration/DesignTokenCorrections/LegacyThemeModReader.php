@@ -51,6 +51,41 @@ class LegacyThemeModReader
         return is_numeric($variant) ? $variant : null;
     }
 
+    /**
+     * Best-effort single heading weight for --font-weight-heading (new styleguide has no per-level weights).
+     *
+     * @return array{weight: string, source: string}|null
+     */
+    public static function resolveHeadingFontWeight(): ?array
+    {
+        foreach (['typography_h2', 'typography_h3'] as $mod) {
+            $weight = self::typographyVariant($mod);
+            if ($weight !== null) {
+                return [
+                    'weight' => $weight,
+                    'source' => $mod . '.variant',
+                ];
+            }
+        }
+
+        if (!self::hasTypographyMod('typography_heading')) {
+            return null;
+        }
+
+        $weight = self::typographyVariant('typography_heading');
+        if ($weight !== null) {
+            return [
+                'weight' => $weight,
+                'source' => 'typography_heading.variant',
+            ];
+        }
+
+        return [
+            'weight' => '700',
+            'source' => 'typography_heading (Kirki default)',
+        ];
+    }
+
     public static function navPrimaryContrastingColor(): ?string
     {
         $nav = get_theme_mod('nav_h_color_primary');

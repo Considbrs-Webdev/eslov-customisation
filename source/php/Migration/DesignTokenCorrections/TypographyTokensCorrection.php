@@ -28,13 +28,6 @@ class TypographyTokensCorrection implements DesignTokenCorrectionInterface
             'resolve' => 'variant',
         ],
         [
-            'mod' => 'typography_heading',
-            'field' => 'variant',
-            'path' => ['token', '--font-weight-heading'],
-            'default' => '700',
-            'resolve' => 'variant',
-        ],
-        [
             'mod' => 'typography_bold',
             'field' => 'variant',
             'path' => ['token', '--font-weight-bold'],
@@ -85,7 +78,7 @@ class TypographyTokensCorrection implements DesignTokenCorrectionInterface
         ],
     ];
 
-  /** @var array<string, string> */
+    /** @var array<string, string> */
     private const TOKEN_DEFAULTS = [
         '--font-weight-normal' => '400',
         '--font-weight-medium' => '500',
@@ -99,6 +92,8 @@ class TypographyTokensCorrection implements DesignTokenCorrectionInterface
 
     public function apply(DesignTokenState $state): void
     {
+        $this->applyHeadingFontWeight($state);
+
         foreach (self::MAPPINGS as $mapping) {
             $value = $this->resolveValue($mapping);
             if ($value === null) {
@@ -126,6 +121,32 @@ class TypographyTokensCorrection implements DesignTokenCorrectionInterface
                 ),
             );
         }
+    }
+
+    private function applyHeadingFontWeight(DesignTokenState $state): void
+    {
+        $resolved = LegacyThemeModReader::resolveHeadingFontWeight();
+        if ($resolved === null) {
+            return;
+        }
+
+        $value = $resolved['weight'];
+        if (
+            !$state->isForce()
+            && $this->normalizeDecimal($value) === $this->normalizeDecimal(self::TOKEN_DEFAULTS['--font-weight-heading'])
+        ) {
+            return;
+        }
+
+        $state->applyChange(
+            ['token', '--font-weight-heading'],
+            $value,
+            sprintf(
+                'Set --font-weight-heading to %s (h2-first: %s)',
+                $value,
+                $resolved['source'],
+            ),
+        );
     }
 
     /**
