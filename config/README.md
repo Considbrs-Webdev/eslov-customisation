@@ -33,7 +33,7 @@ Municipio's `DesignTokensToCssConverter` emits scoped overrides on `[data-scope*
 
 Kirki `search_form_shape=100` maps to token `--c-search-form-border-radius` via `SearchFormShapeCorrection`. Municipio styleguide **does not consume** this token in component SCSS (only Kirki used to output it on `.search-form`). Site CSS in `components/search-forms.scss` applies pill radii from the token. Pair with `c-group--skip-child-normalization` on search form `@group` blades so `@group` child-normalization does not zero the submit button corners.
 
-Search field radius cascade in `search-forms.scss`:
+Search field radius cascade in `search-forms.scss` (field left + submit right use the same token):
 
 1. `--c-search-form-border-radius` when `search_form_shape=100` (pill sites)
 2. Else `calc(var(--c-field--border-radius, var(--border-radius)) * var(--base))`

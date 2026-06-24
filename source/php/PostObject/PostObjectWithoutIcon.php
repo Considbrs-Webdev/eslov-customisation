@@ -21,6 +21,15 @@ class PostObjectWithoutIcon extends AbstractPostObjectDecorator implements PostO
         parent::__construct($postObject);
     }
 
+    public function __isset(string $name): bool
+    {
+        if ($name === 'commentCount') {
+            return true;
+        }
+
+        return property_exists($this->postObject, $name);
+    }
+
     public function __get(string $name): mixed
     {
         if ($name === 'commentCount') {

@@ -4,11 +4,7 @@
  * Municipio search.scss is unlayered; layered rules in @layer theme lose to it
  * even with !important. Pill radius from --c-search-form-border-radius token.
  */
-$search-button-radius: var(
-    --c-search-form-border-radius,
-    calc(var(--c-button--border-radius, var(--border-radius)) * var(--base))
-);
-$search-field-radius: var(
+$search-radius: var(
     --c-search-form-border-radius,
     calc(var(--c-field--border-radius, var(--border-radius)) * var(--base))
 );
@@ -24,8 +20,8 @@ $search-field-radius: var(
     .c-form .c-group > .c-button {
         border-top-left-radius: 0 !important;
         border-bottom-left-radius: 0 !important;
-        border-top-right-radius: $search-button-radius !important;
-        border-bottom-right-radius: $search-button-radius !important;
+        border-top-right-radius: $search-radius !important;
+        border-bottom-right-radius: $search-radius !important;
         corner-shape: round !important;
     }
 
@@ -37,8 +33,8 @@ $search-field-radius: var(
     .c-form .c-field__inner input:focus + .c-field_focus-styler {
         border-top-right-radius: 0 !important;
         border-bottom-right-radius: 0 !important;
-        border-top-left-radius: $search-field-radius !important;
-        border-bottom-left-radius: $search-field-radius !important;
+        border-top-left-radius: $search-radius !important;
+        border-bottom-left-radius: $search-radius !important;
         corner-shape: round !important;
     }
 }
@@ -52,8 +48,8 @@ $search-field-radius: var(
     #hero-search-form__submit {
         border-top-left-radius: 0 !important;
         border-bottom-left-radius: 0 !important;
-        border-top-right-radius: $search-button-radius !important;
-        border-bottom-right-radius: $search-button-radius !important;
+        border-top-right-radius: $search-radius !important;
+        border-bottom-right-radius: $search-radius !important;
         corner-shape: round !important;
     }
 }
@@ -66,7 +62,7 @@ $search-field-radius: var(
 .collapsible-search-form__form .c-group > .c-button.collapsible-search-form__submit-icon {
     border-top-left-radius: 0 !important;
     border-bottom-left-radius: 0 !important;
-    border-top-right-radius: $search-button-radius !important;
-    border-bottom-right-radius: $search-button-radius !important;
+    border-top-right-radius: $search-radius !important;
+    border-bottom-right-radius: $search-radius !important;
     corner-shape: round !important;
 }
