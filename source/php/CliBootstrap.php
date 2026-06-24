@@ -8,6 +8,10 @@ class CliBootstrap
     {
         \WP_CLI::add_command('eslov migrate status', Cli\Migrate\StatusCommand::class);
         \WP_CLI::add_command('eslov migrate all', Cli\Migrate\AllCommand::class);
+        \WP_CLI::add_command(
+            'eslov migrate modularity-upgrade',
+            Cli\Migrate\ModularityUpgradeCommand::class,
+        );
         \WP_CLI::add_command('eslov migrate widgets', Cli\Migrate\WidgetsCommand::class);
         \WP_CLI::add_command(
             'eslov migrate mod-posts-taxonomy-display',

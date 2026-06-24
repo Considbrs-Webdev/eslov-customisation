@@ -109,7 +109,7 @@ abstract class AbstractMigrateCommand extends \WP_CLI_Command
         \WP_CLI::log('Network-activated eslov-customisation.');
     }
 
-    protected function copyMigrateStateTo(AbstractMigrateCommand $target): void
+    public function copyMigrateStateTo(AbstractMigrateCommand $target): void
     {
         $target->dryRun = $this->dryRun;
         $target->postId = $this->postId;

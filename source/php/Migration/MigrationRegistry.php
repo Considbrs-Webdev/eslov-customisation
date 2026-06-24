@@ -21,6 +21,12 @@ class MigrationRegistry
                 'status' => 'ready',
             ],
             [
+                'command' => 'eslov migrate modularity-upgrade',
+                'description' => 'Upstream Modularity V5→V8 database upgrade (per site; use --network on multisite)',
+                'status' => 'ready',
+                'run_order' => 5,
+            ],
+            [
                 'command' => 'eslov migrate widgets',
                 'description' => 'Classic modularity-module widgets → block shortcode widgets',
                 'status' => 'ready',

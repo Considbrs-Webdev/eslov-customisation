@@ -5,6 +5,7 @@ namespace EslovCustomisation\Cli;
 use EslovCustomisation\Cli\Migrate\DesignTokensCommand;
 use EslovCustomisation\Cli\Migrate\ModPostsMixedDisplayCommand;
 use EslovCustomisation\Cli\Migrate\ModPostsTaxonomyDisplayCommand;
+use EslovCustomisation\Cli\Migrate\ModularityUpgradeCommand;
 use EslovCustomisation\Cli\Migrate\ThemeModsCommand;
 use EslovCustomisation\Cli\Migrate\WidgetsCommand;
 
@@ -12,6 +13,7 @@ class MigrationCommandRunner
 {
     /** @var array<string, class-string<AbstractMigrateCommand>> */
     private const COMMAND_MAP = [
+        'eslov migrate modularity-upgrade' => ModularityUpgradeCommand::class,
         'eslov migrate widgets' => WidgetsCommand::class,
         'eslov migrate mod-posts-taxonomy-display' => ModPostsTaxonomyDisplayCommand::class,
         'eslov migrate mod-posts-mixed-display' => ModPostsMixedDisplayCommand::class,
