@@ -1,0 +1,29 @@
+/**
+ * api-event-manager-integration index cards omit c-card__paint-container.
+ * Municipio 6 computes --c-card--inset-padding-* only on paint-container.
+ * Temporary until Gutenberg-based event integration replaces mod-event index.
+ */
+.c-card.c-card--event:not(:has(.c-card__paint-container)) {
+  --c-card--inset-multiplier: max(var(--inherit-inset-multiplier, 1), 1);
+  --c-card--inset-padding-x: calc((var(--c-card--space, var(--space))) * var(--base) * 2 * var(--c-card--inset-multiplier));
+  --c-card--inset-padding-y: calc(var(--c-card--inset-padding-x) * 0.75);
+  --c-card--content-gap: calc((var(--c-card--space, var(--space))) * var(--base) * 0.5 * var(--c-card--inset-multiplier));
+}
+
+@container (min-width: 350px) {
+  .c-card.c-card--event:not(:has(.c-card__paint-container)) {
+    --c-card--inset-multiplier: max(var(--inherit-inset-multiplier, 1), 1.5);
+    --c-card--inset-padding-x: calc((var(--c-card--space, var(--space))) * var(--base) * 2 * var(--c-card--inset-multiplier));
+    --c-card--inset-padding-y: calc(var(--c-card--inset-padding-x) * 0.75);
+    --c-card--content-gap: calc((var(--c-card--space, var(--space))) * var(--base) * 0.5 * var(--c-card--inset-multiplier));
+  }
+}
+
+@container (min-width: 500px) {
+  .c-card.c-card--event:not(:has(.c-card__paint-container)) {
+    --c-card--inset-multiplier: max(var(--inherit-inset-multiplier, 1), 2);
+    --c-card--inset-padding-x: calc((var(--c-card--space, var(--space))) * var(--base) * 2 * var(--c-card--inset-multiplier));
+    --c-card--inset-padding-y: calc(var(--c-card--inset-padding-x) * 0.75);
+    --c-card--content-gap: calc((var(--c-card--space, var(--space))) * var(--base) * 0.5 * var(--c-card--inset-multiplier));
+  }
+}
