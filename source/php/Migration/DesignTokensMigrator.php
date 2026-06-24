@@ -2,12 +2,11 @@
 
 namespace EslovCustomisation\Migration;
 
-use EslovCustomisation\Migration\DesignTokenCorrections\BoldFontWeightCorrection;
-use EslovCustomisation\Migration\DesignTokenCorrections\ButtonFontWeightCorrection;
 use EslovCustomisation\Migration\DesignTokenCorrections\FontSizeScaleRatioCorrection;
+use EslovCustomisation\Migration\DesignTokenCorrections\TypographyTokensCorrection;
 use EslovCustomisation\Migration\DesignTokenCorrections\FooterLinkContrastCorrection;
 use EslovCustomisation\Migration\DesignTokenCorrections\PrimaryPaletteCorrection;
-use EslovCustomisation\Migration\DesignTokenCorrections\SearchFieldBorderRadiusCorrection;
+use EslovCustomisation\Migration\DesignTokenCorrections\FieldBorderRadiusCorrection;
 use EslovCustomisation\Migration\DesignTokenCorrections\SearchFormShapeCorrection;
 
 class DesignTokensMigrator
@@ -21,11 +20,10 @@ class DesignTokensMigrator
         private ?string $patchFilePath = null,
     ) {
         $this->corrections = [
-            new ButtonFontWeightCorrection(),
-            new BoldFontWeightCorrection(),
+            new TypographyTokensCorrection(),
             new FontSizeScaleRatioCorrection(),
             new SearchFormShapeCorrection(),
-            new SearchFieldBorderRadiusCorrection(),
+            new FieldBorderRadiusCorrection(),
             new PrimaryPaletteCorrection(),
             new FooterLinkContrastCorrection(),
         ];

@@ -82,6 +82,22 @@ class DesignTokenState
 
     /**
      * @param string[] $path
+     */
+    public function removeValue(array $path, string $description): void
+    {
+        $current = $this->getNestedValue($this->tokens, $path);
+
+        if ($current === null) {
+            return;
+        }
+
+        $this->unsetNestedValue($this->tokens, $path);
+
+        $this->changes[] = sprintf('%s (was %s)', $description, $current);
+    }
+
+    /**
+     * @param string[] $path
      * @param string[] $replaceableValues
      */
     public function applyChangeWhenUnsetOrCurrentIn(
@@ -212,6 +228,79 @@ class DesignTokenState
         }
 
         $current = $value;
+    }
+
+    /**
+     * @param array<string, mixed> $array
+     * @param string[] $path
+     */
+    private function unsetNestedValue(array &$array, array $path): void
+    {
+        if ($path === []) {
+            return;
+        }
+
+        $key = array_pop($path);
+
+        if ($path === []) {
+            unset($array[$key]);
+
+            return;
+        }
+
+        $current = &$array;
+
+        foreach ($path as $segment) {
+            if (!is_array($current) || !array_key_exists($segment, $current)) {
+                return;
+            }
+
+            $current = &$current[$segment];
+        }
+
+        if (!is_array($current)) {
+            return;
+        }
+
+        unset($current[$key]);
+
+        $this->pruneEmptyAncestors($array, $path);
+    }
+
+    /**
+     * @param array<string, mixed> $array
+     * @param string[] $path
+     */
+    private function pruneEmptyAncestors(array &$array, array $path): void
+    {
+        if ($path === []) {
+            return;
+        }
+
+        $key = array_pop($path);
+
+        if ($path === []) {
+            if (isset($array[$key]) && is_array($array[$key]) && $array[$key] === []) {
+                unset($array[$key]);
+            }
+
+            return;
+        }
+
+        $current = &$array;
+
+        foreach ($path as $segment) {
+            if (!is_array($current) || !array_key_exists($segment, $current)) {
+                return;
+            }
+
+            $current = &$current[$segment];
+        }
+
+        if (isset($current[$key]) && is_array($current[$key]) && $current[$key] === []) {
+            unset($current[$key]);
+            $this->pruneEmptyAncestors($array, $path);
+        }
     }
 
     private function normalizeDecimal(string $value): string

@@ -33,6 +33,13 @@ Municipio's `DesignTokensToCssConverter` emits scoped overrides on `[data-scope*
 
 Kirki `search_form_shape=100` maps to token `--c-search-form-border-radius` via `SearchFormShapeCorrection`. Municipio styleguide **does not consume** this token in component SCSS (only Kirki used to output it on `.search-form`). Site CSS in `components/search-forms.scss` applies pill radii from the token. Pair with `c-group--skip-child-normalization` on search form `@group` blades so `@group` child-normalization does not zero the submit button corners.
 
+Search field radius cascade in `search-forms.scss`:
+
+1. `--c-search-form-border-radius` when `search_form_shape=100` (pill sites)
+2. Else `calc(var(--c-field--border-radius, var(--border-radius)) * var(--base))`
+
+`FieldBorderRadiusCorrection` writes `--c-field--border-radius` at `__general__` from legacy Kirki `field_border_radius` when `field_appearance_type=custom` (unset mod → `0`, matching LTS `calc(0/4)`). Non-pill subsites with custom fields (e.g. plus) therefore get square search corners; pill sites still use the 100px token.
+
 ### Footer link contrast
 
 Footer surface tokens come from v4.1 `footer_background` / `footer_color_text`. Plain widget `<a>` tags use `color: var(--c-link-link-color-mix)`, which reads `--c-link--color--background-contrast` inherited from `:root` (`var(--color--background-contrast)` → `#000`) **before** the inherit fallback runs. Setting only `--inherit-color-contrast` on `.c-footer` is not enough.
