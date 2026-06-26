@@ -4,6 +4,8 @@ namespace EslovCustomisation\Modules\Navigation;
 
 class ItemResolver
 {
+    private string $imageContext = 'card';
+
     public function __construct(
         private readonly int|string|null $moduleId,
         private readonly string $moduleSlug,
@@ -19,6 +21,7 @@ class ItemResolver
     public function resolve(callable $getField): array
     {
         $format = (string) ($getField('mod_navigation_format') ?: '');
+        $this->imageContext = $format === 'tree' ? 'tree' : 'card';
         $depth = $getField('mod_navigation_depth');
         $depth = is_numeric($depth) ? (int) $depth : ($format === 'tree' ? 2 : 1);
 
@@ -214,7 +217,7 @@ class ItemResolver
                 'post' => $post,
                 'title' => $title,
                 'href' => (string) $url,
-                'image' => $this->imageAdapter->fromPost($post, 'card'),
+                'image' => $this->imageAdapter->fromPost($post, $this->imageContext),
                 'icon' => $item['icon'] ?? ($post ? get_field('page_navigation_icon', $post->ID) : null),
                 'description' => $post ? get_field('page_navigation_description', $post->ID) : null,
                 'color' => $item['color'] ?? ($post ? get_field('page_apperance_theme_color', $post->ID) : null),
@@ -235,7 +238,7 @@ class ItemResolver
             'post' => $post,
             'title' => (string) (get_field('custom_menu_title', $post->ID) ?: $post->post_title),
             'href' => (string) get_permalink($post->ID),
-            'image' => $this->imageAdapter->fromPost($post, 'card'),
+            'image' => $this->imageAdapter->fromPost($post, $this->imageContext),
             'icon' => get_field('page_navigation_icon', $post->ID),
             'description' => get_field('page_navigation_description', $post->ID),
             'color' => get_field('page_apperance_theme_color', $post->ID),

@@ -7,20 +7,17 @@
     ])
         @foreach ($items as $item)
             @php
-                $variant = $item['buttonVariant'] ?? 'default';
-                $color = match ($variant) {
-                    'primary' => 'primary',
-                    'secondary' => 'secondary',
+                $color = match ($item['buttonVariant'] ?? 'default') {
+                    'primary', 'secondary' => $item['buttonVariant'] ?? 'default',
                     default => 'default',
                 };
-                $style = $variant === 'default' ? 'basic' : 'filled';
                 $icon = \EslovCustomisation\Modules\Navigation\IconNormalizer::forButton($item['icon'] ?? null);
             @endphp
             @button([
                 'text' => $item['title'] ?? '',
                 'href' => $item['href'] ?? '',
                 'color' => $color,
-                'style' => $style,
+                'style' => 'filled',
                 'icon' => $icon,
                 'classList' => ['u-margin__bottom--05'],
             ])

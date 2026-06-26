@@ -1,9 +1,9 @@
 @if (!empty($children))
-    <ul class="mod-navigation__tree-children unlist">
+    <ul class="mod-navigation__tree-children unlist{{ !empty($classList) ? ' ' . implode(' ', $classList) : '' }}">
         @foreach ($children as $child)
             <li>
                 @link([
-                    'href' => $child['href'] ?? '',
+                    'href' => $child['href'] ?? '#',
                     'classList' => ['mod-navigation__tree-child-link'],
                 ])
                     {{ $child['title'] ?? '' }}

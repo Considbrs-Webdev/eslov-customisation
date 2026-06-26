@@ -1,19 +1,18 @@
 @if (!empty($items))
-    <ul class="mod-navigation__tree mod-navigation__tree--highlighted u-unlist">
+    <ul class="mod-navigation__tree mod-navigation__tree--highlighted unlist">
         @foreach ($items as $item)
-            <li class="mod-navigation__tree-item u-margin__bottom--3">
-                @card([
-                    'link' => $item['href'] ?? '',
-                    'heading' => $item['title'] ?? '',
-                    'content' => $item['description'] ?? '',
-                    'image' => $item['image'] ?? '',
-                    'classList' => ['mod-navigation__tree-card'],
-                    'containerAware' => true,
-                    'hasAction' => true,
-                    'hasPlaceholder' => empty($item['image']),
-                ])
-                @endcard
-                @include('navigation.tree.partials.child-links', ['children' => $item['children'] ?? []])
+            <li class="mod-navigation__tree-item">
+                <div class="mod-navigation__tree-highlighted-item">
+                    <div class="mod-navigation__tree-highlighted-block u-color__bg--secondary">
+                        @if (!empty($item['image']))
+                            @include('navigation.tree.partials.image', ['image' => $item['image']])
+                        @endif
+                        <div class="mod-navigation__tree-highlighted-body">
+                            @include('navigation.tree.partials.item-heading', ['item' => $item])
+                        </div>
+                    </div>
+                    @include('navigation.tree.partials.child-links', ['children' => $item['children'] ?? []])
+                </div>
             </li>
         @endforeach
     </ul>
