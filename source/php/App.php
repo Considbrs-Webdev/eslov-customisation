@@ -25,6 +25,7 @@ class App
             Customisations\ModularityColumnWidth::class,
             Customisations\Templates::class,
             Customisations\TopSidebarLayout::class,
+            Customisations\NestedModularityShortcodes::class,
             AcfFields\ModNavigationFields::class,
             AcfFields\ModPostsFilteringFields::class,
             Customisations\ModPostsTaxonomyFiltering::class,
