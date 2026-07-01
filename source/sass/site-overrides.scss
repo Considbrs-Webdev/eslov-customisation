@@ -4,3 +4,24 @@
 @use 'components/search-forms';
 @use 'components/header-buttons';
 @use 'components/event-cards';
+
+.eslov-child-page-buttons .c-button {
+  --c-button--border-radius: 1;
+
+  & + .c-button {
+    margin-left: 0;
+  }
+
+  .c-button__label-text {
+    white-space: nowrap;
+  }
+}
+
+.mod-navigation__buttons .c-button .c-button__label-text {
+  white-space: nowrap;
+}
+
+.eslov-article-taglist .c-tags__tag {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
