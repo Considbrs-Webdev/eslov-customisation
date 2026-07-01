@@ -2,7 +2,8 @@
     <div class="mod-navigation__inline u-color__bg--primary u-color__text--primary-contrast u-padding--1">
         @group([
             'display' => 'flex',
-            'flexWrap' => 'wrap',
+            'wrap' => 'wrap',
+            'flexShrink' => false,
             'gap' => 1,
             'justifyContent' => 'center',
             'classList' => ['mod-navigation__inline-row', 'c-group--skip-child-normalization'],

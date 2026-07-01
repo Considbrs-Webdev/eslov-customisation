@@ -1,7 +1,8 @@
 @if (!empty($items))
     @group([
         'display' => 'flex',
-        'flexWrap' => 'wrap',
+        'wrap' => 'wrap',
+        'flexShrink' => false,
         'gap' => 2,
         'classList' => ['mod-navigation__buttons', 'c-group--skip-child-normalization'],
     ])

@@ -1,6 +1,7 @@
 @group([
     'display' => 'flex',
-    'flexWrap' => 'wrap',
+    'wrap' => 'wrap',
+    'flexShrink' => false,
     'gap' => 2,
     'classList' => ['u-margin__bottom--2', 'eslov-child-page-buttons', 'c-group--skip-child-normalization'],
 ])

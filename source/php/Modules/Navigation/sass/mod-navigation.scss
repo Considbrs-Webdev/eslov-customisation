@@ -209,6 +209,10 @@
 
     .mod-navigation__buttons .c-button {
       --c-button--border-radius: 1;
+
+      & + .c-button {
+        margin-left: 0;
+      }
     }
 
     @at-root .widget_block:has(> .mod-navigation #{&}) > p:empty {
