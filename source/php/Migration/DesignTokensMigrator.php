@@ -2,6 +2,7 @@
 
 namespace EslovCustomisation\Migration;
 
+use EslovCustomisation\Migration\DesignTokenCorrections\ButtonDefaultSurfaceCorrection;
 use EslovCustomisation\Migration\DesignTokenCorrections\FontSizeScaleRatioCorrection;
 use EslovCustomisation\Migration\DesignTokenCorrections\TypographyTokensCorrection;
 use EslovCustomisation\Migration\DesignTokenCorrections\FooterLinkContrastCorrection;
@@ -26,6 +27,7 @@ class DesignTokensMigrator
             new FieldBorderRadiusCorrection(),
             new PrimaryPaletteCorrection(),
             new FooterLinkContrastCorrection(),
+            new ButtonDefaultSurfaceCorrection(),
         ];
     }
 
