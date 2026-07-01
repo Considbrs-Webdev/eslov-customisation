@@ -46,7 +46,7 @@ class MigrationRegistry
             ],
             [
                 'command' => 'eslov migrate theme-mods',
-                'description' => 'Municipio customizer theme mods missing from LTS import (e.g. vertical menu indent)',
+                'description' => 'Municipio theme mod corrections (vertical menu indent; nyheter collection→newsitem). Use --network on multisite.',
                 'status' => 'ready',
                 'run_order' => 40,
             ],

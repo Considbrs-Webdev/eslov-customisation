@@ -2,6 +2,7 @@
 
 namespace EslovCustomisation\Migration;
 
+use EslovCustomisation\Migration\ThemeModCorrections\ArchiveNyheterStyleCorrection;
 use EslovCustomisation\Migration\ThemeModCorrections\VerticalMenuIndentSublevelsCorrection;
 
 class ThemeModsMigrator
@@ -15,6 +16,7 @@ class ThemeModsMigrator
     ) {
         $this->corrections = [
             new VerticalMenuIndentSublevelsCorrection(),
+            new ArchiveNyheterStyleCorrection(),
         ];
     }
 
