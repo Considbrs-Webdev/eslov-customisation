@@ -19,6 +19,21 @@ define('ESLOV_CUSTOMISATION_PATH', plugin_dir_path(__FILE__));
 define('ESLOV_CUSTOMISATION_URL', plugin_dir_url(__FILE__));
 define('ESLOV_CUSTOMISATION_VERSION', '0.1.0');
 
+spl_autoload_register(static function (string $className): void {
+    $prefix = __NAMESPACE__ . '\\';
+
+    if (strpos($className, $prefix) !== 0) {
+        return;
+    }
+
+    $relativeClass = substr($className, strlen($prefix));
+    $file = ESLOV_CUSTOMISATION_PATH . 'source/php/' . str_replace('\\', '/', $relativeClass) . '.php';
+
+    if (is_readable($file)) {
+        require_once $file;
+    }
+});
+
 if (file_exists(ESLOV_CUSTOMISATION_PATH . 'vendor/autoload.php')) {
     require_once ESLOV_CUSTOMISATION_PATH . 'vendor/autoload.php';
 }

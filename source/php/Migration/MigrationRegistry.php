@@ -57,6 +57,12 @@ class MigrationRegistry
                 'run_order' => 50,
             ],
             [
+                'command' => 'eslov migrate one-page-content',
+                'description' => 'Classic one-page post_content → Municipio-aware Gutenberg block markup',
+                'status' => 'ready',
+                'run_order' => 60,
+            ],
+            [
                 'command' => 'eslov migrate meta-keys',
                 'description' => 'Rewrite legacy post meta keys',
                 'status' => 'planned',

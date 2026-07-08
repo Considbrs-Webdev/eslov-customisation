@@ -29,6 +29,10 @@ class CliBootstrap
             'eslov migrate theme-mods',
             Cli\Migrate\ThemeModsCommand::class
         );
+        \WP_CLI::add_command(
+            'eslov migrate one-page-content',
+            Cli\Migrate\OnePageContentCommand::class
+        );
         // \WP_CLI::add_command('eslov migrate meta-keys', Cli\Migrate\MetaKeysCommand::class);
     }
 }
