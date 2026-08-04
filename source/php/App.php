@@ -26,6 +26,7 @@ class App
             Customisations\Templates::class,
             Customisations\TopSidebarLayout::class,
             Customisations\NestedModularityShortcodes::class,
+            Customisations\ManualInputLinkNormalize::class,
             AcfFields\ModNavigationFields::class,
             AcfFields\ModPostsFilteringFields::class,
             Customisations\ModPostsTaxonomyFiltering::class,
