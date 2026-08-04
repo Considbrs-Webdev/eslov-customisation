@@ -40,7 +40,7 @@ class ModNavigationFields
      */
     private function fields(): array
     {
-        return apply_filters('mx_mod_navigation_fields', [
+        return [
             'mod_navigation_format' => [
                 'key' => 'field_mod_navigation_format',
                 'label' => __('Format', 'eslov-customisation'),
@@ -187,7 +187,7 @@ class ModNavigationFields
                     ],
                 ],
             ],
-        ]);
+        ];
     }
 
     /**
