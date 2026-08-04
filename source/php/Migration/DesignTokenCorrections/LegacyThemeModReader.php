@@ -88,7 +88,17 @@ class LegacyThemeModReader
 
     public static function navPrimaryContrastingColor(): ?string
     {
-        $nav = get_theme_mod('nav_h_color_primary');
+        return self::navColorContrasting('nav_h_color_primary');
+    }
+
+    public static function navDrawerContrastingColor(): ?string
+    {
+        return self::navColorContrasting('nav_v_color_drawer');
+    }
+
+    private static function navColorContrasting(string $themeModKey): ?string
+    {
+        $nav = get_theme_mod($themeModKey);
         if (!is_array($nav)) {
             return null;
         }
