@@ -11,8 +11,7 @@ class ItemResolver
         private readonly string $moduleSlug,
         private readonly ImageAdapter $imageAdapter = new ImageAdapter(),
         private readonly MenuItemNormalizer $menuItemNormalizer = new MenuItemNormalizer(),
-    ) {
-    }
+    ) {}
 
     /**
      * @param callable(string): mixed $getField
@@ -81,21 +80,26 @@ class ItemResolver
             return [];
         }
 
-        $useNp = apply_filters(
-            'mx_mod_navigation_use_nested_pages',
-            false,
-            $post,
-            'children',
-            $this->moduleSlug,
-            $this->moduleId,
-        );
+        /**
+         * 
+         * @deprecated
+         */
 
-        if ($useNp) {
-            $npItems = $this->getNestedPagesMenuItems($post, $depth);
-            if ($npItems !== []) {
-                return $npItems;
-            }
-        }
+        // $useNp = apply_filters(
+        //     'mx_mod_navigation_use_nested_pages',
+        //     false,
+        //     $post,
+        //     'children',
+        //     $this->moduleSlug,
+        //     $this->moduleId,
+        // );
+
+        // if ($useNp) {
+        //     $npItems = $this->getNestedPagesMenuItems($post, $depth);
+        //     if ($npItems !== []) {
+        //         return $npItems;
+        //     }
+        // }
 
         $childPosts = get_posts([
             'post_parent' => $post->ID,
@@ -133,21 +137,26 @@ class ItemResolver
             return [];
         }
 
-        $useNp = apply_filters(
-            'mx_mod_navigation_use_nested_pages',
-            false,
-            $post,
-            'siblings',
-            $this->moduleSlug,
-            $this->moduleId,
-        );
+        /**
+         * 
+         * @deprecated
+         */
 
-        if ($useNp) {
-            $npItems = $this->getNestedPagesMenuItems($post, 1);
-            if ($npItems !== []) {
-                return $npItems;
-            }
-        }
+        // $useNp = apply_filters(
+        //     'mx_mod_navigation_use_nested_pages',
+        //     false,
+        //     $post,
+        //     'siblings',
+        //     $this->moduleSlug,
+        //     $this->moduleId,
+        // );
+
+        // if ($useNp) {
+        //     $npItems = $this->getNestedPagesMenuItems($post, 1);
+        //     if ($npItems !== []) {
+        //         return $npItems;
+        //     }
+        // }
 
         $siblingPosts = get_posts([
             'post_parent' => $post->post_parent,
@@ -171,7 +180,7 @@ class ItemResolver
             ],
         ]);
 
-        return array_map(fn (\WP_Post $sibling) => $this->mapPostToItem($sibling), $siblingPosts);
+        return array_map(fn(\WP_Post $sibling) => $this->mapPostToItem($sibling), $siblingPosts);
     }
 
     /**
