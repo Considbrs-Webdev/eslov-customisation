@@ -5,6 +5,6 @@
     'color' => 'primary',
     'icon' => 'arrow_back',
     'reversePositions' => true,
-    'classList' => ['u-margin__bottom--2'],
+    'classList' => ['u-margin__top--3'],
 ])
 @endbutton
