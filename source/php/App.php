@@ -29,9 +29,11 @@ class App
             Customisations\ManualInputLinkNormalize::class,
             AcfFields\ModNavigationFields::class,
             AcfFields\ModPostsFilteringFields::class,
+            AcfFields\PageSectionStartField::class,
             Customisations\ModPostsTaxonomyFiltering::class,
             Customisations\ModPostsHideTermIcons::class,
             Customisations\ChildPageLinksBelowTitle::class,
+            Customisations\SectionStartPageLink::class,
             Customisations\TaxonomyTaglist::class,
         ];
 
