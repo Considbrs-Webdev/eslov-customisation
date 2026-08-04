@@ -5,6 +5,10 @@
 @use 'components/header-buttons';
 @use 'components/event-cards';
 
+.t-searchform .c-group.c-group--horizontal {
+  width: 100%;
+}
+
 .eslov-child-page-buttons .c-button {
   --c-button--border-radius: 1;
 
