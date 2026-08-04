@@ -46,6 +46,8 @@ class ModularityUpgradeRunner
             return $result;
         }
 
+        self::preloadAcfModuleMigrationHandlerFix();
+
         (new \Modularity\Upgrade())->upgrade();
 
         $after = (int) get_option(self::VERSION_OPTION, 0);
@@ -68,5 +70,15 @@ class ModularityUpgradeRunner
         ));
 
         return $result;
+    }
+
+    private static function preloadAcfModuleMigrationHandlerFix(): void
+    {
+        if (class_exists(\Modularity\Upgrade\Migrators\Module\AcfModuleMigrationHandler::class, false)) {
+            return;
+        }
+
+        require_once ESLOV_CUSTOMISATION_PATH
+            . 'source/php/Shim/Modularity/Upgrade/Migrators/Module/AcfModuleMigrationHandler.php';
     }
 }
