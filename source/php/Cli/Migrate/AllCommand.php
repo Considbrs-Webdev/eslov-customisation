@@ -66,7 +66,12 @@ class AllCommand extends AbstractMigrateCommand
             \WP_CLI::log('==> ' . $task['command']);
 
             if ($this->isNetworkFlag($assocArgs) && is_multisite()) {
-                MigrationCommandRunner::run($task['command'], $this, $assocArgs);
+                if (MigrationCommandRunner::hasRunner($task['command'])) {
+                    MigrationCommandRunner::run($task['command'], $this, $assocArgs);
+                } else {
+                    // executeAcrossSites already switched to the current blog.
+                    $this->runSubcommand($task['command'], $assocArgs, passNetworkFlag: false);
+                }
             } else {
                 $this->runSubcommand($task['command'], $assocArgs);
             }
@@ -79,7 +84,7 @@ class AllCommand extends AbstractMigrateCommand
     /**
      * @param array<string, mixed> $assocArgs
      */
-    private function runSubcommand(string $command, array $assocArgs): void
+    private function runSubcommand(string $command, array $assocArgs, ?bool $passNetworkFlag = null): void
     {
         $flags = [];
 
@@ -93,6 +98,12 @@ class AllCommand extends AbstractMigrateCommand
 
         if ($this->postId !== null) {
             $flags[] = '--post-id=' . $this->postId;
+        }
+
+        $shouldPassNetwork = $passNetworkFlag ?? $this->isNetworkFlag($assocArgs);
+
+        if ($shouldPassNetwork && $this->isNetworkFlag($assocArgs)) {
+            $flags[] = '--network';
         }
 
         $fullCommand = $command;

@@ -21,6 +21,11 @@ class MigrationCommandRunner
         'eslov migrate design-tokens' => DesignTokensCommand::class,
     ];
 
+    public static function hasRunner(string $command): bool
+    {
+        return isset(self::COMMAND_MAP[$command]);
+    }
+
     public static function run(string $command, AbstractMigrateCommand $parent, array $assocArgs): void
     {
         $class = self::COMMAND_MAP[$command] ?? null;
