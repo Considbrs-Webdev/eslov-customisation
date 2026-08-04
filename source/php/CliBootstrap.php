@@ -33,6 +33,10 @@ class CliBootstrap
             'eslov migrate one-page-content',
             Cli\Migrate\OnePageContentCommand::class
         );
+        \WP_CLI::add_command(
+            'eslov migrate one-page-show-title',
+            Cli\Migrate\OnePageShowTitleCommand::class
+        );
         // \WP_CLI::add_command('eslov migrate meta-keys', Cli\Migrate\MetaKeysCommand::class);
     }
 }

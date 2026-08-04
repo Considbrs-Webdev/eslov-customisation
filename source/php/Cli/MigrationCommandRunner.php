@@ -6,6 +6,7 @@ use EslovCustomisation\Cli\Migrate\DesignTokensCommand;
 use EslovCustomisation\Cli\Migrate\ModPostsMixedDisplayCommand;
 use EslovCustomisation\Cli\Migrate\ModPostsTaxonomyDisplayCommand;
 use EslovCustomisation\Cli\Migrate\ModularityUpgradeCommand;
+use EslovCustomisation\Cli\Migrate\OnePageShowTitleCommand;
 use EslovCustomisation\Cli\Migrate\ThemeModsCommand;
 use EslovCustomisation\Cli\Migrate\WidgetsCommand;
 
@@ -19,6 +20,7 @@ class MigrationCommandRunner
         'eslov migrate mod-posts-mixed-display' => ModPostsMixedDisplayCommand::class,
         'eslov migrate theme-mods' => ThemeModsCommand::class,
         'eslov migrate design-tokens' => DesignTokensCommand::class,
+        'eslov migrate one-page-show-title' => OnePageShowTitleCommand::class,
     ];
 
     public static function hasRunner(string $command): bool

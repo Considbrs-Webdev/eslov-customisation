@@ -63,6 +63,12 @@ class MigrationRegistry
                 'run_order' => 60,
             ],
             [
+                'command' => 'eslov migrate one-page-show-title',
+                'description' => 'Enable ACF post_one_page_show_title on all one-page template pages (LTS Kirki override replacement)',
+                'status' => 'ready',
+                'run_order' => 65,
+            ],
+            [
                 'command' => 'eslov migrate meta-keys',
                 'description' => 'Rewrite legacy post meta keys',
                 'status' => 'planned',
