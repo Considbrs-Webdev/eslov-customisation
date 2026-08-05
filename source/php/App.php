@@ -35,6 +35,7 @@ class App
             Customisations\ChildPageLinksBelowTitle::class,
             Customisations\SectionStartPageLink::class,
             Customisations\TaxonomyTaglist::class,
+            Customisations\HidePageTitle::class,
         ];
 
         foreach ($classes as $class) {
