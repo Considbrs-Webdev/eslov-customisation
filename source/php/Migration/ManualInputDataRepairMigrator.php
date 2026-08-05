@@ -371,6 +371,11 @@ class ManualInputDataRepairMigrator
             return true;
         }
 
+        if (!$this->isEmptyField($dataRow['item_icon'] ?? null)
+            && $this->isEmptyField($miRow['box_icon'] ?? null)) {
+            return true;
+        }
+
         return false;
     }
 
@@ -404,7 +409,11 @@ class ManualInputDataRepairMigrator
             }
 
             if ($this->prefixTitlesMatch($dataRows, $manualInputRows, $prefixLength)) {
-                $rows = $manualInputRows;
+                $rows = [];
+
+                for ($i = 0; $i < $prefixLength; $i++) {
+                    $rows[] = $this->mergeRowFields($manualInputRows[$i], $dataRows[$i]);
+                }
 
                 for ($i = $prefixLength; $i < count($dataRows); $i++) {
                     $rows[] = $this->mapDataRowToManualInput($dataRows[$i]);
