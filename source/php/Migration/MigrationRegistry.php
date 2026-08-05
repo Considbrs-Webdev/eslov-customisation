@@ -27,6 +27,12 @@ class MigrationRegistry
                 'run_order' => 5,
             ],
             [
+                'command' => 'eslov migrate manual-input-data-repair',
+                'description' => 'Repair mod-manualinput modules with leftover LTS data_* not fully migrated to manual_inputs',
+                'status' => 'ready',
+                'run_order' => 6,
+            ],
+            [
                 'command' => 'eslov migrate widgets',
                 'description' => 'Classic modularity-module widgets → block shortcode widgets',
                 'status' => 'ready',

@@ -12,6 +12,10 @@ class CliBootstrap
             'eslov migrate modularity-upgrade',
             Cli\Migrate\ModularityUpgradeCommand::class,
         );
+        \WP_CLI::add_command(
+            'eslov migrate manual-input-data-repair',
+            Cli\Migrate\ManualInputDataRepairCommand::class,
+        );
         \WP_CLI::add_command('eslov migrate widgets', Cli\Migrate\WidgetsCommand::class);
         \WP_CLI::add_command(
             'eslov migrate mod-posts-taxonomy-display',
