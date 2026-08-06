@@ -8,9 +8,24 @@ namespace EslovCustomisation\Customisations;
 
 class SectionStartPageLink
 {
+    private const ONE_PAGE_TEMPLATE = 'one-page.blade.php';
+
     public function __construct()
     {
         add_action('article_content_before', [$this, 'render'], 10);
+        add_action('inner_loop_start', [$this, 'renderOnOnePage'], 10);
+    }
+
+    /**
+     * One Page skips the article partial, so print via inner_loop_start instead.
+     */
+    public function renderOnOnePage(): void
+    {
+        if (get_page_template_slug() !== self::ONE_PAGE_TEMPLATE) {
+            return;
+        }
+
+        $this->render();
     }
 
     /**
