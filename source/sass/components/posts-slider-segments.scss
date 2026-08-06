@@ -1,0 +1,9 @@
+/**
+ * Styleguide forces --c-segment--min-height-card: 560px on segment cards inside
+ * any .c-slider. That suits hero slides, but mod-posts sliders (c-slider--post)
+ * show compact title+CTA cards and end up with huge empty white panels.
+ * Match LTS content-sized height for posts sliders only.
+ */
+.c-slider.c-slider--post .c-slider__container .c-slider__inner .c-segment.c-segment--card {
+  --c-segment--min-height-card: 0;
+}
