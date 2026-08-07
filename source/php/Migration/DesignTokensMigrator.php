@@ -3,6 +3,7 @@
 namespace EslovCustomisation\Migration;
 
 use EslovCustomisation\Migration\DesignTokenCorrections\ButtonDefaultSurfaceCorrection;
+use EslovCustomisation\Migration\DesignTokenCorrections\ButtonPrimaryColorCorrection;
 use EslovCustomisation\Migration\DesignTokenCorrections\FontSizeScaleRatioCorrection;
 use EslovCustomisation\Migration\DesignTokenCorrections\TypographyTokensCorrection;
 use EslovCustomisation\Migration\DesignTokenCorrections\DrawerLinkContrastCorrection;
@@ -30,6 +31,7 @@ class DesignTokensMigrator
             new DrawerLinkContrastCorrection(),
             new FooterLinkContrastCorrection(),
             new ButtonDefaultSurfaceCorrection(),
+            new ButtonPrimaryColorCorrection(),
         ];
     }
 

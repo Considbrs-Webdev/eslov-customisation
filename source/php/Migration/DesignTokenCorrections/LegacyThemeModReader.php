@@ -86,9 +86,31 @@ class LegacyThemeModReader
         ];
     }
 
+    public static function palettePrimaryBase(): ?string
+    {
+        return self::colorModField('color_palette_primary', 'base');
+    }
+
+    public static function palettePrimaryContrasting(): ?string
+    {
+        return self::colorModField('color_palette_primary', 'contrasting');
+    }
+
     public static function navPrimaryContrastingColor(): ?string
     {
         return self::navColorContrasting('nav_h_color_primary');
+    }
+
+    private static function colorModField(string $themeModKey, string $field): ?string
+    {
+        $mod = get_theme_mod($themeModKey);
+        if (!is_array($mod)) {
+            return null;
+        }
+
+        $value = $mod[$field] ?? null;
+
+        return is_string($value) && $value !== '' ? $value : null;
     }
 
     public static function navDrawerContrastingColor(): ?string
