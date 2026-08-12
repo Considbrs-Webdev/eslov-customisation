@@ -3,56 +3,48 @@
 namespace EslovCustomisation\Customisations;
 
 /**
- * Auto-highlight the timeline event closest to (but not after) today or current time.
+ * Auto-highlight the current timeline step and mark passed steps with a checkmark.
  */
 class TimelineActiveStep
 {
     public function __construct()
     {
-        add_filter('Modularity/Block/acf/timeline/Data', [$this, 'applyToBlockData'], 10, 3);
-        add_filter('Modularity/Display/mod-timeline/viewData', [$this, 'applyToModuleViewData']);
+        add_filter('ComponentLibrary/Component/Timeline/Data', [$this, 'applyStepStates']);
+        add_filter('ComponentLibrary/ViewPaths', [$this, 'registerComponentViewPath']);
     }
 
     /**
-     * @param array<string, mixed> $viewData
-     * @param array<string, mixed> $block
-     * @return array<string, mixed>
+     * @param array<int, string> $viewPaths
+     * @return array<int, string>
      */
-    public function applyToBlockData(array $viewData, array $block, object $module): array
+    public function registerComponentViewPath(array $viewPaths): array
     {
-        return $this->applyActiveStep($viewData);
+        array_unshift($viewPaths, ESLOV_CUSTOMISATION_PATH . 'views/components');
+
+        return $viewPaths;
     }
 
     /**
-     * @param array<string, mixed> $viewData
+     * @param array<string, mixed> $data
      * @return array<string, mixed>
      */
-    public function applyToModuleViewData(array $viewData): array
+    public function applyStepStates(array $data): array
     {
-        return $this->applyActiveStep($viewData);
-    }
-
-    /**
-     * @param array<string, mixed> $viewData
-     * @return array<string, mixed>
-     */
-    private function applyActiveStep(array $viewData): array
-    {
-        if (!empty($viewData['sequential'])) {
-            return $viewData;
+        if (!empty($data['sequential'])) {
+            return $data;
         }
 
-        if (!isset($viewData['events']) || !is_array($viewData['events']) || $viewData['events'] === []) {
-            return $viewData;
+        if (!isset($data['events']) || !is_array($data['events']) || $data['events'] === []) {
+            return $data;
         }
 
-        $isTimeMode = $this->isTimeMode($viewData['events']);
+        $isTimeMode = $this->isTimeMode($data['events']);
         $now = $isTimeMode ? date('H:i:s') : date('Y-m-d');
         $pattern = $isTimeMode ? '/^\d{2}:\d{2}:\d{2}$/' : '/^\d{4}-\d{2}-\d{2}$/';
         $activeIndex = null;
         $closestValue = null;
 
-        foreach ($viewData['events'] as $index => $event) {
+        foreach ($data['events'] as $index => $event) {
             if (!is_array($event)) {
                 continue;
             }
@@ -73,13 +65,28 @@ class TimelineActiveStep
             }
         }
 
-        if ($activeIndex === null) {
-            return $viewData;
+        foreach ($data['events'] as $index => $event) {
+            if (!is_array($event)) {
+                continue;
+            }
+
+            $value = $isTimeMode ? ($event['timestamp'] ?? null) : ($event['date'] ?? null);
+
+            if (!is_string($value) || !preg_match($pattern, $value)) {
+                continue;
+            }
+
+            if ($index === $activeIndex) {
+                $data['events'][$index]['active_step'] = true;
+                continue;
+            }
+
+            if ($value < $now) {
+                $data['events'][$index]['passed_step'] = true;
+            }
         }
 
-        $viewData['events'][$activeIndex]['active_step'] = true;
-
-        return $viewData;
+        return $data;
     }
 
     /**

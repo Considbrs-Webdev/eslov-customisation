@@ -1,0 +1,16 @@
+.c-timeline .c-timeline__event--passed .c-timeline__marker {
+  position: relative;
+}
+
+.c-timeline .c-timeline__event--passed .c-timeline__marker::after {
+  border: solid var(--c-timeline--accent-contrast, #fff);
+  border-width: 0 2px 2px 0;
+  box-sizing: border-box;
+  content: "";
+  height: calc(var(--c-timeline--marker-size) * 0.45);
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -65%) rotate(45deg);
+  width: calc(var(--c-timeline--marker-size) * 0.25);
+}
