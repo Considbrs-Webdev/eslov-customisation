@@ -55,6 +55,9 @@ source/
   sass/                # Site-wide CSS overrides (enqueued globally)
     site-overrides.scss
     components/        # Per-component override partials
+  js/                  # Site-wide JS (enqueued globally)
+    site.js            # Vite entry
+    components/        # Per-feature modules imported by site.js
   php/
     AcfFields/         # ACF field groups (e.g. ModNavigationFields)
     Cli/               # WP-CLI migration commands
@@ -68,7 +71,7 @@ source/
         views/         # mod-navigation.blade.php + navigation/*
 views/
   partials/            # Theme blade overrides (taglist, child buttons)
-assets/dist/           # Site overrides built CSS + manifest.json
+assets/dist/           # Site CSS + JS build output + manifest.json (gitignored)
 ```
 
 Custom Modularity modules register in `eslov-customisation.php` (`init` priority 5), same pattern as Piteå `AccButtons`.
@@ -80,7 +83,8 @@ Custom Modularity modules register in `eslov-customisation.php` (`init` priority
 
 ## Assets (Vite)
 
-Site overrides and module styles use **separate Vite builds** and manifests:
+Site CSS/JS and module styles use **separate Vite builds** and manifests.
+Built files land in `assets/dist/` (gitignored) — run `npm run build` locally or via `build.php`.
 
 ```bash
 cd wp-content/plugins/eslov-customisation
@@ -90,10 +94,12 @@ npm run build
 
 | Build | Config | Output | Enqueued by |
 |-------|--------|--------|-------------|
-| Site overrides | `vite.config.mjs` | `assets/dist/` | `Customisations\SiteStyles` (global) |
+| Site CSS + JS | `vite.config.mjs` | `assets/dist/` | `SiteStyles` + `SiteScripts` (global) |
 | mod-navigation | `vite.navigation.config.mjs` | `Modules/Navigation/assets/dist/` | `Navigation::style()` (on-page only) |
 
-Site overrides live in `source/sass/` (`site-overrides.scss` imports `components/*`). Module SCSS lives beside the module (`Modules/Navigation/sass/mod-navigation.scss`), scoped under `.modularity-mod-navigation`, using Municipio tokens (`var(--color--primary)`, etc.).
+- Site CSS: `source/sass/site-overrides.scss` → imports `components/*`
+- Site JS: `source/js/site.js` → imports `components/*` (depends on `js-styleguidejs`)
+- Module SCSS: beside the module (`Modules/Navigation/sass/mod-navigation.scss`), scoped under `.modularity-mod-navigation`
 
 ## License
 

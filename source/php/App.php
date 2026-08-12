@@ -22,6 +22,7 @@ class App
         $classes = [
             Customisations\Config::class,
             Customisations\SiteStyles::class,
+            Customisations\SiteScripts::class,
             Customisations\BrandedBorder::class,
             Customisations\ModularityColumnWidth::class,
             Customisations\Templates::class,
