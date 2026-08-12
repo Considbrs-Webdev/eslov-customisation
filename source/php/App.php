@@ -29,6 +29,8 @@ class App
             Customisations\TopSidebarLayout::class,
             Customisations\NestedModularityShortcodes::class,
             Customisations\ManualInputLinkNormalize::class,
+            Customisations\CustomerFeedback::class,
+            Admin\CustomerFeedbackSettings::class,
             AcfFields\ModNavigationFields::class,
             AcfFields\ModPostsFilteringFields::class,
             AcfFields\PageSectionStartField::class,
