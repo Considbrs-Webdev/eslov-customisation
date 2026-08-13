@@ -27,7 +27,7 @@ class SiteStyles
         wp_enqueue_style(
             'eslov-site-overrides',
             $url,
-            ['styleguide-design-builder-output', 'css-municipiocss'],
+            ['styleguide-css-variables', 'styleguide-design-builder-output', 'css-municipiocss'],
             ESLOV_CUSTOMISATION_VERSION,
         );
     }
