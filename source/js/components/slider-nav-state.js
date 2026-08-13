@@ -48,12 +48,17 @@ function onSliderReady(event) {
             return;
         }
 
-        const end = splide.Components?.Controller?.getEnd?.() ?? 0;
-        setControlDisabled(prev, splide.index <= 0);
-        setControlDisabled(next, splide.index >= end);
+        const controller = splide.Components?.Controller;
+        if (!controller) {
+            return;
+        }
+
+        // getEnd() is the last slide index, not the last navigable page when perMove/perPage > 1.
+        setControlDisabled(prev, controller.getPrev() < 0);
+        setControlDisabled(next, controller.getNext() < 0);
     };
 
-    splide.on('mounted move updated refreshed', updateControls);
+    splide.on('mounted moved refreshed updated', updateControls);
     updateControls();
 }
 
