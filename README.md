@@ -33,6 +33,8 @@ Individual commands (also run by `migrate all` when status is `ready`):
 ddev wp eslov migrate meta-keys --dry-run
 ddev wp eslov migrate modules --post-id=123
 ddev wp eslov migrate options
+ddev wp eslov migrate fonts --dry-run
+ddev wp eslov migrate fonts --network
 ```
 
 ## Adding a migration
