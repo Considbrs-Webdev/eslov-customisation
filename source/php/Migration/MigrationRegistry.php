@@ -63,6 +63,12 @@ class MigrationRegistry
                 'run_order' => 50,
             ],
             [
+                'command' => 'eslov migrate fonts',
+                'description' => 'LTS uploaded Montserrat slug → native font library + Design Builder CSS family',
+                'status' => 'ready',
+                'run_order' => 55,
+            ],
+            [
                 'command' => 'eslov migrate one-page-content',
                 'description' => 'Classic one-page post_content → Municipio-aware Gutenberg block markup',
                 'status' => 'ready',

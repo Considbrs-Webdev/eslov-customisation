@@ -3,6 +3,7 @@
 namespace EslovCustomisation\Cli;
 
 use EslovCustomisation\Cli\Migrate\DesignTokensCommand;
+use EslovCustomisation\Cli\Migrate\FontsCommand;
 use EslovCustomisation\Cli\Migrate\ManualInputDataRepairCommand;
 use EslovCustomisation\Cli\Migrate\ModPostsMixedDisplayCommand;
 use EslovCustomisation\Cli\Migrate\ModPostsTaxonomyDisplayCommand;
@@ -22,6 +23,7 @@ class MigrationCommandRunner
         'eslov migrate mod-posts-mixed-display' => ModPostsMixedDisplayCommand::class,
         'eslov migrate theme-mods' => ThemeModsCommand::class,
         'eslov migrate design-tokens' => DesignTokensCommand::class,
+        'eslov migrate fonts' => FontsCommand::class,
         'eslov migrate one-page-show-title' => OnePageShowTitleCommand::class,
     ];
 

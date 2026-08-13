@@ -30,6 +30,10 @@ class CliBootstrap
             Cli\Migrate\DesignTokensCommand::class
         );
         \WP_CLI::add_command(
+            'eslov migrate fonts',
+            Cli\Migrate\FontsCommand::class
+        );
+        \WP_CLI::add_command(
             'eslov migrate theme-mods',
             Cli\Migrate\ThemeModsCommand::class
         );
