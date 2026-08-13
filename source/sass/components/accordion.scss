@@ -1,0 +1,19 @@
+/**
+ * Styleguide accordion hover/open only tints the summary background.
+ * The global :focus-visible outline (2px + 2px offset) is clipped by
+ * contain:paint on .c-accordion, details.c-accordion__item, and
+ * .c-card__paint-container — so the ring never draws around the item.
+ * Inset box-shadow stays inside the paint containment.
+ * Remove when upstream ships an inset item ring.
+ */
+.c-accordion__item {
+  &:hover summary,
+  &[open] summary,
+  summary:focus-visible {
+    box-shadow: inset 0 0 0 2px var(--color--focus, #4d90fe);
+  }
+
+  summary:focus-visible {
+    outline: none;
+  }
+}
