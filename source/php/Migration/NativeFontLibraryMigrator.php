@@ -246,13 +246,16 @@ class NativeFontLibraryMigrator
         }
 
         $familyPostId = $this->findFontFamilyPostId(LegacyUploadedFontFamilyMapper::GOOGLE_FAMILY);
-        $hasLocalFaces = $familyPostId !== null && $this->fontFamilyHasLocalFaces($familyPostId);
+        $missingFaces = $this->missingActivatedFaces($familyPostId, $definition);
 
-        if ($hasLocalFaces && !$this->force) {
+        if ($missingFaces === [] && $familyPostId !== null) {
             $result->skipped++;
-            $result->addMessage('Skip Montserrat download: local font faces already exist.');
+            $result->addMessage('Skip Montserrat download: all required local font faces already exist.');
         } elseif ($this->dryRun) {
-            $result->addMessage('Would install Montserrat from the WordPress Google Fonts collection.');
+            $result->addMessage(sprintf(
+                'Would install %d Montserrat font face(s) from the WordPress Google Fonts collection.',
+                count($missingFaces),
+            ));
             $result->migrated++;
         } else {
             $installed = $this->withPublicContentUrls(
@@ -272,7 +275,7 @@ class NativeFontLibraryMigrator
         }
 
         if ($familyPostId === null && $this->dryRun) {
-            $result->addMessage('Would activate Montserrat in user Global Styles.');
+            $result->addMessage('Would create user Global Styles and activate Montserrat.');
             $result->migrated++;
 
             return;
@@ -349,6 +352,10 @@ class NativeFontLibraryMigrator
             return false;
         }
 
+        if ($this->fontFaceExistsForVariant($familyPostId, $fontFace)) {
+            return true;
+        }
+
         $installedSources = [];
         $fontFile = null;
 
@@ -365,10 +372,6 @@ class NativeFontLibraryMigrator
 
         if ($installedSources === []) {
             return false;
-        }
-
-        if ($this->fontFaceExists($familyPostId, $installedSources)) {
-            return true;
         }
 
         $settings = [
@@ -465,6 +468,13 @@ class NativeFontLibraryMigrator
         $postId = $this->getOrCreateGlobalStylesPostId();
 
         if ($postId === null) {
+            if ($this->dryRun) {
+                $result->addMessage('Would create user Global Styles and activate Montserrat.');
+                $result->migrated++;
+
+                return;
+            }
+
             $result->errors++;
             $result->addMessage('Could not load or create the user Global Styles post.');
 
@@ -595,6 +605,16 @@ class NativeFontLibraryMigrator
         $postId = $this->getOrCreateGlobalStylesPostId();
 
         if ($postId === null) {
+            if ($this->dryRun) {
+                $result->addMessage(sprintf(
+                    'Would create Global Styles post and assign wp_theme=%s.',
+                    get_stylesheet(),
+                ));
+                $result->migrated++;
+
+                return;
+            }
+
             $result->errors++;
             $result->addMessage('Could not attach Global Styles: post missing.');
 
@@ -770,8 +790,39 @@ class NativeFontLibraryMigrator
         return null;
     }
 
-    private function fontFamilyHasLocalFaces(int $familyPostId): bool
+    /**
+     * @param array{name: string, fontFamily: string, fontFace: array<int, array<string, mixed>>} $definition
+     *
+     * @return array<int, array<string, mixed>>
+     */
+    private function missingActivatedFaces(?int $familyPostId, array $definition): array
     {
+        $needed = [];
+
+        foreach ($this->filterActivatedFaces($definition['fontFace']) as $fontFace) {
+            $needed[$this->fontFaceVariantKey($fontFace)] = $fontFace;
+        }
+
+        if ($familyPostId === null) {
+            return array_values($needed);
+        }
+
+        $existing = $this->existingLocalVariantKeys($familyPostId);
+
+        return array_values(array_filter(
+            $needed,
+            static fn (string $variantKey): bool => !isset($existing[$variantKey]),
+            ARRAY_FILTER_USE_KEY,
+        ));
+    }
+
+    /**
+     * @return array<string, true>
+     */
+    private function existingLocalVariantKeys(int $familyPostId): array
+    {
+        $keys = [];
+
         foreach (get_posts([
             'post_type' => 'wp_font_face',
             'post_status' => 'publish',
@@ -780,12 +831,27 @@ class NativeFontLibraryMigrator
         ]) as $face) {
             $settings = json_decode((string) $face->post_content, true);
 
-            if (is_array($settings) && $this->familyHasLocalSrc(['fontFace' => [$settings]])) {
-                return true;
+            if (!is_array($settings) || !$this->familyHasLocalSrc(['fontFace' => [$settings]])) {
+                continue;
             }
+
+            $keys[$this->fontFaceVariantKey($settings)] = true;
         }
 
-        return false;
+        return $keys;
+    }
+
+    /**
+     * @param array<string, mixed> $fontFace
+     */
+    private function fontFaceExistsForVariant(int $familyPostId, array $fontFace): bool
+    {
+        return isset($this->existingLocalVariantKeys($familyPostId)[$this->fontFaceVariantKey($fontFace)]);
+    }
+
+    private function fontFamilyHasLocalFaces(int $familyPostId): bool
+    {
+        return $this->existingLocalVariantKeys($familyPostId) !== [];
     }
 
     /**
@@ -823,28 +889,6 @@ class NativeFontLibraryMigrator
     {
         foreach ($families as $family) {
             if (($family['slug'] ?? '') === $slug) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * @param array<int, string> $sources
-     */
-    private function fontFaceExists(int $familyPostId, array $sources): bool
-    {
-        foreach (get_posts([
-            'post_type' => 'wp_font_face',
-            'post_status' => 'publish',
-            'post_parent' => $familyPostId,
-            'posts_per_page' => -1,
-        ]) as $face) {
-            $settings = json_decode((string) $face->post_content, true);
-            $existing = is_array($settings) ? $this->normalizeSources($settings['src'] ?? []) : [];
-
-            if (array_intersect($sources, $existing) !== []) {
                 return true;
             }
         }
