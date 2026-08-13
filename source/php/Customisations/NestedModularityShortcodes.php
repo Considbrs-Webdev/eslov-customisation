@@ -96,13 +96,30 @@ class NestedModularityShortcodes
             return $content;
         }
 
+        $replaced = preg_replace_callback(
+            '/<p\b[^>]*>.*?<\/p>/is',
+            function (array $matches): string {
+                if (!str_contains($matches[0], self::PLACEHOLDER_PREFIX)) {
+                    return $matches[0];
+                }
+
+                return $this->restorePlaceholdersInParagraph($matches[0]);
+            },
+            $content
+        );
+
+        $content = is_string($replaced) ? $replaced : $content;
+
         foreach ($this->placeholders as $token => $placeholder) {
             if (!str_contains($content, $token)) {
                 continue;
             }
 
-            $markup = $this->expandShortcode($placeholder['id'], $placeholder['shortcode']);
-            $content = $this->replacePlaceholder($content, $token, $markup);
+            $content = str_replace(
+                $token,
+                $this->expandShortcode($placeholder['id'], $placeholder['shortcode']),
+                $content
+            );
         }
 
         return $content;
@@ -140,18 +157,62 @@ class NestedModularityShortcodes
         return is_string($markup) ? $markup : '';
     }
 
-    private function replacePlaceholder(string $content, string $token, string $markup): string
+    /**
+     * Lift placeholders out of a `wpautop` paragraph so block markup is not
+     * injected inside `<p>`. Consecutive shortcodes often share one paragraph
+     * with `<br />` between tokens.
+     */
+    private function restorePlaceholdersInParagraph(string $paragraph): string
     {
-        $wrapped = [
-            '<p>' . $token . '</p>',
-            '<p>' . $token . '<br /></p>',
-            '<p>' . $token . '<br/></p>',
-            '<p>' . $token . '<br></p>',
-        ];
+        if (!preg_match('/^(<p\b[^>]*>)(.*)(<\/p>)$/is', $paragraph, $matches)) {
+            return $paragraph;
+        }
 
-        $content = str_replace($wrapped, $markup, $content);
+        $tokenPattern = $this->placeholderTokenPattern();
+        if ($tokenPattern === null) {
+            return $paragraph;
+        }
 
-        return str_replace($token, $markup, $content);
+        $pieces = preg_split('/(' . $tokenPattern . ')/', $matches[2], -1, PREG_SPLIT_DELIM_CAPTURE);
+        if ($pieces === false) {
+            return $paragraph;
+        }
+
+        $output = [];
+        foreach ($pieces as $piece) {
+            if ($piece === '') {
+                continue;
+            }
+
+            if (isset($this->placeholders[$piece])) {
+                $placeholder = $this->placeholders[$piece];
+                $output[] = $this->expandShortcode($placeholder['id'], $placeholder['shortcode']);
+                continue;
+            }
+
+            $text = preg_replace('/^(?:<br\s*\/?>|\s)+|(?:<br\s*\/?>|\s)+$/i', '', $piece);
+            if (!is_string($text) || $text === '') {
+                continue;
+            }
+
+            $output[] = $matches[1] . $text . $matches[3];
+        }
+
+        return implode('', $output);
+    }
+
+    private function placeholderTokenPattern(): ?string
+    {
+        if ($this->placeholders === []) {
+            return null;
+        }
+
+        $tokens = array_map(
+            static fn (string $token): string => preg_quote($token, '/'),
+            array_keys($this->placeholders)
+        );
+
+        return implode('|', $tokens);
     }
 
     private function createPlaceholder(): string
