@@ -526,8 +526,14 @@ class NativeFontLibraryMigrator
         }
 
         $original = $data['settings']['typography']['fontFamilies']['custom'] ?? null;
+        $needsUserFlag = $this->globalStylesNeedsUserFlag($post instanceof \WP_Post ? (string) $post->post_content : '');
 
-        if (!$replaced && !$this->force && wp_json_encode($filtered) === wp_json_encode($original)) {
+        if (
+            !$replaced
+            && !$this->force
+            && !$needsUserFlag
+            && wp_json_encode($filtered) === wp_json_encode($original)
+        ) {
             $result->skipped++;
             $result->addMessage('Skip Global Styles font activation: Montserrat already active.');
 
@@ -654,14 +660,20 @@ class NativeFontLibraryMigrator
     private function getOrCreateGlobalStylesPostId(): ?int
     {
         $stylesheet = get_stylesheet();
-        $existing = get_page_by_path(
-            sprintf('wp-global-styles-%s', rawurlencode($stylesheet)),
-            OBJECT,
-            'wp_global_styles',
-        );
+        $fromTheme = $this->findGlobalStylesPostIdByTheme($stylesheet);
 
-        if ($existing instanceof \WP_Post) {
-            return (int) $existing->ID;
+        if ($fromTheme !== null) {
+            return $fromTheme;
+        }
+
+        $fromPath = $this->findGlobalStylesPostIdByPath($stylesheet);
+
+        if ($fromPath !== null) {
+            if (!$this->dryRun) {
+                wp_set_object_terms($fromPath, $stylesheet, 'wp_theme');
+            }
+
+            return $fromPath;
         }
 
         if ($this->dryRun) {
@@ -686,6 +698,44 @@ class NativeFontLibraryMigrator
         wp_set_object_terms($postId, $stylesheet, 'wp_theme');
 
         return $postId;
+    }
+
+    private function findGlobalStylesPostIdByTheme(string $stylesheet): ?int
+    {
+        $posts = get_posts([
+            'posts_per_page' => 1,
+            'orderby' => 'date',
+            'order' => 'DESC',
+            'post_type' => 'wp_global_styles',
+            'post_status' => 'publish',
+            'tax_query' => [
+                [
+                    'taxonomy' => 'wp_theme',
+                    'field' => 'name',
+                    'terms' => $stylesheet,
+                ],
+            ],
+        ]);
+
+        return $posts !== [] ? (int) $posts[0]->ID : null;
+    }
+
+    private function findGlobalStylesPostIdByPath(string $stylesheet): ?int
+    {
+        $existing = get_page_by_path(
+            sprintf('wp-global-styles-%s', rawurlencode($stylesheet)),
+            OBJECT,
+            'wp_global_styles',
+        );
+
+        return $existing instanceof \WP_Post ? (int) $existing->ID : null;
+    }
+
+    private function globalStylesNeedsUserFlag(string $postContent): bool
+    {
+        $decoded = json_decode($postContent, true);
+
+        return !is_array($decoded) || empty($decoded['isGlobalStylesUserThemeJSON']);
     }
 
     /**
