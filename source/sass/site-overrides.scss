@@ -9,6 +9,7 @@
 @use 'components/timeline';
 @use 'components/accordion';
 @use 'components/slider-arrows';
+@use 'components/article-taglist';
 
 .t-searchform .c-group.c-group--horizontal {
   width: 100%;
@@ -27,10 +28,5 @@
 }
 
 .mod-navigation__buttons .c-button .c-button__label-text {
-  white-space: nowrap;
-}
-
-.eslov-article-taglist .c-tags__tag {
-  flex-shrink: 0;
   white-space: nowrap;
 }

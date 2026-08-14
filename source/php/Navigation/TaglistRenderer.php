@@ -3,12 +3,12 @@
 namespace EslovCustomisation\Navigation;
 
 /**
- * Renders singular taxonomy pills via Municipio @tags (pill style).
+ * Renders singular taxonomy chips (LTS mxui.taglist appearance).
  */
 class TaglistRenderer
 {
     /**
-     * @param array<int, array{label: string, href?: string}> $tags
+     * @param array<int, array{label: string, href?: string, color?: string}> $tags
      */
     public static function render(array $tags): void
     {
