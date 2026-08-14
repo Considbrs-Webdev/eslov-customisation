@@ -40,6 +40,7 @@ class App
             Customisations\SectionStartPageLink::class,
             Customisations\TaxonomyTaglist::class,
             Customisations\TimelineActiveStep::class,
+            Customisations\SectionModuleWysiwyg::class,
         ];
 
         foreach ($classes as $class) {
