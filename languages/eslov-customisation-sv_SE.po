@@ -1,0 +1,285 @@
+# Swedish translation of Eslöv Customisation
+# Copyright (C) 2026 Municipio
+# This file is distributed under the same license as the Eslöv Customisation plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: Eslöv Customisation 0.1.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/eslov-customisation\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Swedish <sv@li.org>\n"
+"Language: sv_SE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-08-14T09:09:55+00:00\n"
+"PO-Revision-Date: 2026-08-14 09:10+0000\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: eslov-customisation\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. Plugin Name of the plugin
+#: eslov-customisation.php
+msgid "Eslöv Customisation"
+msgstr "Eslöv Customisation"
+
+#. Description of the plugin
+#: eslov-customisation.php
+msgid "DB migration CLI and runtime shims for Eslöv Municipio deployment"
+msgstr "CLI för databasmigrering och körtidsanpassningar för Eslövs Municipio-driftsättning"
+
+#. Author of the plugin
+#: eslov-customisation.php
+msgid "Municipio"
+msgstr "Municipio"
+
+#: source/php/AcfFields/ModNavigationFields.php:24
+msgid "Navigation module"
+msgstr "Navigationsmodul"
+
+#: source/php/AcfFields/ModNavigationFields.php:46
+msgid "Format"
+msgstr "Format"
+
+#: source/php/AcfFields/ModNavigationFields.php:52
+msgid "List"
+msgstr "Lista"
+
+#: source/php/AcfFields/ModNavigationFields.php:53
+msgid "Grid"
+msgstr "Rutnät"
+
+#: source/php/AcfFields/ModNavigationFields.php:54
+msgid "Bar"
+msgstr "Rad"
+
+#: source/php/AcfFields/ModNavigationFields.php:55
+msgid "Tree"
+msgstr "Träd"
+
+#: source/php/AcfFields/ModNavigationFields.php:56
+msgid "Cards"
+msgstr "Kort"
+
+#: source/php/AcfFields/ModNavigationFields.php:57
+msgid "Buttons"
+msgstr "Knappar"
+
+#: source/php/AcfFields/ModNavigationFields.php:58
+msgid "Inline"
+msgstr "Inline"
+
+#: source/php/AcfFields/ModNavigationFields.php:63
+msgid "Source"
+msgstr "Källa"
+
+#: source/php/AcfFields/ModNavigationFields.php:68
+msgid "Child pages"
+msgstr "Undersidor"
+
+#: source/php/AcfFields/ModNavigationFields.php:69
+msgid "Sibling pages"
+msgstr "Syskonsidor"
+
+#: source/php/AcfFields/ModNavigationFields.php:70
+#: source/php/AcfFields/ModNavigationFields.php:76
+msgid "Menu"
+msgstr "Meny"
+
+#: source/php/AcfFields/ModNavigationFields.php:71
+msgid "Manually selected"
+msgstr "Manuellt valda"
+
+#: source/php/AcfFields/ModNavigationFields.php:94
+msgid "Items"
+msgstr "Poster"
+
+#: source/php/AcfFields/ModNavigationFields.php:109
+msgid "Link"
+msgstr "Länk"
+
+#: source/php/AcfFields/ModNavigationFields.php:116
+msgid "Color"
+msgstr "Färg"
+
+#: source/php/AcfFields/ModNavigationFields.php:131
+msgid "Variant"
+msgstr "Variant"
+
+#: source/php/AcfFields/ModNavigationFields.php:135
+msgid "Primary"
+msgstr "Primär"
+
+#: source/php/AcfFields/ModNavigationFields.php:136
+msgid "Secondary"
+msgstr "Sekundär"
+
+#: source/php/AcfFields/ModNavigationFields.php:137
+msgid "Default"
+msgstr "Standard"
+
+#: source/php/AcfFields/ModNavigationFields.php:152
+msgid "Icon"
+msgstr "Ikon"
+
+#: source/php/AcfFields/ModNavigationFields.php:169
+msgid "Display this module even when there are no items"
+msgstr "Visa denna modul även när det inte finns några poster"
+
+#: source/php/AcfFields/ModNavigationFields.php:177
+msgid "Message to display when there are no items"
+msgstr "Meddelande att visa när det inte finns några poster"
+
+#: source/php/AcfFields/ModPostsFilteringFields.php:49
+msgid "Taxonomifilter"
+msgstr "Taxonomifilter"
+
+#: source/php/AcfFields/ModPostsFilteringFields.php:52
+msgid "Endast inlägg som uppfyller alla dessa villkor kommer visas i modulen."
+msgstr "Endast inlägg som uppfyller alla dessa villkor kommer visas i modulen."
+
+#: source/php/AcfFields/ModPostsFilteringFields.php:75
+msgid "Lägg till filter"
+msgstr "Lägg till filter"
+
+#: source/php/AcfFields/ModPostsFilteringFields.php:124
+msgid "Taxonomi"
+msgstr "Taxonomi"
+
+#: source/php/AcfFields/ModPostsFilteringFields.php:135
+msgid "Operator"
+msgstr "Operator"
+
+#: source/php/AcfFields/ModPostsFilteringFields.php:140
+msgid "Är lika med"
+msgstr "Är lika med"
+
+#: source/php/AcfFields/ModPostsFilteringFields.php:141
+msgid "Är inte lika med"
+msgstr "Är inte lika med"
+
+#: source/php/AcfFields/ModPostsFilteringFields.php:152
+msgid "Term"
+msgstr "Term"
+
+#: source/php/AcfFields/PageSectionStartField.php:41
+msgid "Section start page"
+msgstr "Sektionsstartsida"
+
+#: source/php/AcfFields/PageSectionStartField.php:44
+msgid "Mark this page as a section start page. Child pages will display a link back to this page."
+msgstr "Markera denna sida som en sektionsstartsida. Undersidor kommer visa en länk tillbaka till denna sida."
+
+#: source/php/AcfFields/SplitSectionWysiwygField.php:51
+msgid "Use rich text editor"
+msgstr "Använd rich text-editor"
+
+#: source/php/AcfFields/SplitSectionWysiwygField.php:63
+msgid "Text"
+msgstr "Text"
+
+#: source/php/Admin/CustomerFeedbackSettings.php:28
+#: source/php/Admin/CustomerFeedbackSettings.php:29
+msgid "Customer feedback"
+msgstr "Kundfeedback"
+
+#: source/php/Admin/CustomerFeedbackSettings.php:62
+msgid "Visibility"
+msgstr "Synlighet"
+
+#: source/php/Admin/CustomerFeedbackSettings.php:64
+msgid "Control where the customer feedback form should be hidden. Front page and individually excluded singular posts/pages are already handled separately."
+msgstr "Bestäm var formuläret för kundfeedback ska döljas. Startsidan och individuellt undantagna enskilda inlägg/sidor hanteras redan separat."
+
+#: source/php/Admin/CustomerFeedbackSettings.php:74
+msgid "Exclude on post type archives"
+msgstr "Undanta på arkivsidor för inläggstyper"
+
+#: source/php/Admin/CustomerFeedbackSettings.php:82
+msgid "Exclude on other page types"
+msgstr "Undanta på andra sidtyper"
+
+#: source/php/Admin/CustomerFeedbackSettings.php:96
+msgid "Customer feedback settings"
+msgstr "Inställningar för kundfeedback"
+
+#: source/php/Admin/CustomerFeedbackSettings.php:116
+msgid "No public post types with archives were found."
+msgstr "Inga publika inläggstyper med arkiv hittades."
+
+#: source/php/Admin/CustomerFeedbackSettings.php:132
+msgid "When checked, the feedback form is hidden on archive pages for the selected post types."
+msgstr "När detta är ikryssat döljs feedbackformuläret på arkivsidor för de valda inläggstyperna."
+
+#: source/php/Admin/CustomerFeedbackSettings.php:156
+msgid "Use these toggles to hide feedback on common non-singular or utility page types."
+msgstr "Använd dessa reglage för att dölja feedback på vanliga icke-enskilda sidor eller funktionssidor."
+
+#: source/php/Admin/CustomerFeedbackSettings.php:271
+msgid "Posts page (blog index)"
+msgstr "Inläggssida (blogglista)"
+
+#: source/php/Admin/CustomerFeedbackSettings.php:272
+msgid "Search results"
+msgstr "Sökresultat"
+
+#: source/php/Admin/CustomerFeedbackSettings.php:273
+msgid "Taxonomy archives"
+msgstr "Taxonomiarkiv"
+
+#: source/php/Admin/CustomerFeedbackSettings.php:274
+msgid "Category archives"
+msgstr "Kategoriarkiv"
+
+#: source/php/Admin/CustomerFeedbackSettings.php:275
+msgid "Tag archives"
+msgstr "Etikettarkiv"
+
+#: source/php/Admin/CustomerFeedbackSettings.php:276
+msgid "Date archives"
+msgstr "Datumarkiv"
+
+#: source/php/Admin/CustomerFeedbackSettings.php:277
+msgid "Author archives"
+msgstr "Författararkiv"
+
+#: source/php/Admin/CustomerFeedbackSettings.php:278
+msgid "404 pages"
+msgstr "404-sidor"
+
+#: source/php/Customisations/BrandedBorder.php:32
+msgid "Ram runt webbplatsen"
+msgstr "Ram runt webbplatsen"
+
+#: source/php/Customisations/BrandedBorder.php:43
+msgid "Aktivera ram runt webbplatsen"
+msgstr "Aktivera ram runt webbplatsen"
+
+#: source/php/Customisations/BrandedBorder.php:55
+msgid "Färg 1"
+msgstr "Färg 1"
+
+#: source/php/Customisations/BrandedBorder.php:66
+msgid "Färg 2"
+msgstr "Färg 2"
+
+#: source/php/Customisations/CustomerFeedback.php:156
+msgid "Customer Feedback"
+msgstr "Kundfeedback"
+
+#: source/php/Customisations/CustomerFeedback.php:171
+msgid "Exclude customer feedback form on this page"
+msgstr "Undanta formulär för kundfeedback på denna sida"
+
+#: source/php/Modules/Navigation/Navigation.php:15
+msgctxt "Post Type Singular Name"
+msgid "Navigation"
+msgstr "Navigation"
+
+#: source/php/Modules/Navigation/Navigation.php:20
+msgctxt "Post Type General Name"
+msgid "Navigation modules"
+msgstr "Navigationsmoduler"
+
+#: source/php/Modules/Navigation/Navigation.php:25
+msgid "Outputs a menu or manually selected links"
+msgstr "Visar en meny eller manuellt valda länkar"
