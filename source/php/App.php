@@ -34,6 +34,7 @@ class App
             AcfFields\ModNavigationFields::class,
             AcfFields\ModPostsFilteringFields::class,
             AcfFields\PageSectionStartField::class,
+            AcfFields\SplitSectionWysiwygField::class,
             Customisations\ModPostsTaxonomyFiltering::class,
             Customisations\ModPostsHideTermIcons::class,
             Customisations\ChildPageLinksBelowTitle::class,
