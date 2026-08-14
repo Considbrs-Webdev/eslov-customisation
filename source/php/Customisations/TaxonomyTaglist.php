@@ -3,16 +3,13 @@
 namespace EslovCustomisation\Customisations;
 
 use EslovCustomisation\Navigation\TaglistRenderer;
+use EslovCustomisation\Support\SingularTaxonomySettings;
 
 /**
  * Taxonomy term pills on singular content (LTS municipio-extended autoload/post.php).
  */
 class TaxonomyTaglist
 {
-    private const PLACEMENT_UNDER_HEADER = 'under_header';
-
-    private const PLACEMENT_AFTER_CONTENT = 'after_content';
-
     public function __construct()
     {
         add_action('wp', [$this, 'registerPlacementHook'], 10);
@@ -30,13 +27,13 @@ class TaxonomyTaglist
             return;
         }
 
-        $placement = $this->getTaxonomyPlacement((string) $postType);
-        $hook = $placement === self::PLACEMENT_AFTER_CONTENT
+        $placement = SingularTaxonomySettings::getPlacement((string) $postType);
+        $hook = $placement === SingularTaxonomySettings::PLACEMENT_AFTER_CONTENT
             ? 'article_content_after'
             : 'article_content_before';
 
         add_action($hook, function () use ($postId, $postType): void {
-            $this->renderForPost($postId, $postType);
+            $this->renderForPost($postId, (string) $postType);
         }, 25);
     }
 
@@ -47,16 +44,17 @@ class TaxonomyTaglist
     }
 
     /**
-     * @return array<int, array{label: string, href?: string, color?: string|null}>
+     * @return array<int, array{label: string, href?: string, color?: string}>
      */
     private function buildTaxonomyTags(int $postId, string $postType): array
     {
-        $selected = $this->getSelectedTaxonomies($postType);
+        $selected = SingularTaxonomySettings::getSelectedTaxonomies($postType);
         if ($selected === []) {
             return [];
         }
 
         $tags = [];
+
         foreach (get_object_taxonomies($postType, 'objects') as $taxonomy) {
             if (!in_array($taxonomy->name, $selected, true)) {
                 continue;
@@ -68,42 +66,23 @@ class TaxonomyTaglist
             }
 
             foreach ($terms as $term) {
-                $tags[] = [
-                    'label' => $term->name,
-                    'href' => $this->getTermHref($term),
-                    'color' => $this->getTermColor($term),
-                ];
+                $tag = ['label' => $term->name];
+                $href = $this->getTermHref($term);
+                $color = $this->getTermColor($term);
+
+                if ($href !== null) {
+                    $tag['href'] = $href;
+                }
+
+                if ($color !== null) {
+                    $tag['color'] = $color;
+                }
+
+                $tags[] = $tag;
             }
         }
 
         return $tags;
-    }
-
-    private function getTaxonomyPlacement(string $postType): string
-    {
-        $placement = get_theme_mod(
-            'municipio_customizer_panel_content_types_' . $postType . '_taxonomy_placement'
-        );
-
-        return is_string($placement) && $placement !== ''
-            ? $placement
-            : self::PLACEMENT_UNDER_HEADER;
-    }
-
-    /**
-     * @return string[]
-     */
-    private function getSelectedTaxonomies(string $postType): array
-    {
-        $selected = get_theme_mod(
-            'municipio_customizer_panel_content_types_' . $postType . '_taxonomies'
-        );
-
-        if (is_array($selected) && $selected !== []) {
-            return array_values(array_filter($selected, 'is_string'));
-        }
-
-        return [];
     }
 
     private function getTermHref(\WP_Term $term): ?string
@@ -116,17 +95,45 @@ class TaxonomyTaglist
         return null;
     }
 
+    /**
+     * Term ACF `colour` (Municipio core field), sanitized to a CSS hex value.
+     */
     private function getTermColor(\WP_Term $term): ?string
     {
+        $color = null;
+
         if (function_exists('get_field')) {
-            $color = get_field('colour', $term->taxonomy . '_' . $term->term_id);
-            if (is_string($color) && $color !== '') {
-                return $color;
+            $fromAcf = get_field('colour', 'term_' . $term->term_id);
+            if (!is_string($fromAcf) || $fromAcf === '') {
+                $fromAcf = get_field('colour', $term->taxonomy . '_' . $term->term_id);
+            }
+
+            if (is_string($fromAcf) && $fromAcf !== '') {
+                $color = $fromAcf;
             }
         }
 
-        $meta = get_term_meta($term->term_id, 'colour', true);
+        if ($color === null) {
+            $meta = get_term_meta($term->term_id, 'colour', true);
+            if (is_string($meta) && $meta !== '') {
+                $color = $meta;
+            }
+        }
 
-        return is_string($meta) && $meta !== '' ? $meta : null;
+        if (is_string($color) && $color !== '' && !str_starts_with($color, '#')) {
+            $color = '#' . $color;
+        }
+
+        $filtered = apply_filters('Municipio/getTermColour', $color, $term, $term->taxonomy);
+
+        if (!is_string($filtered) || $filtered === '') {
+            return null;
+        }
+
+        if (!preg_match('/^#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/', $filtered)) {
+            return null;
+        }
+
+        return $filtered;
     }
 }

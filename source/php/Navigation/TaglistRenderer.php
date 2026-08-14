@@ -3,12 +3,12 @@
 namespace EslovCustomisation\Navigation;
 
 /**
- * Renders taxonomy pills using component-library c-tags__tag markup (replaces LTS mxui.taglist).
+ * Renders singular taxonomy chips (LTS mxui.taglist appearance).
  */
 class TaglistRenderer
 {
     /**
-     * @param array<int, array{label: string, href?: string, color?: string|null}> $tags
+     * @param array<int, array{label: string, href?: string, color?: string}> $tags
      */
     public static function render(array $tags): void
     {
