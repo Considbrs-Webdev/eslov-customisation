@@ -34,6 +34,8 @@ class App
             AcfFields\ModNavigationFields::class,
             AcfFields\ModPostsFilteringFields::class,
             AcfFields\PageSectionStartField::class,
+            AcfFields\TermRedirectToField::class,
+            Customisations\SingularTaxonomyCustomizer::class,
             Customisations\ModPostsTaxonomyFiltering::class,
             Customisations\ModPostsHideTermIcons::class,
             Customisations\ChildPageLinksBelowTitle::class,
