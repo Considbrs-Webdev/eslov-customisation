@@ -20,7 +20,7 @@ class Config
         load_plugin_textdomain(
             'eslov-customisation',
             false,
-            dirname(dirname(dirname(__DIR__))) . '/languages'
+            dirname(plugin_basename(ESLOV_CUSTOMISATION_PATH . 'eslov-customisation.php')) . '/languages'
         );
     }
 }
