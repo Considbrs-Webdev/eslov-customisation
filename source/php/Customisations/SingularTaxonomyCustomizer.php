@@ -96,11 +96,16 @@ class SingularTaxonomyCustomizer
     public function enqueueControlScript(): void
     {
         $script = <<<'JS'
-(function () {
-    wp.customize.control.each(function (control) {
-        if (control.params.type !== 'eslov_taxonomy_checklist') {
+(function (api, $) {
+    function bindChecklist(control) {
+        if (!control || control.params.type !== 'eslov_taxonomy_checklist' || !control.container) {
             return;
         }
+
+        if (control.container.data('eslovChecklistBound')) {
+            return;
+        }
+        control.container.data('eslovChecklistBound', true);
 
         control.container.on('change', 'input[type="checkbox"]', function () {
             var values = [];
@@ -109,8 +114,13 @@ class SingularTaxonomyCustomizer
             });
             control.setting.set(values);
         });
+    }
+
+    api.bind('ready', function () {
+        api.control.each(bindChecklist);
+        api.control.bind('add', bindChecklist);
     });
-}());
+}(wp.customize, jQuery));
 JS;
 
         wp_add_inline_script('customize-controls', $script);
