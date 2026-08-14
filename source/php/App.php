@@ -31,6 +31,8 @@ class App
             Customisations\ManualInputLinkNormalize::class,
             Customisations\CustomerFeedback::class,
             Admin\CustomerFeedbackSettings::class,
+            AcfFields\BrandPaletteFields::class,
+            Customisations\BrandPaletteOverride::class,
             AcfFields\ModNavigationFields::class,
             AcfFields\ModPostsFilteringFields::class,
             AcfFields\PageSectionStartField::class,
