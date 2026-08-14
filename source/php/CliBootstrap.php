@@ -45,6 +45,10 @@ class CliBootstrap
             'eslov migrate one-page-show-title',
             Cli\Migrate\OnePageShowTitleCommand::class
         );
+        \WP_CLI::add_command(
+            'eslov migrate split-section-wysiwyg',
+            Cli\Migrate\SplitSectionWysiwygCommand::class
+        );
         // \WP_CLI::add_command('eslov migrate meta-keys', Cli\Migrate\MetaKeysCommand::class);
     }
 }
