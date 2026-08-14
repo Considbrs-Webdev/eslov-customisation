@@ -1,0 +1,282 @@
+# Copyright (C) 2026 Municipio
+# This file is distributed under the same license as the Eslöv Customisation plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: Eslöv Customisation 0.1.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/eslov-customisation\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-08-14T09:09:55+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: eslov-customisation\n"
+
+#. Plugin Name of the plugin
+#: eslov-customisation.php
+msgid "Eslöv Customisation"
+msgstr ""
+
+#. Description of the plugin
+#: eslov-customisation.php
+msgid "DB migration CLI and runtime shims for Eslöv Municipio deployment"
+msgstr ""
+
+#. Author of the plugin
+#: eslov-customisation.php
+msgid "Municipio"
+msgstr ""
+
+#: source/php/AcfFields/ModNavigationFields.php:24
+msgid "Navigation module"
+msgstr ""
+
+#: source/php/AcfFields/ModNavigationFields.php:46
+msgid "Format"
+msgstr ""
+
+#: source/php/AcfFields/ModNavigationFields.php:52
+msgid "List"
+msgstr ""
+
+#: source/php/AcfFields/ModNavigationFields.php:53
+msgid "Grid"
+msgstr ""
+
+#: source/php/AcfFields/ModNavigationFields.php:54
+msgid "Bar"
+msgstr ""
+
+#: source/php/AcfFields/ModNavigationFields.php:55
+msgid "Tree"
+msgstr ""
+
+#: source/php/AcfFields/ModNavigationFields.php:56
+msgid "Cards"
+msgstr ""
+
+#: source/php/AcfFields/ModNavigationFields.php:57
+msgid "Buttons"
+msgstr ""
+
+#: source/php/AcfFields/ModNavigationFields.php:58
+msgid "Inline"
+msgstr ""
+
+#: source/php/AcfFields/ModNavigationFields.php:63
+msgid "Source"
+msgstr ""
+
+#: source/php/AcfFields/ModNavigationFields.php:68
+msgid "Child pages"
+msgstr ""
+
+#: source/php/AcfFields/ModNavigationFields.php:69
+msgid "Sibling pages"
+msgstr ""
+
+#: source/php/AcfFields/ModNavigationFields.php:70
+#: source/php/AcfFields/ModNavigationFields.php:76
+msgid "Menu"
+msgstr ""
+
+#: source/php/AcfFields/ModNavigationFields.php:71
+msgid "Manually selected"
+msgstr ""
+
+#: source/php/AcfFields/ModNavigationFields.php:94
+msgid "Items"
+msgstr ""
+
+#: source/php/AcfFields/ModNavigationFields.php:109
+msgid "Link"
+msgstr ""
+
+#: source/php/AcfFields/ModNavigationFields.php:116
+msgid "Color"
+msgstr ""
+
+#: source/php/AcfFields/ModNavigationFields.php:131
+msgid "Variant"
+msgstr ""
+
+#: source/php/AcfFields/ModNavigationFields.php:135
+msgid "Primary"
+msgstr ""
+
+#: source/php/AcfFields/ModNavigationFields.php:136
+msgid "Secondary"
+msgstr ""
+
+#: source/php/AcfFields/ModNavigationFields.php:137
+msgid "Default"
+msgstr ""
+
+#: source/php/AcfFields/ModNavigationFields.php:152
+msgid "Icon"
+msgstr ""
+
+#: source/php/AcfFields/ModNavigationFields.php:169
+msgid "Display this module even when there are no items"
+msgstr ""
+
+#: source/php/AcfFields/ModNavigationFields.php:177
+msgid "Message to display when there are no items"
+msgstr ""
+
+#: source/php/AcfFields/ModPostsFilteringFields.php:49
+msgid "Taxonomifilter"
+msgstr ""
+
+#: source/php/AcfFields/ModPostsFilteringFields.php:52
+msgid "Endast inlägg som uppfyller alla dessa villkor kommer visas i modulen."
+msgstr ""
+
+#: source/php/AcfFields/ModPostsFilteringFields.php:75
+msgid "Lägg till filter"
+msgstr ""
+
+#: source/php/AcfFields/ModPostsFilteringFields.php:124
+msgid "Taxonomi"
+msgstr ""
+
+#: source/php/AcfFields/ModPostsFilteringFields.php:135
+msgid "Operator"
+msgstr ""
+
+#: source/php/AcfFields/ModPostsFilteringFields.php:140
+msgid "Är lika med"
+msgstr ""
+
+#: source/php/AcfFields/ModPostsFilteringFields.php:141
+msgid "Är inte lika med"
+msgstr ""
+
+#: source/php/AcfFields/ModPostsFilteringFields.php:152
+msgid "Term"
+msgstr ""
+
+#: source/php/AcfFields/PageSectionStartField.php:41
+msgid "Section start page"
+msgstr ""
+
+#: source/php/AcfFields/PageSectionStartField.php:44
+msgid "Mark this page as a section start page. Child pages will display a link back to this page."
+msgstr ""
+
+#: source/php/AcfFields/SplitSectionWysiwygField.php:51
+msgid "Use rich text editor"
+msgstr ""
+
+#: source/php/AcfFields/SplitSectionWysiwygField.php:63
+msgid "Text"
+msgstr ""
+
+#: source/php/Admin/CustomerFeedbackSettings.php:28
+#: source/php/Admin/CustomerFeedbackSettings.php:29
+msgid "Customer feedback"
+msgstr ""
+
+#: source/php/Admin/CustomerFeedbackSettings.php:62
+msgid "Visibility"
+msgstr ""
+
+#: source/php/Admin/CustomerFeedbackSettings.php:64
+msgid "Control where the customer feedback form should be hidden. Front page and individually excluded singular posts/pages are already handled separately."
+msgstr ""
+
+#: source/php/Admin/CustomerFeedbackSettings.php:74
+msgid "Exclude on post type archives"
+msgstr ""
+
+#: source/php/Admin/CustomerFeedbackSettings.php:82
+msgid "Exclude on other page types"
+msgstr ""
+
+#: source/php/Admin/CustomerFeedbackSettings.php:96
+msgid "Customer feedback settings"
+msgstr ""
+
+#: source/php/Admin/CustomerFeedbackSettings.php:116
+msgid "No public post types with archives were found."
+msgstr ""
+
+#: source/php/Admin/CustomerFeedbackSettings.php:132
+msgid "When checked, the feedback form is hidden on archive pages for the selected post types."
+msgstr ""
+
+#: source/php/Admin/CustomerFeedbackSettings.php:156
+msgid "Use these toggles to hide feedback on common non-singular or utility page types."
+msgstr ""
+
+#: source/php/Admin/CustomerFeedbackSettings.php:271
+msgid "Posts page (blog index)"
+msgstr ""
+
+#: source/php/Admin/CustomerFeedbackSettings.php:272
+msgid "Search results"
+msgstr ""
+
+#: source/php/Admin/CustomerFeedbackSettings.php:273
+msgid "Taxonomy archives"
+msgstr ""
+
+#: source/php/Admin/CustomerFeedbackSettings.php:274
+msgid "Category archives"
+msgstr ""
+
+#: source/php/Admin/CustomerFeedbackSettings.php:275
+msgid "Tag archives"
+msgstr ""
+
+#: source/php/Admin/CustomerFeedbackSettings.php:276
+msgid "Date archives"
+msgstr ""
+
+#: source/php/Admin/CustomerFeedbackSettings.php:277
+msgid "Author archives"
+msgstr ""
+
+#: source/php/Admin/CustomerFeedbackSettings.php:278
+msgid "404 pages"
+msgstr ""
+
+#: source/php/Customisations/BrandedBorder.php:32
+msgid "Ram runt webbplatsen"
+msgstr ""
+
+#: source/php/Customisations/BrandedBorder.php:43
+msgid "Aktivera ram runt webbplatsen"
+msgstr ""
+
+#: source/php/Customisations/BrandedBorder.php:55
+msgid "Färg 1"
+msgstr ""
+
+#: source/php/Customisations/BrandedBorder.php:66
+msgid "Färg 2"
+msgstr ""
+
+#: source/php/Customisations/CustomerFeedback.php:156
+msgid "Customer Feedback"
+msgstr ""
+
+#: source/php/Customisations/CustomerFeedback.php:171
+msgid "Exclude customer feedback form on this page"
+msgstr ""
+
+#: source/php/Modules/Navigation/Navigation.php:15
+msgctxt "Post Type Singular Name"
+msgid "Navigation"
+msgstr ""
+
+#: source/php/Modules/Navigation/Navigation.php:20
+msgctxt "Post Type General Name"
+msgid "Navigation modules"
+msgstr ""
+
+#: source/php/Modules/Navigation/Navigation.php:25
+msgid "Outputs a menu or manually selected links"
+msgstr ""
