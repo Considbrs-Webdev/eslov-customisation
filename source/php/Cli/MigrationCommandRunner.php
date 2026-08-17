@@ -10,6 +10,7 @@ use EslovCustomisation\Cli\Migrate\ModPostsTaxonomyDisplayCommand;
 use EslovCustomisation\Cli\Migrate\ModularityUpgradeCommand;
 use EslovCustomisation\Cli\Migrate\OnePageShowTitleCommand;
 use EslovCustomisation\Cli\Migrate\SectionSpacingCommand;
+use EslovCustomisation\Cli\Migrate\SectionTextAutopCommand;
 use EslovCustomisation\Cli\Migrate\ThemeModsCommand;
 use EslovCustomisation\Cli\Migrate\WidgetsCommand;
 
@@ -27,6 +28,7 @@ class MigrationCommandRunner
         'eslov migrate fonts' => FontsCommand::class,
         'eslov migrate one-page-show-title' => OnePageShowTitleCommand::class,
         'eslov migrate section-spacing' => SectionSpacingCommand::class,
+        'eslov migrate section-text-autop' => SectionTextAutopCommand::class,
     ];
 
     public static function hasRunner(string $command): bool

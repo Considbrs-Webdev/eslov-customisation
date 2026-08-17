@@ -87,6 +87,12 @@ class MigrationRegistry
                 'run_order' => 70,
             ],
             [
+                'command' => 'eslov migrate section-text-autop',
+                'description' => 'Persist <p> in split/featured/card section Text where blank lines were display-only paragraphs.',
+                'status' => 'ready',
+                'run_order' => 75,
+            ],
+            [
                 'command' => 'eslov migrate meta-keys',
                 'description' => 'Rewrite legacy post meta keys',
                 'status' => 'planned',

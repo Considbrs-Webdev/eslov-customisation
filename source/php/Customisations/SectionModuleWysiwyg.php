@@ -2,6 +2,8 @@
 
 namespace EslovCustomisation\Customisations;
 
+use EslovCustomisation\Migration\SectionTextAutopMigrator;
+
 /**
  * Restore the LTS full WYSIWYG editor on Modularity Sections text fields.
  *
@@ -12,6 +14,8 @@ namespace EslovCustomisation\Customisations;
  *
  * Type is only switched in editor/save contexts. Frontend keeps the upstream
  * textarea formatting so stored HTML is not run through acf_the_content/wpautop.
+ * Editor wpautop is off so TinyMCE stores real <p> tags (paired with
+ * `wp eslov migrate section-text-autop` for imported blank-line content).
  */
 class SectionModuleWysiwyg
 {
@@ -26,6 +30,8 @@ class SectionModuleWysiwyg
         add_filter('acf/load_field/key=' . self::SPLIT_FEATURED_TEXT, [$this, 'enableFullWysiwyg']);
         add_filter('acf/load_field/key=' . self::CARD_TEXT, [$this, 'enableFullWysiwyg']);
         add_filter('acf/load_field/key=' . self::FULL_TEXT, [$this, 'enableFullToolbar']);
+        add_filter('acf/format_value/key=' . self::SPLIT_FEATURED_TEXT, [$this, 'formatFrontendParagraphs'], 10, 3);
+        add_filter('acf/format_value/key=' . self::CARD_TEXT, [$this, 'formatFrontendParagraphs'], 10, 3);
     }
 
     /**
@@ -45,8 +51,30 @@ class SectionModuleWysiwyg
         $field['tabs'] = $field['tabs'] ?? 'all';
         $field['media_upload'] = $field['media_upload'] ?? 1;
         $field['delay'] = $field['delay'] ?? 0;
+        $field['wpautop'] = 0;
 
         return $field;
+    }
+
+    /**
+     * Frontend safety net: blank lines still become paragraphs if a save
+     * did not persist <p> (Text tab). Skip when there is no blank line so
+     * list/more HTML is not rewritten.
+     *
+     * @param mixed $value
+     * @param int|string $postId
+     * @param array<string, mixed> $field
+     * @return mixed
+     */
+    public function formatFrontendParagraphs(mixed $value, mixed $postId, array $field): mixed
+    {
+        if ($this->isEditingContext() || !is_string($value) || $value === '') {
+            return $value;
+        }
+
+        $transformed = SectionTextAutopMigrator::transform($value);
+
+        return $transformed ?? $value;
     }
 
     /**
