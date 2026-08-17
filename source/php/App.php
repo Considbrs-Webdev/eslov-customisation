@@ -45,6 +45,7 @@ class App
             Customisations\TaxonomyTaglist::class,
             Customisations\TimelineActiveStep::class,
             Customisations\SectionModuleWysiwyg::class,
+            Customisations\SectionModuleGap::class,
         ];
 
         foreach ($classes as $class) {

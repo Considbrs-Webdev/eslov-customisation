@@ -9,6 +9,7 @@ use EslovCustomisation\Cli\Migrate\ModPostsMixedDisplayCommand;
 use EslovCustomisation\Cli\Migrate\ModPostsTaxonomyDisplayCommand;
 use EslovCustomisation\Cli\Migrate\ModularityUpgradeCommand;
 use EslovCustomisation\Cli\Migrate\OnePageShowTitleCommand;
+use EslovCustomisation\Cli\Migrate\SectionSpacingCommand;
 use EslovCustomisation\Cli\Migrate\ThemeModsCommand;
 use EslovCustomisation\Cli\Migrate\WidgetsCommand;
 
@@ -25,6 +26,7 @@ class MigrationCommandRunner
         'eslov migrate design-tokens' => DesignTokensCommand::class,
         'eslov migrate fonts' => FontsCommand::class,
         'eslov migrate one-page-show-title' => OnePageShowTitleCommand::class,
+        'eslov migrate section-spacing' => SectionSpacingCommand::class,
     ];
 
     public static function hasRunner(string $command): bool
