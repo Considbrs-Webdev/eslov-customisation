@@ -49,6 +49,10 @@ class CliBootstrap
             'eslov migrate section-spacing',
             Cli\Migrate\SectionSpacingCommand::class
         );
+        \WP_CLI::add_command(
+            'eslov migrate section-text-autop',
+            Cli\Migrate\SectionTextAutopCommand::class
+        );
         // \WP_CLI::add_command('eslov migrate meta-keys', Cli\Migrate\MetaKeysCommand::class);
     }
 }
