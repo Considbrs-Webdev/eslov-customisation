@@ -1,0 +1,30 @@
+/**
+ * Municipio section inner padding + LTS module-to-module gap.
+ *
+ * Split/featured padding lives on `.c-segment__padder`; Segment.php still
+ * toggles `u-padding__*--0` on the root. Card inner padding is on
+ * `.c-card__paint-container`. LTS "Remove spacing below" used a
+ * negative wrapper margin (`-u-margin-after--grid-gap`) that the new
+ * styleguide does not ship.
+ */
+@layer theme {
+  .c-segment.u-padding__top--0 .c-segment__padder {
+    padding-top: 0;
+  }
+
+  .c-segment.u-padding__bottom--0 .c-segment__padder {
+    padding-bottom: 0;
+  }
+
+  .c-segment.u-padding__top--0 .c-segment__content-card .c-card__paint-container {
+    padding-top: 0;
+  }
+
+  .c-segment.u-padding__bottom--0 .c-segment__content-card .c-card__paint-container {
+    padding-bottom: 0;
+  }
+
+  .-u-margin-after--grid-gap {
+    margin-block-end: calc(var(--grid-gap, var(--o-grid-gap, 2rem)) * -1) !important;
+  }
+}

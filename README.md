@@ -35,6 +35,7 @@ ddev wp eslov migrate modules --post-id=123
 ddev wp eslov migrate options
 ddev wp eslov migrate fonts --dry-run
 ddev wp eslov migrate fonts --network
+ddev wp eslov migrate section-spacing --dry-run --network
 ```
 
 ## Adding a migration
