@@ -1,0 +1,64 @@
+{{--
+    This is the main file for grid layout. Everything in here is full width.
+    Go to layout.blade.php to see the main content area.
+--}}
+<!DOCTYPE html>
+<html {!! $languageAttributes !!}>
+
+@include('templates.sections.head')
+
+{{-- Content --}}
+@section('body-content')
+    <div class="site-wrapper u-padding__bottom--4">
+        @include('templates.sections.banner-notices', [
+            'classes' => []
+        ])
+
+        {{-- Site banner --}}
+        @include('templates.sections.site-banner', [
+            'classes' => []
+        ])
+
+        {{-- Site header --}}
+        @include('templates.sections.site-header', [
+            'classes' => []
+        ])
+
+        {{-- Hero area and top sidebar --}}
+        @section('hero-top-sidebar')
+            @includeIf('partials.hero', ['classes' => [], 'sliderAreaClasses' => [], 'quicklinksPlacement' => $quicklinksPlacement ?? null])
+            @includeIf('partials.sidebar', ['id' => 'top-sidebar', 'classes' => []])
+        @show
+
+        {{-- Layout --}}
+        @include('templates.sections.grid.layout', $layoutData ?? [])
+    </div>
+
+    @include('templates.sections.bottom-sidebar')
+
+    @section('footer')
+        @includeIf('partials.footer')
+    @show
+
+    {{-- Floating menu --}}
+    @include('partials.navigation.floating')
+
+    {{-- Toast notices --}}
+    @include('templates.sections.toast-notices')
+
+    {{-- Wordpress required call to wp_footer() --}}
+    {!! $wpFooter !!}
+@stop
+
+
+{{-- Including body --}}
+@include('templates.sections.body', [
+    'classes' => array_merge(
+        explode(' ', $bodyClass),
+        [
+            'o-layout-grid',
+            'o-layout-grid--cols-1',
+        ]
+    ),
+])
+</html>
