@@ -5,6 +5,10 @@ namespace EslovCustomisation\Migration;
 /**
  * Write Municipio Spacing Top/Bottom defaults where LTS never stored the keys.
  *
+ * Updates by ACF field key (not field name) because spacing_top / spacing_bottom
+ * are registered separately on split/featured, full, and card. Also repairs a
+ * wrong `_spacing_*` reference without changing an already-saved 0/1.
+ *
  * Does not read or change module_layout_remove_spacing_below (wrapper gap).
  */
 class SectionSpacingMigrator
@@ -73,7 +77,7 @@ class SectionSpacingMigrator
 
         if ($result->migrated > 0) {
             $result->addMessage(sprintf(
-                '%s spacing_top/spacing_bottom=1 on %d section module(s).',
+                '%s spacing_top/spacing_bottom defaults or ACF field-key refs on %d section module(s).',
                 $this->dryRun ? 'Would set' : 'Set',
                 $result->migrated,
             ));
@@ -115,21 +119,45 @@ class SectionSpacingMigrator
     private function ensureDefault(int $postId, string $metaKey, string $fieldKey): bool
     {
         $current = get_post_meta($postId, $metaKey, true);
+        $currentKey = (string) get_post_meta($postId, '_' . $metaKey, true);
+        $hasValue = $this->hasExplicitValue($current);
+        $keyMatches = $currentKey === $fieldKey;
 
-        if ($this->hasExplicitValue($current) && !$this->force) {
+        if ($hasValue && $keyMatches && !$this->force) {
             return false;
         }
 
+        $value = ($this->force || !$hasValue) ? 1 : $this->toStoredInt($current);
+
         if (!$this->dryRun) {
-            if (function_exists('update_field')) {
-                update_field($metaKey, 1, $postId);
-            } else {
-                update_post_meta($postId, $metaKey, '1');
-                update_post_meta($postId, '_' . $metaKey, $fieldKey);
-            }
+            $this->writeField($postId, $metaKey, $fieldKey, $value);
         }
 
         return true;
+    }
+
+    private function writeField(int $postId, string $metaKey, string $fieldKey, int $value): void
+    {
+        // Must use the field key: spacing_top / spacing_bottom are registered
+        // three times (split/featured, full, card). update_field($name) resolves
+        // the first match (split) and stores the wrong _spacing_* reference.
+        if (function_exists('update_field')) {
+            update_field($fieldKey, $value, $postId);
+
+            return;
+        }
+
+        update_post_meta($postId, $metaKey, (string) $value);
+        update_post_meta($postId, '_' . $metaKey, $fieldKey);
+    }
+
+    private function toStoredInt(mixed $value): int
+    {
+        if ($value === '0' || $value === 0 || $value === false) {
+            return 0;
+        }
+
+        return 1;
     }
 
     private function hasExplicitValue(mixed $value): bool

@@ -82,7 +82,7 @@ class MigrationRegistry
             ],
             [
                 'command' => 'eslov migrate section-spacing',
-                'description' => 'Set missing section Spacing Top/Bottom meta to Municipio default (on). Does not touch LTS module-gap meta.',
+                'description' => 'Set missing section Spacing Top/Bottom meta to Municipio default (on); repair ACF field-key refs. Does not touch LTS module-gap meta.',
                 'status' => 'ready',
                 'run_order' => 70,
             ],
