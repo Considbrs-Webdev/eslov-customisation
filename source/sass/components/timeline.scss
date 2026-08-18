@@ -1,7 +1,9 @@
 /**
  * Dated timelines reuse c-timeline--sequential layout. Stack @icon on the
- * marker circle (styleguide draws the circle as ::before). Passed steps get
- * the same accent fill as active so the check contrasts.
+ * marker circle (styleguide draws the circle as ::before).
+ *
+ * Passed stays on the default muted marker so current (accent + play) reads
+ * as “you are here”. Check uses surface contrast so it stays visible on gray.
  */
 @layer theme {
   .c-timeline .c-timeline__marker {
@@ -17,12 +19,15 @@
       position: relative;
       z-index: 1;
       font-size: calc(var(--c-timeline--marker-size) * 0.5);
-      color: var(--c-timeline--accent-contrast, #fff);
       line-height: 1;
     }
   }
 
-  .c-timeline .c-timeline__event--passed .c-timeline__marker::before {
-    background-color: var(--c-timeline--accent);
+  .c-timeline .c-timeline__event--passed .c-timeline__marker .c-icon {
+    color: var(--c-timeline--date-color, var(--color--surface-contrast, #1d1d1d));
+  }
+
+  .c-timeline .c-timeline__event--active .c-timeline__marker .c-icon {
+    color: var(--c-timeline--accent-contrast, #fff);
   }
 }
