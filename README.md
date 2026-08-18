@@ -83,6 +83,7 @@ Custom Modularity modules register in `eslov-customisation.php` (`init` priority
 
 - **Theme:** `views/partials/` — registered on `Municipio/viewPaths` via `Customisations\Templates`.
 - **Modules:** `source/php/Modules/{Name}/views/` — registered on `/Modularity/externalViewPath`.
+- **Components:** `views/components/` — registered on `ComponentLibrary/ViewPaths` via `Customisations\TimelineActiveStep` (dated `@timeline` uses sequential layout + card `meta` for dates).
 
 ## Assets (Vite)
 

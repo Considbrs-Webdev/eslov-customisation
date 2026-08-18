@@ -3,7 +3,8 @@
 namespace EslovCustomisation\Customisations;
 
 /**
- * Auto-highlight the current timeline step and mark passed steps with a checkmark.
+ * Dated timelines: compact one-sided layout (reuse sequential CSS) plus
+ * current/passed step state. Sequential mode is left to upstream.
  */
 class TimelineActiveStep
 {
@@ -30,6 +31,8 @@ class TimelineActiveStep
      */
     public function applyStepStates(array $data): array
     {
+        $data = $this->applyDatedCompactLayout($data);
+
         if (!empty($data['sequential'])) {
             return $data;
         }
@@ -85,6 +88,28 @@ class TimelineActiveStep
                 $data['events'][$index]['passed_step'] = true;
             }
         }
+
+        return $data;
+    }
+
+    /**
+     * Reuse styleguide sequential layout CSS without turning sequential mode on
+     * (dates still belong on the card).
+     *
+     * @param array<string, mixed> $data
+     * @return array<string, mixed>
+     */
+    private function applyDatedCompactLayout(array $data): array
+    {
+        if (!empty($data['sequential'])) {
+            return $data;
+        }
+
+        if (!isset($data['classList']) || !is_array($data['classList'])) {
+            $data['classList'] = [];
+        }
+
+        $data['classList'][] = 'c-timeline--sequential';
 
         return $data;
     }

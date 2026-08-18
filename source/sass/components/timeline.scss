@@ -1,16 +1,28 @@
-.c-timeline .c-timeline__event--passed .c-timeline__marker {
-  position: relative;
-}
+/**
+ * Dated timelines reuse c-timeline--sequential layout. Stack @icon on the
+ * marker circle (styleguide draws the circle as ::before). Passed steps get
+ * the same accent fill as active so the check contrasts.
+ */
+@layer theme {
+  .c-timeline .c-timeline__marker {
+    display: grid;
+    place-items: center;
 
-.c-timeline .c-timeline__event--passed .c-timeline__marker::after {
-  border: solid var(--c-timeline--accent-contrast, #fff);
-  border-width: 0 2px 2px 0;
-  box-sizing: border-box;
-  content: "";
-  height: calc(var(--c-timeline--marker-size) * 0.45);
-  left: 50%;
-  position: absolute;
-  top: 50%;
-  transform: translate(-50%, -65%) rotate(45deg);
-  width: calc(var(--c-timeline--marker-size) * 0.25);
+    &::before,
+    .c-icon {
+      grid-area: 1 / 1;
+    }
+
+    .c-icon {
+      position: relative;
+      z-index: 1;
+      font-size: calc(var(--c-timeline--marker-size) * 0.5);
+      color: var(--c-timeline--accent-contrast, #fff);
+      line-height: 1;
+    }
+  }
+
+  .c-timeline .c-timeline__event--passed .c-timeline__marker::before {
+    background-color: var(--c-timeline--accent);
+  }
 }
