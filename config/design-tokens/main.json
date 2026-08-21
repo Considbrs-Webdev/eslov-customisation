@@ -1,0 +1,51 @@
+{
+    "token": {
+        "--color--background": "#f3f3f3",
+        "--color--surface-contrast": "#000000",
+        "--color--background-contrast": "#000000",
+        "--color--primary": "#5b2c82",
+        "--color--secondary": "#eae1f0",
+        "--color--secondary-contrast": "#000000",
+        "--color--alpha": "rgba(0,0,0,0.55)",
+        "--font-family-base": "Montserrat",
+        "--font-family-heading": "Montserrat",
+        "--shadow-color": "rgba(0, 0, 0, 0.15)",
+        "--shadow-amount": "1",
+        "--font-weight-heading": "600",
+        "--font-weight-normal": "400",
+        "--font-weight-bold": "700",
+        "--font-weight-medium": "700",
+        "--line-height-base": "1.5",
+        "--line-height-heading": "1.33",
+        "--letter-spacing-base": "0",
+        "--letter-spacing-heading": "0",
+        "--font-size-scale-ratio": "1.125",
+        "--c-search-form-border-radius": "100px",
+        "--color--primary-contrast": "#ffffff"
+    },
+    "component": {
+        "__general__": {
+            "footer": {
+                "--c-footer--color--surface": "#2d2d2d",
+                "--c-footer--color--surface-contrast": "#ffffff",
+                "--c-link--color--background-contrast": "#ffffff",
+                "--inherit-color-contrast": "#ffffff"
+            },
+            "header": {
+                "--c-header--color": "#ffffff",
+                "--c-header--color--primary-contrast": "#ffffff"
+            },
+            "field": {
+                "--c-field--color--surface-alt": "#ffffff",
+                "--c-field--border-radius": "0"
+            },
+            "button": {
+                "--c-button--color--surface-contrast": "#000000",
+                "--c-button--color--primary": "#5b2c82",
+                "--c-button--color--primary-contrast": "#ffffff",
+                "--c-button--font-weight-medium": "700",
+                "--c-button--color--surface-alt": "#ffffff"
+            }
+        }
+    }
+}

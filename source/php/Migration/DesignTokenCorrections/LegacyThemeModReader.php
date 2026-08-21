@@ -96,6 +96,67 @@ class LegacyThemeModReader
         return self::colorModField('color_palette_primary', 'contrasting');
     }
 
+    public static function paletteSecondaryBase(): ?string
+    {
+        return self::colorModField('color_palette_secondary', 'base');
+    }
+
+    /**
+     * LTS Kirki header background modifier. Empty string means surface (default).
+     */
+    public static function headerBackground(): ?string
+    {
+        $value = get_theme_mod('header_background');
+
+        if ($value === false || $value === null) {
+            return null;
+        }
+
+        return is_string($value) ? $value : null;
+    }
+
+    /**
+     * Orphaned LTS Kirki header text modifier (text-black, text-white, etc.).
+     */
+    public static function headerColor(): ?string
+    {
+        $value = get_theme_mod('header_color');
+
+        if ($value === false || $value === null || $value === '') {
+            return null;
+        }
+
+        return is_string($value) ? $value : null;
+    }
+
+    public static function normalizeHexColor(?string $color): ?string
+    {
+        if ($color === null) {
+            return null;
+        }
+
+        $normalized = strtolower(trim($color));
+
+        if ($normalized === '') {
+            return null;
+        }
+
+        return match ($normalized) {
+            '#fff' => '#ffffff',
+            '#000' => '#000000',
+            default => $normalized,
+        };
+    }
+
+    public static function colorsMatch(?string $a, ?string $b): bool
+    {
+        if ($a === null || $b === null) {
+            return false;
+        }
+
+        return self::normalizeHexColor($a) === self::normalizeHexColor($b);
+    }
+
     public static function navPrimaryContrastingColor(): ?string
     {
         return self::navColorContrasting('nav_h_color_primary');

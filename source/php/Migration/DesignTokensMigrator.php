@@ -9,6 +9,7 @@ use EslovCustomisation\Migration\DesignTokenCorrections\TypographyTokensCorrecti
 use EslovCustomisation\Migration\DesignTokenCorrections\DrawerLinkContrastCorrection;
 use EslovCustomisation\Migration\DesignTokenCorrections\FooterLinkContrastCorrection;
 use EslovCustomisation\Migration\DesignTokenCorrections\PrimaryPaletteCorrection;
+use EslovCustomisation\Migration\DesignTokenCorrections\HeaderTextColorCorrection;
 use EslovCustomisation\Migration\DesignTokenCorrections\FieldBorderRadiusCorrection;
 use EslovCustomisation\Migration\DesignTokenCorrections\SearchFormShapeCorrection;
 
@@ -28,6 +29,7 @@ class DesignTokensMigrator
             new SearchFormShapeCorrection(),
             new FieldBorderRadiusCorrection(),
             new PrimaryPaletteCorrection(),
+            new HeaderTextColorCorrection(),
             new DrawerLinkContrastCorrection(),
             new FooterLinkContrastCorrection(),
             new ButtonDefaultSurfaceCorrection(),
