@@ -1,0 +1,64 @@
+{
+    "token": {
+        "--font-size-scale-ratio": "1.125",
+        "--color--background": "#fffef5",
+        "--color--surface-contrast": "#000000",
+        "--color--background-contrast": "#000000",
+        "--color--primary": "#470d4d",
+        "--color--primary-contrast": "#ffffff",
+        "--color--secondary": "#00f5fa",
+        "--color--secondary-contrast": "#000000",
+        "--color--surface": "#ffedeb",
+        "--color--alpha": "rgba(0, 0, 0, 0.26)",
+        "--color--alpha-contrast": "#ffffff",
+        "--font-family-base": "tisa-pro-regular, sans-serif",
+        "--base-font-size": "18px",
+        "--font-family-heading": "tisa-pro-regular, sans-serif",
+        "--shadow-color": "rgba(0, 0, 0, 0.34)",
+        "--shadow-amount": "1",
+        "--border-radius": 0,
+        "--container-width": "1288px",
+        "--font-weight-heading": "700",
+        "--font-weight-normal": "400",
+        "--font-weight-bold": "700",
+        "--font-weight-medium": "700",
+        "--line-height-base": "1.5",
+        "--line-height-heading": "1.33",
+        "--letter-spacing-base": "0",
+        "--letter-spacing-heading": "0"
+    },
+    "component": {
+        "__general__": {
+            "footer": {
+                "--c-footer--color--surface": "#2e2e2e",
+                "--c-footer--color--surface-contrast": "#ffffff",
+                "--c-footer--home-link-height-multiplier": 2,
+                "--c-link--color--background-contrast": "#ffffff",
+                "--inherit-color-contrast": "#ffffff"
+            },
+            "header": {
+                "--c-header--logotype-height-multiplier": 3.1666666666666665,
+                "--c-header--color--primary-contrast": "#ffffff",
+                "--c-header--color": "#000000"
+            },
+            "field": {
+                "--c-field--color--surface-alt": "#ffffff",
+                "--c-field--border-radius": "0"
+            },
+            "card": {
+                "--c-card--border-width": 0
+            },
+            "button": {
+                "--c-button--color--surface-alt": "#ffffff",
+                "--c-button--color--surface-contrast": "#000000",
+                "--c-button--color--primary": "#470d4d",
+                "--c-button--color--primary-contrast": "#ffffff",
+                "--c-button--font-weight-medium": "700"
+            },
+            "brand": {
+                "--c-brand--font-size-multiplier": 0.7142857142857143,
+                "--c-brand--color--primary": "#ffffff"
+            }
+        }
+    }
+}

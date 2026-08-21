@@ -1,0 +1,37 @@
+{
+    "token": {
+        "--font-weight-heading": "600",
+        "--font-weight-medium": "700",
+        "--line-height-base": "1.5",
+        "--font-family-heading": "Montserrat",
+        "--font-size-scale-ratio": "1.125",
+        "--c-search-form-border-radius": "100px",
+        "--color--primary-contrast": "#ffffff",
+        "--font-family-base": "\"Montserrat\", sans-serif",
+        "--font-weight-normal": "400",
+        "--font-weight-bold": "700",
+        "--line-height-heading": "1.33",
+        "--letter-spacing-base": "0",
+        "--letter-spacing-heading": "0"
+    },
+    "component": {
+        "__general__": {
+            "button": {
+                "--c-button--font-weight-medium": "700",
+                "--c-button--color--surface-alt": "#ffffff",
+                "--c-button--color--primary": "#174338",
+                "--c-button--color--primary-contrast": "#ffffff"
+            },
+            "field": {
+                "--c-field--border-radius": "0"
+            },
+            "header": {
+                "--c-header--color--primary-contrast": "#ffffff"
+            },
+            "footer": {
+                "--c-link--color--background-contrast": "#ffffff",
+                "--inherit-color-contrast": "#ffffff"
+            }
+        }
+    }
+}

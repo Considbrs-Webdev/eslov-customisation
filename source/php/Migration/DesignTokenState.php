@@ -48,6 +48,34 @@ class DesignTokenState
     }
 
     /**
+     * Token/component payload for committed baseline JSON files.
+     *
+     * @return array{token: array<string, mixed>, component: array<string, mixed>}
+     */
+    public function toExportPayload(): array
+    {
+        return [
+            'token' => is_array($this->tokens['token'] ?? null) ? $this->tokens['token'] : [],
+            'component' => is_array($this->tokens['component'] ?? null) ? $this->tokens['component'] : [],
+        ];
+    }
+
+    /**
+     * Pretty-printed baseline JSON (`token` + `component` only).
+     */
+    public function toPrettyJson(): string
+    {
+        $json = wp_json_encode(
+            $this->toExportPayload(),
+            JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE
+        );
+
+        return is_string($json) && $json !== ''
+            ? $json
+            : "{\n    \"token\": {},\n    \"component\": {}\n}";
+    }
+
+    /**
      * @param string[] $path
      */
     public function applyChange(array $path, string $value, string $description): void

@@ -1,0 +1,21 @@
+{
+    "token": {
+        "--font-weight-medium": "700",
+        "--font-family-heading": "Georgia,Times,\"Times New Roman\",serif",
+        "--font-size-scale-ratio": "1.125",
+        "--font-weight-heading": "700",
+        "--font-weight-normal": "400",
+        "--line-height-heading": "1.33",
+        "--letter-spacing-base": "0",
+        "--letter-spacing-heading": "0"
+    },
+    "component": {
+        "__general__": {
+            "button": {
+                "--c-button--font-weight-medium": "700",
+                "--c-button--color--surface-alt": "#ffffff",
+                "--c-button--color--primary": "#000000"
+            }
+        }
+    }
+}
