@@ -8,6 +8,10 @@
   --c-card--inset-padding-x: calc((var(--c-card--space, var(--space))) * var(--base) * 2 * var(--c-card--inset-multiplier));
   --c-card--inset-padding-y: calc(var(--c-card--inset-padding-x) * 0.75);
   --c-card--content-gap: calc((var(--c-card--space, var(--space))) * var(--base) * 0.5 * var(--c-card--inset-multiplier));
+
+  h3 {
+    font-size: 1.313rem;
+  }
 }
 
 @container (min-width: 350px) {
@@ -17,6 +21,7 @@
     --c-card--inset-padding-y: calc(var(--c-card--inset-padding-x) * 0.75);
     --c-card--content-gap: calc((var(--c-card--space, var(--space))) * var(--base) * 0.5 * var(--c-card--inset-multiplier));
   }
+
 }
 
 @container (min-width: 500px) {
@@ -26,4 +31,5 @@
     --c-card--inset-padding-y: calc(var(--c-card--inset-padding-x) * 0.75);
     --c-card--content-gap: calc((var(--c-card--space, var(--space))) * var(--base) * 0.5 * var(--c-card--inset-multiplier));
   }
+
 }
