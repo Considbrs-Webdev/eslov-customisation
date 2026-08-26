@@ -1,6 +1,7 @@
 /**
  * Site-wide CSS overrides — enqueued globally via SiteStyles.php.
  */
+@use 'components/legacy-color-aliases';
 @use 'components/search-forms';
 @use 'components/header-buttons';
 @use 'components/event-cards';

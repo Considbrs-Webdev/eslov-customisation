@@ -1,0 +1,25 @@
+/**
+ * Styleguide `_list.scss` paints `ul li::marker` with the LTS token
+ * `--color-primary` (fallback Helsingborg red `#ae0b05`). Municipio V4.1
+ * renamed that token to `--color--primary`.
+ *
+ * Aliasing the old name to the Design Builder palette is not enough for
+ * lists: primary is a brand colour (on Utveckla it is `#000000`), while
+ * section copy flips between white (`.c-segment--text-light`) and black
+ * (`.c-segment--text-dark`). Markers must follow that text colour, not
+ * the brand token.
+ *
+ * `currentColor` on `::marker` tracks the `li` (inherited from the
+ * segment/article). Nav/menus already use `.unlist` (no marker). Ordered
+ * lists were never given a marker colour by the styleguide, so they
+ * already inherit. Keep the token alias for any other leftover Sass.
+ */
+@layer theme {
+  :root {
+    --color-primary: var(--color--primary);
+  }
+
+  ul li::marker {
+    color: currentColor;
+  }
+}
