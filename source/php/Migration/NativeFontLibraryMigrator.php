@@ -80,6 +80,7 @@ class NativeFontLibraryMigrator
         }
 
         $this->attachGlobalStylesToTheme($result);
+        $this->rewriteFontSourcesToCurrentSite($result);
 
         if ($result->migrated === 0 && $result->skipped === 0 && $result->errors === 0) {
             $result->skipped = 1;
@@ -455,7 +456,7 @@ class NativeFontLibraryMigrator
         }
 
         return [
-            'url' => $this->publicContentUrl((string) $sideloaded['url']),
+            'url' => $this->rewriteFontUrlToCurrentSite((string) $sideloaded['url']),
             'fontFile' => $this->relativeFontsPath((string) $sideloaded['file']),
         ];
     }
@@ -581,7 +582,7 @@ class NativeFontLibraryMigrator
             }
 
             $settings['src'] = array_map(
-                fn (mixed $src): string => is_string($src) ? $this->publicContentUrl($src) : '',
+                fn (mixed $src): string => is_string($src) ? $this->rewriteFontUrlToCurrentSite($src) : '',
                 $this->normalizeSources($settings['src'] ?? []),
             );
             $settings['src'] = array_values(array_filter($settings['src']));
@@ -1055,6 +1056,168 @@ class NativeFontLibraryMigrator
     private function publicContentUrl(string $url): string
     {
         return str_replace('/wp/wp-content/', '/wp-content/', $url);
+    }
+
+    private function rewriteFontUrlToCurrentSite(string $url): string
+    {
+        if ($url === '') {
+            return $url;
+        }
+
+        $normalized = $this->publicContentUrl($url);
+        $path = (string) parse_url($normalized, PHP_URL_PATH);
+
+        if ($path === '' || !str_contains($path, '/wp-content/')) {
+            return $normalized;
+        }
+
+        if (!$this->fontUrlNeedsRewrite($normalized)) {
+            return $normalized;
+        }
+
+        $relative = ltrim(
+            substr($path, (int) strpos($path, '/wp-content/') + strlen('/wp-content/')),
+            '/',
+        );
+
+        return $this->publicContentUrl(content_url($relative));
+    }
+
+    private function fontUrlNeedsRewrite(string $url): bool
+    {
+        $path = (string) parse_url($url, PHP_URL_PATH);
+
+        if ($path === '' || !str_contains($path, '/wp-content/uploads/')) {
+            return false;
+        }
+
+        $currentHost = (string) parse_url(home_url(), PHP_URL_HOST);
+        $sourceHost = (string) parse_url($url, PHP_URL_HOST);
+
+        return $sourceHost !== '' && $sourceHost !== $currentHost;
+    }
+
+    private function rewriteFontSourcesToCurrentSite(MigrationResult $result): void
+    {
+        $this->rewriteFontFacePostSources($result);
+        $this->rewriteGlobalStylesFontSources($result);
+    }
+
+    private function rewriteFontFacePostSources(MigrationResult $result): void
+    {
+        foreach (get_posts([
+            'post_type' => 'wp_font_face',
+            'post_status' => 'publish',
+            'posts_per_page' => -1,
+        ]) as $face) {
+            if (!$face instanceof \WP_Post) {
+                continue;
+            }
+
+            $settings = json_decode((string) $face->post_content, true);
+
+            if (!is_array($settings)) {
+                continue;
+            }
+
+            $sources = $this->normalizeSources($settings['src'] ?? []);
+            $rewritten = array_map(
+                fn (string $source): string => $this->rewriteFontUrlToCurrentSite($source),
+                $sources,
+            );
+
+            if ($rewritten === $sources) {
+                continue;
+            }
+
+            $settings['src'] = $rewritten;
+
+            $result->addMessage(sprintf(
+                '%s rewrite wp_font_face %d src to current site host.',
+                $this->dryRun ? 'Would' : 'Did',
+                (int) $face->ID,
+            ));
+
+            if (!$this->dryRun) {
+                wp_update_post([
+                    'ID' => (int) $face->ID,
+                    'post_content' => wp_slash(wp_json_encode($settings) ?: '{}'),
+                ]);
+            }
+
+            $result->migrated++;
+        }
+    }
+
+    private function rewriteGlobalStylesFontSources(MigrationResult $result): void
+    {
+        $stylesheet = get_stylesheet();
+        $postId = $this->findGlobalStylesPostIdByTheme($stylesheet)
+            ?? $this->findGlobalStylesPostIdByPath($stylesheet);
+
+        if ($postId === null) {
+            return;
+        }
+
+        $post = get_post($postId);
+
+        if (!$post instanceof \WP_Post) {
+            return;
+        }
+
+        $data = $this->decodeGlobalStyles((string) $post->post_content);
+        $custom = $data['settings']['typography']['fontFamilies']['custom'] ?? [];
+        $custom = is_array($custom) ? array_values(array_filter($custom, 'is_array')) : [];
+        $changed = false;
+
+        foreach ($custom as $familyIndex => $family) {
+            $faces = $family['fontFace'] ?? [];
+
+            if (!is_array($faces)) {
+                continue;
+            }
+
+            foreach ($faces as $faceIndex => $face) {
+                if (!is_array($face)) {
+                    continue;
+                }
+
+                $sources = $this->normalizeSources($face['src'] ?? []);
+                $rewritten = array_map(
+                    fn (string $source): string => $this->rewriteFontUrlToCurrentSite($source),
+                    $sources,
+                );
+
+                if ($rewritten === $sources) {
+                    continue;
+                }
+
+                $custom[$familyIndex]['fontFace'][$faceIndex]['src'] = $rewritten;
+                $changed = true;
+            }
+        }
+
+        if (!$changed) {
+            return;
+        }
+
+        $data['settings']['typography']['fontFamilies']['custom'] = $custom;
+
+        $result->addMessage(sprintf(
+            '%s rewrite Global Styles post %d font src to current site host.',
+            $this->dryRun ? 'Would' : 'Did',
+            $postId,
+        ));
+
+        if (!$this->dryRun) {
+            wp_update_post([
+                'ID' => $postId,
+                'post_content' => wp_slash(wp_json_encode($data) ?: '{}'),
+            ]);
+            $this->clearThemeJsonCache();
+        }
+
+        $result->migrated++;
     }
 
     private function urlToLocalPath(string $url): ?string
