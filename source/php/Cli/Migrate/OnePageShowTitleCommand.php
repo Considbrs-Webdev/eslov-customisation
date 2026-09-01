@@ -7,6 +7,8 @@ use EslovCustomisation\Migration\OnePageShowTitleMigrator;
 
 class OnePageShowTitleCommand extends AbstractMigrateCommand
 {
+    protected const SUPPORTS_FORCE_FLAG = true;
+
     /**
      * Enable Municipio "Title (onepage)" on all one-page template pages.
      *

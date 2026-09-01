@@ -17,7 +17,7 @@ class AllCommand extends AbstractMigrateCommand
      * : Log planned changes without writing to the database.
      *
      * [--force]
-     * : Pass --force to fonts, theme-mods, and section-spacing. design-tokens always runs with --force (must overwrite Municipio V41 tokens).
+     * : Pass --force to subcommands that declare it. design-tokens always runs with --force so Eslöv patches overwrite Municipio V41 tokens.
      *
      * [--post-id=<id>]
      * : Pass --post-id to migrations that support it.
@@ -93,7 +93,7 @@ class AllCommand extends AbstractMigrateCommand
             $flags[] = '--dry-run';
         }
 
-        if ($this->shouldPassForce($command, $assocArgs)) {
+        if (\WP_CLI\Utils\get_flag_value($assocArgs, 'force', false)) {
             $flags[] = '--force';
         }
 
@@ -149,10 +149,6 @@ class AllCommand extends AbstractMigrateCommand
             return false;
         }
 
-        return in_array($command, [
-            'eslov migrate fonts',
-            'eslov migrate theme-mods',
-            'eslov migrate section-spacing',
-        ], true);
+        return MigrationCommandRunner::supportsForceFlag($command);
     }
 }

@@ -4,6 +4,7 @@ namespace EslovCustomisation\Migration\DesignTokenCorrections;
 
 use EslovCustomisation\Migration\DesignTokenCorrectionInterface;
 use EslovCustomisation\Migration\DesignTokenState;
+use EslovCustomisation\Migration\LegacyUploadedFontFamilyMapper;
 
 class TypographyTokensCorrection implements DesignTokenCorrectionInterface
 {
@@ -166,6 +167,14 @@ class TypographyTokensCorrection implements DesignTokenCorrectionInterface
 
         if (($mapping['resolve'] ?? null) === 'variant') {
             return LegacyThemeModReader::normalizeVariant($raw);
+        }
+
+        if ($mapping['field'] === 'font-family') {
+            $mapped = LegacyUploadedFontFamilyMapper::toCssFontFamily($raw);
+
+            if ($mapped !== null) {
+                return $mapped;
+            }
         }
 
         return $raw;

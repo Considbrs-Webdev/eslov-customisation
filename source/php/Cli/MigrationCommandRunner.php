@@ -38,6 +38,16 @@ class MigrationCommandRunner
         return isset(self::COMMAND_MAP[$command]);
     }
 
+    /**
+     * Whether the in-process command declares `--force`.
+     */
+    public static function supportsForceFlag(string $command): bool
+    {
+        $class = self::COMMAND_MAP[$command] ?? null;
+
+        return $class !== null && $class::supportsForceFlag();
+    }
+
     public static function run(string $command, AbstractMigrateCommand $parent, array $assocArgs): void
     {
         $class = self::COMMAND_MAP[$command] ?? null;
