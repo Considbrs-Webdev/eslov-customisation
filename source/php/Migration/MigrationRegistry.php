@@ -27,6 +27,12 @@ class MigrationRegistry
                 'run_order' => 5,
             ],
             [
+                'command' => 'eslov migrate municipio-upgrade',
+                'description' => 'Upstream Municipio DB upgrades (V41 tokens, V42/V43 fonts). Must run before design-tokens — the `wp` hook never fires in WP-CLI.',
+                'status' => 'ready',
+                'run_order' => 7,
+            ],
+            [
                 'command' => 'eslov migrate manual-input-data-repair',
                 'description' => 'Repair mod-manualinput modules with leftover LTS data_* not fully migrated to manual_inputs',
                 'status' => 'ready',
@@ -58,7 +64,7 @@ class MigrationRegistry
             ],
             [
                 'command' => 'eslov migrate design-tokens',
-                'description' => 'Kirki typography_button / search_form_shape → Design Builder tokens',
+                'description' => 'Kirki typography / search / footer contrast → Design Builder tokens (always --force from migrate all)',
                 'status' => 'ready',
                 'run_order' => 50,
             ],
