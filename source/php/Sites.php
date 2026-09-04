@@ -42,6 +42,7 @@ class Sites
      */
     public static function isSubsite(): bool
     {
+        return true;
         return !self::currentIs('eslov');
     }
 }

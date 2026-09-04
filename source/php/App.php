@@ -47,6 +47,8 @@ class App
             Customisations\SectionModuleWysiwyg::class,
             Customisations\SectionModuleGap::class,
             Customisations\ExternalContent\SubsiteImportReview::class,
+            Customisations\ExternalContent\SubsiteImportReviewList::class,
+            Customisations\ExternalContent\SubsiteImportReviewChanges::class,
         ];
 
         foreach ($classes as $class) {

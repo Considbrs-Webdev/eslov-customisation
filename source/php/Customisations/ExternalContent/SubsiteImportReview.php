@@ -13,6 +13,8 @@ use Municipio\SchemaData\ExternalContent\Rest\AjaxSync;
  * Municipio External Content always inserts as publish. On subsites, new posts
  * and posts that change after they were published are stored as pending instead.
  * Unchanged posts are skipped by Municipio checksum and keep their status.
+ * Published schemaData is snapshotted before overwrite so special-field diffs
+ * can be shown on the pending event.
  *
  * Applies to WP-Cron (`Municipio/ExternalContent/Sync`) and the admin button
  * (`wp_ajax_municipio_external_content_sync`), which calls SyncHandler directly.
@@ -24,10 +26,6 @@ class SubsiteImportReview
 {
     private const REVIEW_STATUS = 'pending';
 
-    private const SCHEMA_TYPE_EVENT = 'Event';
-
-    private const SCHEMA_SETTINGS_OPTION = 'options_post_type_schema_types';
-
     private const SYNC_START_PRIORITY = 2;
 
     private const SYNC_END_PRIORITY = 20;
@@ -38,14 +36,9 @@ class SubsiteImportReview
 
     private bool $syncing = false;
 
-    /**
-     * @var array<string, string>|null
-     */
-    private ?array $schemaTypeByPostType = null;
-
     public function __construct()
     {
-        if (!$this->isEnabled()) {
+        if (!EventSchemaSettings::isReviewEnabled()) {
             return;
         }
 
@@ -53,7 +46,8 @@ class SubsiteImportReview
         add_action('Municipio/ExternalContent/Sync', [$this, 'endSync'], self::SYNC_END_PRIORITY);
         add_action('wp_ajax_' . $this->ajaxAction(), [$this, 'startSync'], self::AJAX_SYNC_START_PRIORITY);
         add_action('shutdown', [$this, 'endSync']);
-        add_filter('wp_insert_post_data', [$this, 'setReviewStatus'], 10, 4);
+        add_filter('wp_insert_post_data', [$this, 'setReviewStatus'], 999, 4);
+        add_action('wp_insert_post', [$this, 'enforcePendingAfterInsert'], 999, 3);
         add_filter('register_post_type_args', [$this, 'allowReviewCapabilities'], self::CAPABILITY_FILTER_PRIORITY, 2);
     }
 
@@ -99,7 +93,14 @@ class SubsiteImportReview
 
         $currentStatus = $postId > 0 ? get_post_status($postId) : false;
 
-        if ($currentStatus === false || $currentStatus === 'publish') {
+        if ($currentStatus === 'publish') {
+            SubsiteImportReviewChanges::snapshot($postId);
+            $data['post_status'] = $this->reviewStatus();
+
+            return $data;
+        }
+
+        if ($currentStatus === false) {
             $data['post_status'] = $this->reviewStatus();
 
             return $data;
@@ -108,6 +109,49 @@ class SubsiteImportReview
         $data['post_status'] = $currentStatus;
 
         return $data;
+    }
+
+    /**
+     * Second-layer safety: if a synced Event ends up as publish anyway
+     * (some other filter overrode our post_status), rewrite the row
+     * directly to pending. Direct SQL avoids re-firing wp_insert_post.
+     *
+     * Snapshot is already handled from setReviewStatus (which reads the
+     * old schemaData before meta_input overwrites it).
+     *
+     * @param int      $postId
+     * @param \WP_Post $post
+     * @param bool     $update
+     */
+    public function enforcePendingAfterInsert(int $postId, $post, bool $update): void
+    {
+        if (!$this->isExternalContentSync()) {
+            return;
+        }
+
+        if (!$post instanceof \WP_Post) {
+            return;
+        }
+
+        if (!Sites::isSubsite()) {
+            return;
+        }
+
+        if (!EventSchemaSettings::isEventPostType($post->post_type)) {
+            return;
+        }
+
+        if ($post->post_status !== 'publish') {
+            return;
+        }
+
+        global $wpdb;
+        $wpdb->update(
+            $wpdb->posts,
+            ['post_status' => $this->reviewStatus()],
+            ['ID' => $postId]
+        );
+        clean_post_cache($postId);
     }
 
     /**
@@ -121,7 +165,7 @@ class SubsiteImportReview
             return $args;
         }
 
-        if (!$this->isEventSchemaPostType($postType)) {
+        if (!EventSchemaSettings::isEventPostType($postType)) {
             return $args;
         }
 
@@ -155,60 +199,13 @@ class SubsiteImportReview
             return false;
         }
 
-        if (!$this->isEventSchemaPostType(is_string($postType) ? $postType : '')) {
+        if (!EventSchemaSettings::isEventPostType(is_string($postType) ? $postType : '')) {
             return false;
         }
 
         $postStatus = $data['post_status'] ?? '';
 
         return $postStatus !== 'inherit';
-    }
-
-    private function isEnabled(): bool
-    {
-        return defined('ESLOV_EXTERNAL_CONTENT_SUBSITE_REVIEW')
-            && ESLOV_EXTERNAL_CONTENT_SUBSITE_REVIEW === true;
-    }
-
-    private function isEventSchemaPostType(string $postType): bool
-    {
-        if ($postType === '') {
-            return false;
-        }
-
-        return ($this->schemaTypesByPostType()[$postType] ?? null) === self::SCHEMA_TYPE_EVENT;
-    }
-
-    /**
-     * Schema type per post type from Settings → Post type schema settings.
-     *
-     * @return array<string, string>
-     */
-    private function schemaTypesByPostType(): array
-    {
-        if ($this->schemaTypeByPostType !== null) {
-            return $this->schemaTypeByPostType;
-        }
-
-        $this->schemaTypeByPostType = [];
-        $rowCount = (int) get_option(self::SCHEMA_SETTINGS_OPTION, 0);
-
-        if ($rowCount < 1) {
-            return $this->schemaTypeByPostType;
-        }
-
-        foreach (range(0, $rowCount - 1) as $index) {
-            $mappedPostType = get_option(self::SCHEMA_SETTINGS_OPTION . "_{$index}_post_type", '');
-            $schemaType = get_option(self::SCHEMA_SETTINGS_OPTION . "_{$index}_schema_type", '');
-
-            if (!is_string($mappedPostType) || $mappedPostType === '' || !is_string($schemaType) || $schemaType === '') {
-                continue;
-            }
-
-            $this->schemaTypeByPostType[$mappedPostType] = $schemaType;
-        }
-
-        return $this->schemaTypeByPostType;
     }
 
     private function isExternalContentSync(): bool
