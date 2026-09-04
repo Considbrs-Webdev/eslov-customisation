@@ -46,6 +46,7 @@ class App
             Customisations\TimelineActiveStep::class,
             Customisations\SectionModuleWysiwyg::class,
             Customisations\SectionModuleGap::class,
+            Customisations\ExternalContent\SubsiteImportReview::class,
         ];
 
         foreach ($classes as $class) {

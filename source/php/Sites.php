@@ -36,4 +36,12 @@ class Sites
 
         return $id !== null && get_current_blog_id() === $id;
     }
+
+    /**
+     * Whether the current blog is a subsite (not the main Eslöv site).
+     */
+    public static function isSubsite(): bool
+    {
+        return !self::currentIs('eslov');
+    }
 }

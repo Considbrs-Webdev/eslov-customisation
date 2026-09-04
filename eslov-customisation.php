@@ -19,6 +19,10 @@ define('ESLOV_CUSTOMISATION_PATH', plugin_dir_path(__FILE__));
 define('ESLOV_CUSTOMISATION_URL', plugin_dir_url(__FILE__));
 define('ESLOV_CUSTOMISATION_VERSION', '0.1.0');
 
+if (!defined('ESLOV_EXTERNAL_CONTENT_SUBSITE_REVIEW')) {
+    define('ESLOV_EXTERNAL_CONTENT_SUBSITE_REVIEW', true);
+}
+
 spl_autoload_register(static function (string $className): void {
     $prefix = __NAMESPACE__ . '\\';
 
