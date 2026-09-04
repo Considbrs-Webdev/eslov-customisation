@@ -368,14 +368,15 @@ class SubsiteImportReviewChanges
             }
 
             [$beforeStr, $afterStr] = self::formatChangedSideBySide($beforeVal, $afterVal);
-            $label = self::labelForKey($key);
+            $label = self::friendlyLabelForKey($key);
+            $prefix = $label !== null ? $label . ': ' : '';
 
             if ($beforeStr !== '' && $beforeStr !== '—') {
-                $beforeLines[] = $label . ': ' . $beforeStr;
+                $beforeLines[] = $prefix . $beforeStr;
             }
 
             if ($afterStr !== '' && $afterStr !== '—') {
-                $afterLines[] = $label . ': ' . $afterStr;
+                $afterLines[] = $prefix . $afterStr;
             }
         }
 
@@ -496,6 +497,16 @@ class SubsiteImportReviewChanges
 
     private static function labelForKey(string $key): string
     {
+        return self::friendlyLabelForKey($key) ?? $key;
+    }
+
+    /**
+     * Swedish label for a schema key, or null if we do not translate it.
+     * Untranslated intermediate keys (e.g. `contactPoint`) are hidden in the
+     * nested diff — the leaf label carries the meaning.
+     */
+    private static function friendlyLabelForKey(string $key): ?string
+    {
         $labels = [
             'name' => __('Namn', 'eslov-customisation'),
             'eventStatus' => __('Status', 'eslov-customisation'),
@@ -522,9 +533,25 @@ class SubsiteImportReviewChanges
             'duration' => __('Längd', 'eslov-customisation'),
             'video' => __('Video', 'eslov-customisation'),
             'audience' => __('Målgrupp', 'eslov-customisation'),
+            'email' => __('E-post', 'eslov-customisation'),
+            'telephone' => __('Telefon', 'eslov-customisation'),
+            'price' => __('Pris', 'eslov-customisation'),
+            'priceCurrency' => __('Valuta', 'eslov-customisation'),
+            'availability' => __('Tillgänglighet', 'eslov-customisation'),
+            'validFrom' => __('Gäller från', 'eslov-customisation'),
+            'validThrough' => __('Gäller till', 'eslov-customisation'),
+            'address' => __('Adress', 'eslov-customisation'),
+            'streetAddress' => __('Gatuadress', 'eslov-customisation'),
+            'postalCode' => __('Postnummer', 'eslov-customisation'),
+            'addressLocality' => __('Ort', 'eslov-customisation'),
+            'addressCountry' => __('Land', 'eslov-customisation'),
+            'repeatFrequency' => __('Upprepning', 'eslov-customisation'),
+            'byDay' => __('Veckodagar', 'eslov-customisation'),
+            'repeatCount' => __('Antal', 'eslov-customisation'),
+            'exceptDate' => __('Undantag', 'eslov-customisation'),
         ];
 
-        return $labels[$key] ?? $key;
+        return $labels[$key] ?? null;
     }
 
     private static function formatValue(mixed $value): string
