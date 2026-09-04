@@ -239,22 +239,22 @@ class SubsiteImportReviewList
     {
         $acceptUrl = $this->actionUrl($post, self::ACTION_ACCEPT);
         $denyUrl = $this->actionUrl($post, self::ACTION_DENY);
-        $viewUrl = get_preview_post_link($post);
+        $reviewUrl = (string) get_edit_post_link($post->ID);
         $denyConfirm = __('Neka evenemanget och flytta till papperskorgen?', 'eslov-customisation');
 
         return sprintf(
             '<div class="eslov-event-review-actions">'
                 . '<a class="button button-small button-primary" href="%s">%s</a>'
                 . '<a class="button button-small" href="%s" onclick="return confirm(\'%s\');">%s</a>'
-                . '<a class="button button-small" href="%s" target="_blank" rel="noopener noreferrer">%s</a>'
+                . '<a class="button button-small" href="%s">%s</a>'
                 . '</div>',
             esc_url($acceptUrl),
             esc_html__('Acceptera', 'eslov-customisation'),
             esc_url($denyUrl),
             esc_js($denyConfirm),
             esc_html__('Neka', 'eslov-customisation'),
-            esc_url($viewUrl),
-            esc_html__('Visa', 'eslov-customisation')
+            esc_url($reviewUrl),
+            esc_html__('Granska', 'eslov-customisation')
         );
     }
 

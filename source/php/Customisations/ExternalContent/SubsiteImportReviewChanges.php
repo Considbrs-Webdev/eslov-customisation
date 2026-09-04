@@ -8,17 +8,20 @@ use EslovCustomisation\Sites;
 use WP_Post;
 
 /**
- * Before/after table of Event schema fields after a subsite import review.
+ * Before/after table of Event schema fields for subsite import review.
  *
- * Municipio overwrites `schemaData` on sync. The published copy is stored
- * when status becomes pending so reviewers can see special-field changes
- * below post content. Description is omitted — it is already visible as content.
+ * Municipio overwrites `schemaData` on sync. The previous copy is snapshotted
+ * during wp_insert_post_data (before meta_input runs) and written to
+ * `_eslov_review_previous_schema` right after the row is saved.
+ *
+ * The diff is rendered as a metabox on the Event edit screen for pending
+ * posts. Description is omitted — it is already shown as the post content.
  */
 class SubsiteImportReviewChanges
 {
     public const PREVIOUS_SCHEMA_META = '_eslov_review_previous_schema';
 
-    private const CONTENT_FILTER_PRIORITY = 20;
+    private const METABOX_ID = 'eslov_event_review_changes';
 
     /**
      * @var array<string, true>
@@ -50,8 +53,6 @@ class SubsiteImportReviewChanges
      */
     private static array $queuedSchema = [];
 
-    private bool $appended = false;
-
     public function __construct()
     {
         if (!EventSchemaSettings::isReviewEnabled()) {
@@ -59,7 +60,10 @@ class SubsiteImportReviewChanges
         }
 
         add_action('wp_insert_post', [self::class, 'persist'], 20, 1);
-        add_filter('the_content', [$this, 'appendToContent'], self::CONTENT_FILTER_PRIORITY);
+
+        if (is_admin()) {
+            add_action('add_meta_boxes', [$this, 'registerMetabox'], 10, 2);
+        }
     }
 
     /**
@@ -108,53 +112,118 @@ class SubsiteImportReviewChanges
     }
 
     /**
-     * Append a before/after table of changed schema fields after post content.
+     * Register the review changes metabox on the Event edit screen.
      *
-     * @param mixed $content
+     * @param string  $postType
+     * @param \WP_Post $post
      */
-    public function appendToContent($content): string
+    public function registerMetabox(string $postType, $post): void
     {
-        if (!is_string($content)) {
-            return '';
+        if (!Sites::isSubsite()) {
+            return;
         }
 
-        if ($this->appended) {
-            return $content;
+        if (!EventSchemaSettings::isEventPostType($postType)) {
+            return;
         }
 
-        if (!$this->shouldRender()) {
-            return $content;
+        if (!$post instanceof WP_Post || $post->post_status !== 'pending') {
+            return;
         }
 
-        $post = get_queried_object();
+        add_meta_box(
+            self::METABOX_ID,
+            __('Ändringar sedan senaste import', 'eslov-customisation'),
+            [$this, 'renderMetabox'],
+            $postType,
+            'normal',
+            'high'
+        );
+    }
+
+    /**
+     * @param \WP_Post $post
+     */
+    public function renderMetabox($post): void
+    {
         if (!$post instanceof WP_Post) {
-            return $content;
+            return;
         }
 
         $rows = self::changedRows($post->ID);
+
         if ($rows === []) {
-            return $content;
+            echo '<p>' . esc_html__('Inga specialfält har ändrats sedan senaste import.', 'eslov-customisation') . '</p>';
+
+            return;
         }
 
-        if (!function_exists('render_blade_view')) {
-            return $content;
+        echo self::css();
+        echo '<table class="eslov-import-review-changes">';
+        printf(
+            '<thead><tr><th>%s</th><th>%s</th><th>%s</th></tr></thead>',
+            esc_html__('Fält', 'eslov-customisation'),
+            esc_html__('Före', 'eslov-customisation'),
+            esc_html__('Efter', 'eslov-customisation')
+        );
+        echo '<tbody>';
+
+        foreach ($rows as $row) {
+            printf(
+                '<tr><th scope="row">%s</th>%s%s</tr>',
+                esc_html($row['field']),
+                self::renderCell($row['before'], 'before', $row['after']),
+                self::renderCell($row['after'], 'after', $row['before'])
+            );
         }
 
-        $this->appended = true;
+        echo '</tbody></table>';
+    }
 
-        try {
-            return $content . render_blade_view('partials.schema.event.import-review-changes', [
-                'heading' => __('Ändrade fält', 'eslov-customisation'),
-                'columnField' => __('Fält', 'eslov-customisation'),
-                'columnBefore' => __('Före', 'eslov-customisation'),
-                'columnAfter' => __('Efter', 'eslov-customisation'),
-                'rows' => $rows,
-            ]);
-        } catch (\Throwable) {
-            $this->appended = false;
+    /**
+     * Render a diff cell. Empty values on the opposite side flag the field
+     * as added/removed and drop the highlight from this side.
+     */
+    private static function renderCell(string $value, string $side, string $counterpart): string
+    {
+        $empty = $value === '' || $value === '—';
+        $counterpartEmpty = $counterpart === '' || $counterpart === '—';
 
-            return $content;
+        $classes = ['eslov-import-review-changes__cell'];
+
+        if ($empty) {
+            $classes[] = 'eslov-import-review-changes__cell--empty';
+        } elseif ($counterpartEmpty) {
+            $classes[] = $side === 'before'
+                ? 'eslov-import-review-changes__cell--removed'
+                : 'eslov-import-review-changes__cell--added';
+        } else {
+            $classes[] = $side === 'before'
+                ? 'eslov-import-review-changes__cell--before'
+                : 'eslov-import-review-changes__cell--after';
         }
+
+        return sprintf(
+            '<td class="%s">%s</td>',
+            esc_attr(implode(' ', $classes)),
+            $empty ? '—' : nl2br(esc_html($value))
+        );
+    }
+
+    private static function css(): string
+    {
+        return '<style>'
+            . '.eslov-import-review-changes{width:100%;border-collapse:collapse;}'
+            . '.eslov-import-review-changes th,.eslov-import-review-changes td{padding:8px 12px;border-bottom:1px solid #dcdcde;vertical-align:top;text-align:left;}'
+            . '.eslov-import-review-changes thead th{background:#f6f7f7;font-weight:600;}'
+            . '.eslov-import-review-changes tbody th{font-weight:600;width:20%;background:#f6f7f7;}'
+            . '.eslov-import-review-changes__cell{width:40%;word-break:break-word;}'
+            . '.eslov-import-review-changes__cell--before{background:#fcf0f1;color:#8a1f1f;text-decoration:line-through;}'
+            . '.eslov-import-review-changes__cell--after{background:#edfaef;color:#0a5f1a;}'
+            . '.eslov-import-review-changes__cell--removed{background:#fcf0f1;color:#8a1f1f;text-decoration:line-through;}'
+            . '.eslov-import-review-changes__cell--added{background:#edfaef;color:#0a5f1a;font-weight:600;}'
+            . '.eslov-import-review-changes__cell--empty{color:#8c8f94;}'
+            . '</style>';
     }
 
     /**
@@ -204,32 +273,6 @@ class SubsiteImportReviewChanges
         }
 
         return $rows;
-    }
-
-    private function shouldRender(): bool
-    {
-        if (is_admin() || is_feed() || wp_doing_ajax()) {
-            return false;
-        }
-
-        if (defined('REST_REQUEST') && REST_REQUEST) {
-            return false;
-        }
-
-        if (!is_singular() || !Sites::isSubsite()) {
-            return false;
-        }
-
-        $post = get_queried_object();
-        if (!$post instanceof WP_Post) {
-            return false;
-        }
-
-        if ($post->post_status !== 'pending') {
-            return false;
-        }
-
-        return EventSchemaSettings::isEventPostType($post->post_type);
     }
 
     /**
