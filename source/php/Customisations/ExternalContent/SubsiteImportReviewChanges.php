@@ -218,9 +218,9 @@ class SubsiteImportReviewChanges
             . '.eslov-import-review-changes thead th{background:#f6f7f7;font-weight:600;}'
             . '.eslov-import-review-changes tbody th{font-weight:600;width:20%;background:#f6f7f7;}'
             . '.eslov-import-review-changes__cell{width:40%;word-break:break-word;}'
-            . '.eslov-import-review-changes__cell--before{background:#fcf0f1;color:#8a1f1f;text-decoration:line-through;}'
+            . '.eslov-import-review-changes__cell--before{background:#fcf0f1;color:#8a1f1f;}'
             . '.eslov-import-review-changes__cell--after{background:#edfaef;color:#0a5f1a;}'
-            . '.eslov-import-review-changes__cell--removed{background:#fcf0f1;color:#8a1f1f;text-decoration:line-through;}'
+            . '.eslov-import-review-changes__cell--removed{background:#fcf0f1;color:#8a1f1f;}'
             . '.eslov-import-review-changes__cell--added{background:#edfaef;color:#0a5f1a;font-weight:600;}'
             . '.eslov-import-review-changes__cell--empty{color:#8c8f94;}'
             . '</style>';
@@ -265,14 +265,139 @@ class SubsiteImportReviewChanges
                 continue;
             }
 
+            [$beforeStr, $afterStr] = self::formatChangedSideBySide($beforeValue, $afterValue);
+
             $rows[] = [
                 'field' => self::labelForKey($key),
-                'before' => self::formatValue($beforeValue),
-                'after' => self::formatValue($afterValue),
+                'before' => $beforeStr,
+                'after' => $afterStr,
             ];
         }
 
         return $rows;
+    }
+
+    /**
+     * Format before/after where only sub-fields that differ are included.
+     * Lists are matched by index, associative arrays by key.
+     *
+     * @return array{0: string, 1: string}
+     */
+    private static function formatChangedSideBySide(mixed $before, mixed $after): array
+    {
+        $beforeArray = is_array($before) ? self::maybeReduceImage($before) : $before;
+        $afterArray = is_array($after) ? self::maybeReduceImage($after) : $after;
+
+        if (!is_array($beforeArray) || !is_array($afterArray)) {
+            return [self::formatValue($before), self::formatValue($after)];
+        }
+
+        $beforeIsList = array_is_list($beforeArray);
+        $afterIsList = array_is_list($afterArray);
+
+        if ($beforeIsList !== $afterIsList) {
+            return [self::formatValue($before), self::formatValue($after)];
+        }
+
+        if ($beforeIsList) {
+            return self::formatChangedList($beforeArray, $afterArray);
+        }
+
+        return self::formatChangedAssoc($beforeArray, $afterArray);
+    }
+
+    /**
+     * @param list<mixed> $before
+     * @param list<mixed> $after
+     * @return array{0: string, 1: string}
+     */
+    private static function formatChangedList(array $before, array $after): array
+    {
+        $count = max(count($before), count($after));
+        $useLabel = $count > 1;
+        $beforeParts = [];
+        $afterParts = [];
+
+        for ($i = 0; $i < $count; $i++) {
+            $beforeItem = $before[$i] ?? null;
+            $afterItem = $after[$i] ?? null;
+
+            if (!self::valuesDiffer($beforeItem, $afterItem)) {
+                continue;
+            }
+
+            [$beforeStr, $afterStr] = self::formatChangedSideBySide($beforeItem, $afterItem);
+            $label = $useLabel ? self::listItemLabel($afterItem ?? $beforeItem, $i) : '';
+
+            if ($beforeStr !== '' && $beforeStr !== '—') {
+                $beforeParts[] = $label . $beforeStr;
+            }
+
+            if ($afterStr !== '' && $afterStr !== '—') {
+                $afterParts[] = $label . $afterStr;
+            }
+        }
+
+        return [
+            $beforeParts === [] ? '—' : implode("\n\n", $beforeParts),
+            $afterParts === [] ? '—' : implode("\n\n", $afterParts),
+        ];
+    }
+
+    /**
+     * @param array<string, mixed> $before
+     * @param array<string, mixed> $after
+     * @return array{0: string, 1: string}
+     */
+    private static function formatChangedAssoc(array $before, array $after): array
+    {
+        $keys = array_unique([...array_keys($before), ...array_keys($after)]);
+        $beforeLines = [];
+        $afterLines = [];
+
+        foreach ($keys as $key) {
+            if (!is_string($key) || $key === '' || $key === '@type' || isset(self::COMPARE_IGNORE_NESTED_KEYS[$key])) {
+                continue;
+            }
+
+            $beforeVal = $before[$key] ?? null;
+            $afterVal = $after[$key] ?? null;
+
+            if (!self::valuesDiffer($beforeVal, $afterVal)) {
+                continue;
+            }
+
+            [$beforeStr, $afterStr] = self::formatChangedSideBySide($beforeVal, $afterVal);
+            $label = self::labelForKey($key);
+
+            if ($beforeStr !== '' && $beforeStr !== '—') {
+                $beforeLines[] = $label . ': ' . $beforeStr;
+            }
+
+            if ($afterStr !== '' && $afterStr !== '—') {
+                $afterLines[] = $label . ': ' . $afterStr;
+            }
+        }
+
+        return [
+            $beforeLines === [] ? '—' : implode("\n", $beforeLines),
+            $afterLines === [] ? '—' : implode("\n", $afterLines),
+        ];
+    }
+
+    /**
+     * Prefix for a list item — use a `name` if available, otherwise index.
+     */
+    private static function listItemLabel(mixed $item, int $index): string
+    {
+        if (is_array($item)) {
+            $name = $item['name'] ?? null;
+            if (is_string($name) && $name !== '') {
+                return $name . ' — ';
+            }
+        }
+
+        return '#' . ($index + 1) . ': ';
     }
 
     /**
