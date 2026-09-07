@@ -46,6 +46,7 @@ class App
             Customisations\TimelineActiveStep::class,
             Customisations\SectionModuleWysiwyg::class,
             Customisations\SectionModuleGap::class,
+            Customisations\RemoveAccessibilityPrintItem::class,
             Customisations\ExternalContent\SubsiteImportReview::class,
             Customisations\ExternalContent\SubsiteImportReviewList::class,
             Customisations\ExternalContent\SubsiteImportReviewChanges::class,
