@@ -33,6 +33,7 @@ class SubsiteImportReviewChanges
         '@meta' => true,
         'id' => true,
         'checksum' => true,
+        'text_match_info' => true,
     ];
 
     /**
@@ -43,6 +44,7 @@ class SubsiteImportReviewChanges
         '@meta' => true,
         'id' => true,
         'checksum' => true,
+        'text_match_info' => true,
     ];
 
     /**
