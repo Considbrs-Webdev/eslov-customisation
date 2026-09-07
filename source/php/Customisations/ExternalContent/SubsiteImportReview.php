@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace EslovCustomisation\Customisations\ExternalContent;
 
-use EslovCustomisation\Sites;
 use Municipio\SchemaData\ExternalContent\Rest\AjaxSync;
 
 /**
@@ -133,10 +132,6 @@ class SubsiteImportReview
             return;
         }
 
-        if (!Sites::isSubsite()) {
-            return;
-        }
-
         if (!EventSchemaSettings::isEventPostType($post->post_type)) {
             return;
         }
@@ -161,10 +156,6 @@ class SubsiteImportReview
      */
     public function allowReviewCapabilities(array $args, string $postType): array
     {
-        if (!Sites::isSubsite()) {
-            return $args;
-        }
-
         if (!EventSchemaSettings::isEventPostType($postType)) {
             return $args;
         }
@@ -187,10 +178,6 @@ class SubsiteImportReview
     private function shouldModerateInsert(array $data): bool
     {
         if (!$this->isExternalContentSync()) {
-            return false;
-        }
-
-        if (!Sites::isSubsite()) {
             return false;
         }
 

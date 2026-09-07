@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace EslovCustomisation\Customisations\ExternalContent;
 
-use EslovCustomisation\Sites;
 use WP_Post;
 
 /**
@@ -119,10 +118,6 @@ class SubsiteImportReviewChanges
      */
     public function registerMetabox(string $postType, $post): void
     {
-        if (!Sites::isSubsite()) {
-            return;
-        }
-
         if (!EventSchemaSettings::isEventPostType($postType)) {
             return;
         }
