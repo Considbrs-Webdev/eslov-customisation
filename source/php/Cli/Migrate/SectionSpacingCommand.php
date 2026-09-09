@@ -7,6 +7,8 @@ use EslovCustomisation\Migration\SectionSpacingMigrator;
 
 class SectionSpacingCommand extends AbstractMigrateCommand
 {
+    protected const SUPPORTS_FORCE_FLAG = true;
+
     /**
      * Set missing section Spacing Top/Bottom meta to the Municipio default (on).
      *

@@ -7,6 +7,8 @@ use EslovCustomisation\Migration\ModPostsMixedDisplayMigrator;
 
 class ModPostsMixedDisplayCommand extends AbstractMigrateCommand
 {
+    protected const SUPPORTS_FORCE_FLAG = true;
+
     /**
      * Migrate LTS "Kort och lista" mod-posts display (mixed) to Card + slider.
      *

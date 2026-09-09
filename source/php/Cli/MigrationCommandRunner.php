@@ -8,6 +8,7 @@ use EslovCustomisation\Cli\Migrate\ManualInputDataRepairCommand;
 use EslovCustomisation\Cli\Migrate\ModPostsMixedDisplayCommand;
 use EslovCustomisation\Cli\Migrate\ModPostsTaxonomyDisplayCommand;
 use EslovCustomisation\Cli\Migrate\ModularityUpgradeCommand;
+use EslovCustomisation\Cli\Migrate\MunicipioUpgradeCommand;
 use EslovCustomisation\Cli\Migrate\OnePageShowTitleCommand;
 use EslovCustomisation\Cli\Migrate\SectionSpacingCommand;
 use EslovCustomisation\Cli\Migrate\SectionTextAutopCommand;
@@ -19,6 +20,7 @@ class MigrationCommandRunner
     /** @var array<string, class-string<AbstractMigrateCommand>> */
     private const COMMAND_MAP = [
         'eslov migrate modularity-upgrade' => ModularityUpgradeCommand::class,
+        'eslov migrate municipio-upgrade' => MunicipioUpgradeCommand::class,
         'eslov migrate manual-input-data-repair' => ManualInputDataRepairCommand::class,
         'eslov migrate widgets' => WidgetsCommand::class,
         'eslov migrate mod-posts-taxonomy-display' => ModPostsTaxonomyDisplayCommand::class,
@@ -34,6 +36,16 @@ class MigrationCommandRunner
     public static function hasRunner(string $command): bool
     {
         return isset(self::COMMAND_MAP[$command]);
+    }
+
+    /**
+     * Whether the in-process command declares `--force`.
+     */
+    public static function supportsForceFlag(string $command): bool
+    {
+        $class = self::COMMAND_MAP[$command] ?? null;
+
+        return $class !== null && $class::supportsForceFlag();
     }
 
     public static function run(string $command, AbstractMigrateCommand $parent, array $assocArgs): void

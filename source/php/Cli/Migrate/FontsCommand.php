@@ -7,6 +7,8 @@ use EslovCustomisation\Migration\NativeFontLibraryMigrator;
 
 class FontsCommand extends AbstractMigrateCommand
 {
+    protected const SUPPORTS_FORCE_FLAG = true;
+
     /**
      * Install LTS Montserrat as a native WordPress / Municipio font.
      *

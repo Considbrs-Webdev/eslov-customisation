@@ -17,7 +17,7 @@ class AllCommand extends AbstractMigrateCommand
      * : Log planned changes without writing to the database.
      *
      * [--force]
-     * : Pass --force to migrations that support it.
+     * : Pass --force to subcommands that declare it. design-tokens always runs with --force so Eslöv patches overwrite Municipio V41 tokens.
      *
      * [--post-id=<id>]
      * : Pass --post-id to migrations that support it.
@@ -65,15 +65,16 @@ class AllCommand extends AbstractMigrateCommand
             \WP_CLI::log('');
             \WP_CLI::log('==> ' . $task['command']);
 
+            $taskArgs = $this->assocArgsForTask($task['command'], $assocArgs);
+
             if ($this->isNetworkFlag($assocArgs) && is_multisite()) {
                 if (MigrationCommandRunner::hasRunner($task['command'])) {
-                    MigrationCommandRunner::run($task['command'], $this, $assocArgs);
+                    MigrationCommandRunner::run($task['command'], $this, $taskArgs);
                 } else {
-                    // executeAcrossSites already switched to the current blog.
-                    $this->runSubcommand($task['command'], $assocArgs, passNetworkFlag: false);
+                    $this->runSubcommand($task['command'], $taskArgs, passNetworkFlag: false);
                 }
             } else {
-                $this->runSubcommand($task['command'], $assocArgs);
+                $this->runSubcommand($task['command'], $taskArgs);
             }
         }
 
@@ -113,5 +114,41 @@ class AllCommand extends AbstractMigrateCommand
         }
 
         \WP_CLI::runcommand($fullCommand, ['launch' => false]);
+    }
+
+    /**
+     * Restrict `--force` to commands that declare it, and always force design-tokens.
+     *
+     * Design-token corrections must overwrite Municipio V41 output. Forwarding
+     * `--force` to every subcommand breaks commands such as one-page-content.
+     *
+     * @param array<string, mixed> $assocArgs
+     * @return array<string, mixed>
+     */
+    private function assocArgsForTask(string $command, array $assocArgs): array
+    {
+        if ($this->shouldPassForce($command, $assocArgs)) {
+            $assocArgs['force'] = true;
+        } else {
+            unset($assocArgs['force']);
+        }
+
+        return $assocArgs;
+    }
+
+    /**
+     * @param array<string, mixed> $assocArgs
+     */
+    private function shouldPassForce(string $command, array $assocArgs): bool
+    {
+        if ($command === 'eslov migrate design-tokens') {
+            return true;
+        }
+
+        if (!\WP_CLI\Utils\get_flag_value($assocArgs, 'force', false)) {
+            return false;
+        }
+
+        return MigrationCommandRunner::supportsForceFlag($command);
     }
 }

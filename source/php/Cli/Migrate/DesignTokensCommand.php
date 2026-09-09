@@ -9,6 +9,8 @@ use EslovCustomisation\Migration\MigrationResult;
 
 class DesignTokensCommand extends AbstractMigrateCommand
 {
+    protected const SUPPORTS_FORCE_FLAG = true;
+
     /**
      * Patch design-builder tokens from legacy Kirki settings and optional patch JSON.
      *
