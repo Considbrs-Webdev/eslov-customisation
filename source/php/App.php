@@ -34,6 +34,8 @@ class App
             Admin\CustomerFeedbackSettings::class,
             AcfFields\BrandPaletteFields::class,
             Customisations\BrandPaletteOverride::class,
+            AcfFields\MatomoTrackingFields::class,
+            Customisations\MatomoTracking::class,
             AcfFields\ModNavigationFields::class,
             AcfFields\ModPostsFilteringFields::class,
             AcfFields\PageSectionStartField::class,
