@@ -21,6 +21,7 @@ class App
     {
         $classes = [
             Customisations\Config::class,
+            Customisations\Smtp::class,
             Customisations\SiteStyles::class,
             Customisations\SiteScripts::class,
             Customisations\BrandedBorder::class,
