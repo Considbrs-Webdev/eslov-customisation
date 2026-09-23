@@ -53,6 +53,25 @@ ddev wp eslov migrate section-text-autop --dry-run --network
 2. Register hooks in `__construct()`.
 3. Add the class to `App::registerInstances()`.
 
+## SMTP
+
+`Customisations\Smtp` routes outgoing mail through SMTP (via `phpmailer_init`). It is a no-op
+until all six constants below are defined — normally in `config/application.php` in the Bedrock
+project, from env vars:
+
+```php
+// config/application.php
+Config::define('SMTP_HOST', getEnvVar('SMTP_HOST'));
+Config::define('SMTP_PORT', getEnvVar('SMTP_PORT') ?: 587);
+Config::define('SMTP_USERNAME', getEnvVar('SMTP_USERNAME'));
+Config::define('SMTP_PASSWORD', getSecret('SMTP_PASSWORD'));
+Config::define('SMTP_FROM', getEnvVar('SMTP_FROM'));
+Config::define('SMTP_FROM_NAME', getEnvVar('SMTP_FROM_NAME'));
+```
+
+Set the matching `SMTP_*` env vars (and `SMTP_PASSWORD` as a secret) per environment. This
+replaces the old `web/app/mu-plugins/smtp.php` mu-plugin — no mu-plugin changes are needed.
+
 ## Plugin layout (Piteå-style)
 
 ```
