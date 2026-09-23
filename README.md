@@ -56,21 +56,29 @@ ddev wp eslov migrate section-text-autop --dry-run --network
 ## SMTP
 
 `Customisations\Smtp` routes outgoing mail through SMTP (via `phpmailer_init`). It is a no-op
-until all six constants below are defined — normally in `config/application.php` in the Bedrock
-project, from env vars:
+until all six constants below are defined.
+
+Add a `config/smtp.php` (there's no built-in one), following the pattern of
+[`config-example/sentry-example.php`](https://github.com/municipio-se/municipio-deployment/blob/master/config-example/sentry-example.php)
+in [municipio-deployment](https://github.com/municipio-se/municipio-deployment):
 
 ```php
-// config/application.php
-Config::define('SMTP_HOST', getEnvVar('SMTP_HOST'));
-Config::define('SMTP_PORT', getEnvVar('SMTP_PORT') ?: 587);
-Config::define('SMTP_USERNAME', getEnvVar('SMTP_USERNAME'));
-Config::define('SMTP_PASSWORD', getSecret('SMTP_PASSWORD'));
-Config::define('SMTP_FROM', getEnvVar('SMTP_FROM'));
-Config::define('SMTP_FROM_NAME', getEnvVar('SMTP_FROM_NAME'));
+<?php
+// config/smtp.php
+
+define('SMTP_HOST', '(#smtp_host#)');
+define('SMTP_PORT', '(#smtp_port#)');
+define('SMTP_USERNAME', '(#smtp_username#)');
+define('SMTP_PASSWORD', '(#smtp_password#)');
+define('SMTP_FROM', '(#smtp_from#)');
+define('SMTP_FROM_NAME', '(#smtp_from_name#)');
 ```
 
-Set the matching `SMTP_*` env vars (and `SMTP_PASSWORD` as a secret) per environment. This
-replaces the old `web/app/mu-plugins/smtp.php` mu-plugin — no mu-plugin changes are needed.
+...and register it in `wp-config.php`'s `$configFiles` list, alongside `sentry.php` etc. The
+`(#token#)` placeholders are filled in per environment by the deploy pipeline, same as
+`DB_PASSWORD` and the other secrets in `config-example/`.
+
+This replaces the old `web/app/mu-plugins/smtp.php` mu-plugin — no mu-plugin changes are needed.
 
 ## Plugin layout (Piteå-style)
 
