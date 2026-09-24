@@ -67,6 +67,7 @@ class MatomoTracking
         $u = $this->js($url);
         $id = $this->js($siteId);
         $requireConsent = $gated ? '' : "_paq.push(['requireCookieConsent']);\n        ";
+        $consentSync = $gated ? '' : $this->consentSyncScript();
 
         return <<<JS
         var _paq = window._paq = window._paq || [];
@@ -78,6 +79,26 @@ class MatomoTracking
           _paq.push(['setSiteId', {$id}]);
           var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
           g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+        })();
+        {$consentSync}
+        JS;
+    }
+
+    /**
+     * Ungated Matomo runs cookieless (requireCookieConsent); once the visitor accepts "analytics"
+     * in Pressidium, switch to cookie tracking, and back again if the choice is withdrawn.
+     */
+    private function consentSyncScript(): string
+    {
+        return <<<JS
+        (function() {
+          function sync(e) {
+            var c = e && e.detail && e.detail.cookie;
+            if (!c || !c.categories) { return; }
+            _paq.push([c.categories.indexOf('analytics') !== -1 ? 'rememberCookieConsentGiven' : 'forgetCookieConsentGiven']);
+          }
+          window.addEventListener('pressidium-cookie-consent-accepted', sync);
+          window.addEventListener('pressidium-cookie-consent-changed', sync);
         })();
 
         JS;
