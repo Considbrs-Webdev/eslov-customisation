@@ -3,16 +3,23 @@
 namespace EslovCustomisation\Customisations;
 
 /**
- * Render nested `[modularity]` shortcodes in Text modules after `wpautop`.
+ * Render nested `[modularity]` shortcodes after `wpautop`.
  *
- * Municipio 7 strips `[modularity]` in `Modularity/Display/SanitizeContent`
- * before `the_content`. Expanding shortcodes there lets `wpautop` mangle the
- * nested module HTML. Placeholders survive the sanitizer and `wpautop`;
- * expansion runs afterwards (same order as LTS: wpautop, then do_shortcode).
+ * Text modules: Municipio 7 strips `[modularity]` in
+ * `Modularity/Display/SanitizeContent` before `the_content`. Manual input row
+ * content is the ACF WYSIWYG `manual_inputs` → `content`, stripped on
+ * `acf/format_value/type=wysiwyg` before `acf_the_content`. Expanding
+ * shortcodes before `wpautop` lets it mangle the nested module HTML.
+ * Placeholders survive the strip; expansion runs afterwards (same order as
+ * LTS: wpautop, then do_shortcode).
  */
 class NestedModularityShortcodes
 {
     private const PLACEHOLDER_PREFIX = 'NESTEDMODULARITY';
+
+    private const MANUAL_INPUT_CONTENT_KEY = 'field_64ff231ed91b9';
+
+    private const MANUAL_INPUT_REPEATER_KEY = 'field_64ff22b2d91b7';
 
     /**
      * @var array<string, array{id: int, shortcode: string}>
@@ -29,6 +36,25 @@ class NestedModularityShortcodes
         add_filter('Modularity/Display/SanitizeContent', [$this, 'deferShortcodes'], 9);
         add_filter('the_content', [$this, 'restoreShortcodes'], 12);
         add_filter('Modularity/Display/mod-text/viewData', [$this, 'restoreViewData']);
+        add_filter('acf/format_value/type=wysiwyg', [$this, 'deferManualInputShortcodes'], 8, 3);
+        add_filter('acf_the_content', [$this, 'restoreShortcodes'], 12);
+    }
+
+    /**
+     * Replace nested shortcodes in manual input row content before Modularity strips them.
+     *
+     * @param mixed $value
+     * @param mixed $postId
+     * @param mixed $field
+     * @return mixed
+     */
+    public function deferManualInputShortcodes($value, $postId, $field)
+    {
+        if (!is_array($field) || !$this->isManualInputContentField($field) || !is_string($value)) {
+            return $value;
+        }
+
+        return $this->deferShortcodes($value);
     }
 
     /**
@@ -218,6 +244,20 @@ class NestedModularityShortcodes
     private function createPlaceholder(): string
     {
         return self::PLACEHOLDER_PREFIX . strtoupper(bin2hex(random_bytes(8)));
+    }
+
+    /**
+     * @param array<string, mixed> $field
+     */
+    private function isManualInputContentField(array $field): bool
+    {
+        if (($field['key'] ?? '') === self::MANUAL_INPUT_CONTENT_KEY) {
+            return true;
+        }
+
+        $parent = $field['parent_repeater'] ?? $field['parent'] ?? '';
+
+        return ($field['name'] ?? '') === 'content' && $parent === self::MANUAL_INPUT_REPEATER_KEY;
     }
 
     private function isAdminScreen(): bool
