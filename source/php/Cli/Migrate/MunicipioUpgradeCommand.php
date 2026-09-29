@@ -3,34 +3,29 @@
 namespace EslovCustomisation\Cli\Migrate;
 
 use EslovCustomisation\Cli\AbstractMigrateCommand;
-use EslovCustomisation\Migration\OnePageShowTitleMigrator;
+use EslovCustomisation\Migration\MunicipioUpgradeRunner;
 
-class OnePageShowTitleCommand extends AbstractMigrateCommand
+class MunicipioUpgradeCommand extends AbstractMigrateCommand
 {
-    protected const SUPPORTS_FORCE_FLAG = true;
-
     /**
-     * Enable Municipio "Title (onepage)" on all one-page template pages.
+     * Run pending Municipio theme database upgrades on the current site.
+     *
+     * Upstream upgrades (including V41 token mapping) only run on the `wp`
+     * hook, so WP-CLI never triggers them. Run this before design-tokens.
      *
      * ## OPTIONS
      *
      * [--dry-run]
-     * : Log planned changes without writing to the database.
-     *
-     * [--force]
-     * : Re-apply even when post_one_page_show_title is already enabled.
-     *
-     * [--post-id=<id>]
-     * : Limit migration to a single one-page post on the current site.
+     * : Log planned upgrades without running Municipio upgrade.
      *
      * [--network]
      * : Run on every site in the network.
      *
      * ## EXAMPLES
      *
-     *     wp eslov migrate one-page-show-title --dry-run
-     *     wp eslov migrate one-page-show-title --network
-     *     wp eslov migrate one-page-show-title --post-id=588812
+     *     wp eslov migrate municipio-upgrade --dry-run
+     *     wp eslov migrate municipio-upgrade
+     *     wp eslov migrate municipio-upgrade --network
      *
      * @param array<int, string> $args
      * @param array<string, mixed> $assocArgs
@@ -51,9 +46,7 @@ class OnePageShowTitleCommand extends AbstractMigrateCommand
      */
     public function runTask(array $assocArgs): void
     {
-        $force = \WP_CLI\Utils\get_flag_value($assocArgs, 'force', false);
-
-        $result = (new OnePageShowTitleMigrator($this->dryRun, $force, $this->postId))->migrate();
+        $result = (new MunicipioUpgradeRunner($this->dryRun))->migrate();
         $this->logResult($result);
     }
 }

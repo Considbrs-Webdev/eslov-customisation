@@ -7,6 +7,8 @@ use EslovCustomisation\Migration\ThemeModsMigrator;
 
 class ThemeModsCommand extends AbstractMigrateCommand
 {
+    protected const SUPPORTS_FORCE_FLAG = true;
+
     /**
      * Apply Municipio theme mod defaults missing from the LTS import.
      *

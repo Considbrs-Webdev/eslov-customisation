@@ -13,6 +13,10 @@ class CliBootstrap
             Cli\Migrate\ModularityUpgradeCommand::class,
         );
         \WP_CLI::add_command(
+            'eslov migrate municipio-upgrade',
+            Cli\Migrate\MunicipioUpgradeCommand::class,
+        );
+        \WP_CLI::add_command(
             'eslov migrate manual-input-data-repair',
             Cli\Migrate\ManualInputDataRepairCommand::class,
         );

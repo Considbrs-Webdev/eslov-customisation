@@ -7,6 +7,8 @@ use EslovCustomisation\Migration\ModPostsTaxonomyDisplayMigrator;
 
 class ModPostsTaxonomyDisplayCommand extends AbstractMigrateCommand
 {
+    protected const SUPPORTS_FORCE_FLAG = true;
+
     /**
      * Migrate LTS mod-posts taxonomy tag config to Municipio taxonomy_display.
      *

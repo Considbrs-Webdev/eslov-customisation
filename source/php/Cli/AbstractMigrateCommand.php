@@ -6,6 +6,8 @@ use EslovCustomisation\Migration\MigrationResult;
 
 abstract class AbstractMigrateCommand extends \WP_CLI_Command
 {
+    protected const SUPPORTS_FORCE_FLAG = false;
+
     protected bool $dryRun = false;
 
     protected ?int $postId = null;
@@ -113,6 +115,14 @@ abstract class AbstractMigrateCommand extends \WP_CLI_Command
     {
         $target->dryRun = $this->dryRun;
         $target->postId = $this->postId;
+    }
+
+    /**
+     * Whether this command's OPTIONS include `--force`.
+     */
+    public static function supportsForceFlag(): bool
+    {
+        return static::SUPPORTS_FORCE_FLAG;
     }
 
     /**
