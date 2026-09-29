@@ -62,9 +62,15 @@ Insert the confirmed entry at the top of `CHANGELOG.md`, after the header, befor
 
 ```bash
 php -l eslov-customisation.php
+npm run build       # both Vite builds (site + mod-navigation) must still succeed
 ```
 
-Confirm the three version locations and `ESLOV_CUSTOMISATION_VERSION` all equal `X.Y.Z`, and that `composer.json` still has no `version` field.
+Confirm the three version locations and `ESLOV_CUSTOMISATION_VERSION` all equal `X.Y.Z`, and that `composer.json` still has no `version` field:
+
+```bash
+grep -n "Version:\|ESLOV_CUSTOMISATION_VERSION" eslov-customisation.php
+grep -n '"version"' package.json composer.json
+```
 
 ## 5. Commit
 
