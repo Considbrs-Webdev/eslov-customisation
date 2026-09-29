@@ -1,5 +1,5 @@
 {
-    "name": "municipio-se/eslov-customisation",
+    "name": "considbrs-webdev/eslov-customisation",
     "description": "DB migration CLI and runtime shims for Eslöv Municipio deployment",
     "type": "wordpress-plugin",
     "license": "MIT",

@@ -113,7 +113,7 @@ Tagging does not change production. `eslov-se-new` installs this plugin from `co
 When the user wants the site to run this release, set:
 
 ```json
-"municipio-se/eslov-customisation": "X.Y.Z"
+"considbrs-webdev/eslov-customisation": "X.Y.Z"
 ```
 
 Do that only when asked. Until then, say which constraint is still installed (`dev-main` or the previous tag) and what to change.
