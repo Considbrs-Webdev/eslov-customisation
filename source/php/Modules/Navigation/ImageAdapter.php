@@ -21,7 +21,8 @@ class ImageAdapter
         if ($context === 'card' && class_exists(ImageComponentContract::class)) {
             return ImageComponentContract::factory(
                 $attachmentId,
-                [400, false],
+                // Allow responsive variants above the library's first 425px step.
+                [1024, false],
                 new ImageResolver(),
                 new ImageFocusResolver(['id' => $attachmentId]),
             );

@@ -24,6 +24,7 @@ class App
             Customisations\Smtp::class,
             Customisations\SiteStyles::class,
             Customisations\SiteScripts::class,
+            Customisations\ImageContainerQueries::class,
             Customisations\BrandedBorder::class,
             Customisations\ModularityColumnWidth::class,
             Customisations\Templates::class,
