@@ -137,3 +137,15 @@ npm run build
 ## License
 
 MIT
+
+## Imported-event review is disabled
+
+Events are reviewed at the source site. The registrations for
+`SubsiteImportReview`, `SubsiteImportReviewList` and `SubsiteImportReviewChanges`
+are commented out in `source/php/App.php`. External Content follows its normal
+publication behavior, with no additional review buttons or change-review metabox.
+
+The handler code remains available for future reuse. There is no site option to
+switch these handlers on or off; restoring them requires a code change. This
+applies wherever this plugin runs. Existing pending posts are not automatically
+published, and checksum-based synchronization may skip unchanged source events.
