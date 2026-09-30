@@ -3,7 +3,7 @@
 /**
  * Plugin Name:       Eslöv Customisation
  * Description:       DB migration CLI and runtime shims for Eslöv Municipio deployment
- * Version:           1.0.2
+ * Version:           1.0.3
  * Author:            Municipio
  * Text Domain:       eslov-customisation
  * Domain Path:       /languages
@@ -17,7 +17,7 @@ if (!defined('ABSPATH')) {
 
 define('ESLOV_CUSTOMISATION_PATH', plugin_dir_path(__FILE__));
 define('ESLOV_CUSTOMISATION_URL', plugin_dir_url(__FILE__));
-define('ESLOV_CUSTOMISATION_VERSION', '1.0.2');
+define('ESLOV_CUSTOMISATION_VERSION', '1.0.3');
 
 if (!defined('ESLOV_EXTERNAL_CONTENT_SUBSITE_REVIEW')) {
     define('ESLOV_EXTERNAL_CONTENT_SUBSITE_REVIEW', true);
