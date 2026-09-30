@@ -21,6 +21,7 @@ class App
     {
         $classes = [
             Customisations\Config::class,
+            Customisations\ContentSecurityPolicy::class,
             Customisations\Smtp::class,
             Customisations\SiteStyles::class,
             Customisations\SiteScripts::class,
