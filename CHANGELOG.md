@@ -9,21 +9,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Tree-navigationen på mobil är kompaktare, med liten bild bredvid rubriken och tätare mellanrum. Alla underlänkar är fortsatt synliga.
+- Tree navigation is more compact on mobile, with a small image beside the heading and tighter spacing. All child links remain visible.
 
 ## [1.0.2] - 2026-09-30
 
 ### Fixed
 
-- Mediaflow-anrop blockeras inte längre av CSP; gemensamma regler för Mediaflow och Font Awesome gäller på alla sajter där tillägget är aktivt.
+- Mediaflow requests are no longer blocked by CSP; shared rules for Mediaflow and Font Awesome apply to all sites where the plugin is active.
 
 ## [1.0.1] - 2026-09-29
 
 ### Changed
 
-- Bilder blir skarpare tack vare tidigare brytpunkter för container queries.
-- Den nedströms granskningen av event är avstängd, eftersom den nu hanteras vid källan.
-- Composer-paketet heter nu `considbrs-webdev/eslov-customisation` (tidigare `municipio-se/eslov-customisation`) efter byte av repository-ägare. Uppdatera namnet i `composer.local.json` om du installerar via Composer.
+- Images are sharper thanks to earlier container query breakpoints.
+- Downstream event review is disabled because events are now reviewed at the source.
+- The Composer package is now named `considbrs-webdev/eslov-customisation` (previously `municipio-se/eslov-customisation`) following the repository ownership change. Update the name in `composer.local.json` if installing via Composer.
 
 ## [1.0.0] - 2026-09-29
 

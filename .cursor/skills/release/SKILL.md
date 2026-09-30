@@ -37,6 +37,8 @@ Semver: bug fixes → patch, backward-compatible features → minor, breaking ch
 
 ## 2. Draft the changelog entry — confirm before writing
 
+Write all changelog entries and GitHub release text in English, even when the request or conversation is in Swedish. Keep the GitHub release body consistent with the corresponding `CHANGELOG.md` entry.
+
 Summarize unreleased commits into user-facing bullets. Match existing `CHANGELOG.md` tone: "Fixed X happening when Y", not class or method names. Group under `### Added` / `### Changed` / `### Fixed`. Show the draft and the version number before writing files.
 
 Skip this pause only when the user already named the version and asked for the full release in the same request.
