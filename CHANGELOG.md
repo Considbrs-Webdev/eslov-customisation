@@ -5,6 +5,12 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.2] - 2026-09-30
+
+### Fixed
+
+- Mediaflow-anrop blockeras inte längre av CSP; gemensamma regler för Mediaflow och Font Awesome gäller på alla sajter där tillägget är aktivt.
+
 ## [1.0.1] - 2026-09-29
 
 ### Changed
