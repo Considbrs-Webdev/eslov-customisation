@@ -1,5 +1,15 @@
 # Runtime customisations
 
+## 2026-09-30: Compact highlighted Tree navigation on mobile
+
+Restore the LTS arrangement below 40rem in the custom mod-navigation module:
+a one-third-width thumbnail beside the heading, with the description spanning
+both columns underneath. Reduce mobile description text to 14px and tighten
+item and child-link spacing while retaining all links and at least 24px link
+height. Items without images use the full width. Desktop, standard Tree and
+other navigation formats retain their existing layout. This is module-scoped
+SCSS only; no database migration or JavaScript is required.
+
 ## 2026-09-29: Image container queries
 
 Navigation cards request a 1024px maximum instead of 400px so ComponentLibrary
