@@ -52,6 +52,7 @@ class App
             Customisations\SectionModuleWysiwyg::class,
             Customisations\SectionModuleGap::class,
             Customisations\RemoveAccessibilityPrintItem::class,
+            Customisations\Search::class,
             // Reviewed at the source event site; retain these handlers for possible reuse.
             // Customisations\ExternalContent\SubsiteImportReview::class,
             // Customisations\ExternalContent\SubsiteImportReviewList::class,

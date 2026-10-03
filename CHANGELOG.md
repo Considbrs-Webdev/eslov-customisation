@@ -5,6 +5,14 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Changed
+
+- Search now lives at `/sok/` (old `/?s=` links redirect with a temporary 302), so search results can be cached. Flush permalinks after deploying.
+- The search page is cached by nginx for 20 minutes (`X-Accel-Expires`) instead of the default 12 hours.
+- Canonical, Open Graph and JSON-LD URLs for search point at `/sok/` instead of `/search/`.
+
 ## [1.0.3] - 2026-09-30
 
 ### Fixed
