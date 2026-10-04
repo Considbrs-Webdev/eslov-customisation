@@ -1,0 +1,76 @@
+// Keep complete headings; only wrap when it removes horizontal overflow.
+.c-table {
+    // Override the spacing alias; upstream still owns cell/header/footer padding.
+    --c-table--inset-padding-x: calc(var(--c-table--space, var(--space, 1)) * var(--base, 8px) * 1.5);
+
+    // Article text-flow spacing must not leak into a self-contained table.
+    .c-table__table {
+        margin-top: 0;
+    }
+
+    .c-table__column {
+        min-width: 0;
+    }
+
+    .c-table__head .c-table__column-content {
+        gap: var(--c-table--inset-padding-x);
+    }
+
+    .c-table__head .c-table__heading {
+        max-width: none;
+        padding-right: 0;
+        overflow: visible;
+        text-overflow: clip;
+        white-space: nowrap;
+        line-height: inherit;
+        flex: 1;
+    }
+
+    .c-table__head .c-icon {
+        flex-shrink: 0;
+    }
+
+    &.eslov-table--wrap {
+        .c-table__table { width: 100%; }
+        .c-table__heading { white-space: normal; }
+    }
+
+    .c-table__header {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: var(--c-table--inset-padding-x);
+
+        > .c-field { flex-basis: 100%; }
+    }
+
+    .eslov-table-expand {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--c-table--inset-padding-x);
+        margin-left: auto;
+        padding: var(--c-table--inset-padding-y) var(--c-table--inset-padding-x);
+        min-height: 44px;
+        border: 1px solid currentColor;
+        border-radius: 4px;
+        background: transparent;
+        color: var(--c-table--color--primary, var(--color--primary));
+        font: inherit;
+        cursor: pointer;
+
+        &:hover { background: var(--c-table--color--surface-alt, var(--color--surface-alt)); }
+        &:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+    }
+
+    &.eslov-table--fits {
+        .c-table__scroll-indicator-wrapper { display: none !important; }
+        .c-table__footer:not(:has(.c-table__caption)) { display: none; }
+    }
+}
+
+// Upstream subtracts the outer margins from panel height, but not its width.
+.c-table__modal.c-modal--is-panel {
+    --eslov-table-modal-gutter: calc(var(--c-table--space, var(--space, 1)) * var(--base, 8px) * 2);
+    margin: var(--eslov-table-modal-gutter);
+    width: calc(100% - var(--eslov-table-modal-gutter) * 2);
+}

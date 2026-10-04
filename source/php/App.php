@@ -49,6 +49,7 @@ class App
             Customisations\SectionStartPageLink::class,
             Customisations\TaxonomyTaglist::class,
             Customisations\TimelineActiveStep::class,
+            Customisations\TableLayout::class,
             Customisations\SectionModuleWysiwyg::class,
             Customisations\SectionModuleGap::class,
             Customisations\RemoveAccessibilityPrintItem::class,
