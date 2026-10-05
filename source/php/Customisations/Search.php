@@ -25,6 +25,21 @@ class Search
         add_action('template_redirect', [$this, 'maybeRedirectSearchUrl']);
         add_action('template_redirect', [$this, 'limitCacheLifetime'], 20);
         add_filter('search_link', [$this, 'filterSearchLink'], 10, 2);
+        add_filter('Municipio/Template/viewData', [$this, 'showHeaderSearch']);
+    }
+
+    /** Keep the configured subpage header search visible on search pages too. */
+    public function showHeaderSearch(array $data): array
+    {
+        if (!is_search()) {
+            return $data;
+        }
+
+        $locations = $data['customizer']->searchDisplay ?? [];
+        $data['showHeaderSearchDesktop'] = in_array('header_sub', $locations, true);
+        $data['showHeaderSearchMobile'] = in_array('header_mobile_sub', $locations, true);
+
+        return $data;
     }
 
     public function filterSearchForm(string $form): string
