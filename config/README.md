@@ -86,7 +86,6 @@ When a value can be derived from legacy customizer data:
 1. Add a class in `source/php/Migration/DesignTokenCorrections/`
 2. Implement `DesignTokenCorrectionInterface`
 3. Register it in `DesignTokensMigrator::$corrections`
-4. Log the fix in `.cursor/plans/db-migration.md`
 
 ## Adding a patch entry
 
@@ -110,4 +109,4 @@ ddev wp eslov migrate all --network             # every ready migration, every b
 
 Use `--patches=/path/to/custom.json` to test alternate patch files.
 
-**Multisite:** Theme mods and `tokens` are stored per blog (`wp_{id}_options`). Always pass `--network` after a fresh DB import so subsites get the same corrections as the main site. The command network-activates `eslov-customisation` when needed (runtime shims/CSS on subsites).
+**Multisite:** Theme mods and `tokens` are stored per blog (`wp_{id}_options`). Always pass `--network` after a fresh DB import so subsites get the same corrections as the main site. The command network-activates `eslov-customisation` when needed (customisations/CSS on subsites).

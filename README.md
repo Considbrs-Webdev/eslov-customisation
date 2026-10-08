@@ -1,15 +1,8 @@
 # Eslöv Customisation
 
-Site-specific WordPress plugin for the Eslöv municipio-deployment migration. All Eslöv-specific DB transforms and runtime shims live here — not in the theme or LTS plugin ports.
-
-## Fix types
-
-| Type | Purpose | Lifecycle |
-|------|---------|-----------|
-| **One-time migration** | Rewrite DB: meta keys, module JSON, options | `wp eslov migrate …` — idempotent, `--dry-run` |
-| **Runtime shim** | Bridge unmigrated rows or permanent site preference | Hook/filter in `Customisations/` |
-
-Log every fix in `.cursor/plans/db-migration.md`.
+Site-specific WordPress plugin that customises Eslöv's [municipio-deployment](https://github.com/municipio-se/municipio-deployment)
+installation. Runtime hooks, ACF fields, Blade overrides, styles and a custom Modularity module live
+here — not in the theme or in forked plugins.
 
 ## Installation
 
@@ -19,35 +12,10 @@ composer install
 ddev wp plugin activate eslov-customisation
 ```
 
-## WP-CLI
+## Adding a customisation
 
-```bash
-ddev wp eslov migrate status
-ddev wp eslov migrate all --dry-run
-ddev wp eslov migrate all
-```
-
-Individual commands (also run by `migrate all` when status is `ready`):
-
-```bash
-ddev wp eslov migrate meta-keys --dry-run
-ddev wp eslov migrate modules --post-id=123
-ddev wp eslov migrate options
-ddev wp eslov migrate fonts --dry-run
-ddev wp eslov migrate fonts --network
-ddev wp eslov migrate design-tokens --export --network
-ddev wp eslov migrate section-spacing --dry-run --network
-ddev wp eslov migrate section-text-autop --dry-run --network
-```
-
-## Adding a migration
-
-1. Add transform logic in `source/php/Migration/` (pure PHP, no WP-CLI coupling).
-2. Add `source/php/Cli/Migrate/YourCommand.php` extending `AbstractMigrateCommand`.
-3. Register in `CliBootstrap::register()`.
-4. Add an entry to `Migration/MigrationRegistry.php` (set `run_order` when status is `ready`).
-
-## Adding a runtime shim
+`source/php/Customisations/` holds permanent hooks and filters that adapt Municipio and its plugins
+to Eslöv's needs. A subset are legacy-data shims that display unmigrated LTS rows the new way.
 
 1. Create a class in `source/php/Customisations/`.
 2. Register hooks in `__construct()`.
@@ -92,11 +60,9 @@ source/
     components/        # Per-feature modules imported by site.js
   php/
     AcfFields/         # ACF field groups (e.g. ModNavigationFields)
-    Cli/               # WP-CLI migration commands
     Customisations/    # Runtime hooks and core module tweaks
-    Migration/         # Pure transform logic for CLI
     Modules/           # Custom Modularity modules
-      Navigation/      # mod-navigation (LTS fork)
+      Navigation/      # mod-navigation
         Navigation.php
         sass/          # Module SCSS source
         assets/dist/   # Module built CSS + manifest.json
@@ -149,3 +115,49 @@ The handler code remains available for future reuse. There is no site option to
 switch these handlers on or off; restoring them requires a code change. This
 applies wherever this plugin runs. Existing pending posts are not automatically
 published, and checksum-based synchronization may skip unchanged source events.
+
+## Legacy: migration from Municipio LTS
+
+The site was originally built on [municipio-lts-deployment](https://github.com/municipio-se/municipio-lts-deployment)
+(LTS). A one-off set of WP-CLI migrations moved its data into the shape the current Municipio
+platform expects (meta keys, module JSON, Kirki customizer mods → design tokens, classic widgets →
+blocks). They have already been run and are kept only for reference or re-importing old databases.
+"LTS" in this codebase means that old source data, not a version-support policy.
+
+Code lives in `source/php/Migration/` (pure transform logic) and `source/php/Cli/Migrate/` (thin
+WP-CLI commands). Design-token details are in [`config/README.md`](config/README.md).
+
+### WP-CLI
+
+```bash
+ddev wp eslov migrate status
+ddev wp eslov migrate all --dry-run
+ddev wp eslov migrate all
+```
+
+Individual commands (also run by `migrate all` when status is `ready`):
+
+```bash
+ddev wp eslov migrate meta-keys --dry-run
+ddev wp eslov migrate modules --post-id=123
+ddev wp eslov migrate options
+ddev wp eslov migrate fonts --dry-run
+ddev wp eslov migrate fonts --network
+ddev wp eslov migrate design-tokens --export --network
+ddev wp eslov migrate section-spacing --dry-run --network
+ddev wp eslov migrate section-text-autop --dry-run --network
+```
+
+## Adding a migration
+
+1. Add transform logic in `source/php/Migration/` (pure PHP, no WP-CLI coupling).
+2. Add `source/php/Cli/Migrate/YourCommand.php` extending `AbstractMigrateCommand`.
+3. Register in `CliBootstrap::register()`.
+4. Add an entry to `Migration/MigrationRegistry.php` (set `run_order` when status is `ready`).
+
+### Adding a migration
+
+1. Add transform logic in `source/php/Migration/` (pure PHP, no WP-CLI coupling).
+2. Add `source/php/Cli/Migrate/YourCommand.php` extending `AbstractMigrateCommand`.
+3. Register in `CliBootstrap::register()`.
+4. Add an entry to `Migration/MigrationRegistry.php` (set `run_order` when status is `ready`).

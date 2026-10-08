@@ -16,10 +16,10 @@ separate:
   mods → design tokens, classic widgets → blocks, etc. Meant to run once per environment and then
   be retired; "LTS" throughout this codebase means "the old municipio-lts-deployment source data",
   not a version-support policy.
-- **Runtime shims** (`source/php/Customisations/`) — permanent hooks/filters bridging unmigrated
-  LTS rows or encoding a permanent site preference, registered in `App::registerInstances()`.
-
-Log every fix (migration or shim) in `.cursor/plans/db-migration.md`.
+- **Customisations** (`source/php/Customisations/`) — permanent hooks/filters that adapt Municipio
+  and its plugins to Eslöv's needs, registered in `App::registerInstances()`. Most encode a site
+  preference or fix; a subset are *legacy-data shims* that display unmigrated LTS rows the new
+  way.
 
 ## Commands
 
@@ -50,14 +50,14 @@ There is no test suite, linter, or CI config in this repo — do not invent comm
 
 Registers a PSR-4 autoloader for `EslovCustomisation\`, requires `vendor/autoload.php` if present,
 runs `Shim\MunicipioTermCacheFix::register()` immediately, instantiates `App` (which wires all
-runtime shims), registers the `mod-navigation` Modularity module on `init` priority 5, and — only
+customisations), registers the `mod-navigation` Modularity module on `init` priority 5, and — only
 when `WP_CLI` is defined — calls `CliBootstrap::register()`.
 
-### Runtime shims: `App` + `Customisations/`
+### Customisations: `App` + `Customisations/`
 
-`App::registerInstances()` is the single source of truth for which shims are active — it holds a
+`App::registerInstances()` is the single source of truth for which customisations are active — it holds a
 flat array of class names, `new`s each one (guarded by `class_exists`), and every class wires its
-own hooks in `__construct()`. To add a shim: create the class under `source/php/Customisations/`,
+own hooks in `__construct()`. To add a customisation: create the class under `source/php/Customisations/`,
 wire hooks in its constructor, then add it to the array in `App.php`. There's no autodiscovery.
 
 ### Migrations: `Cli/Migrate/*Command` → `Migration/*Migrator`
@@ -73,7 +73,7 @@ entry.
 
 `AbstractMigrateCommand::executeAcrossSites()` is the multisite loop primitive (`--network` flag →
 `switch_to_blog`/`restore_current_blog` per site); it also network-activates the plugin itself when
-needed so shims/CSS apply on every subsite.
+needed so customisations/CSS apply on every subsite.
 
 ### Design tokens (`Migration/DesignTokenCorrections/`)
 
@@ -89,8 +89,7 @@ known CSS-cascade gotchas that corrections alone can't fix (header buttons, sear
 footer link contrast), and the multisite export/snapshot workflow (`--export`).
 
 To add a new correction: implement `DesignTokenCorrectionInterface` in
-`Migration/DesignTokenCorrections/`, register it in `DesignTokensMigrator::$corrections`, and log
-the fix per the README's convention.
+`Migration/DesignTokenCorrections/`, and register it in `DesignTokensMigrator::$corrections`.
 
 ### Custom Modularity module: `Modules/Navigation/`
 
