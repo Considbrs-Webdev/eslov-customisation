@@ -283,3 +283,15 @@ msgstr "Navigationsmoduler"
 #: source/php/Modules/Navigation/Navigation.php:25
 msgid "Outputs a menu or manually selected links"
 msgstr "Visar en meny eller manuellt valda länkar"
+
+#: source/php/AcfFields/CategoryHideInPublicFormField.php
+msgid "Public form"
+msgstr "Publikt formulär"
+
+#: source/php/AcfFields/CategoryHideInPublicFormField.php
+msgid "Hide in public form"
+msgstr "Dölj i publikt formulär"
+
+#: source/php/AcfFields/CategoryHideInPublicFormField.php
+msgid "Internal category: not offered to visitors submitting through the public form."
+msgstr "Intern kategori: erbjuds inte besökare som skickar in via det publika formuläret."

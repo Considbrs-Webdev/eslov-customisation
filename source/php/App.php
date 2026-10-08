@@ -38,6 +38,8 @@ class App
             Customisations\BrandPaletteOverride::class,
             AcfFields\MatomoTrackingFields::class,
             Customisations\MatomoTracking::class,
+            AcfFields\CategoryHideInPublicFormField::class,
+            Customisations\HideInternalCategoriesFromPublicForm::class,
             AcfFields\ModNavigationFields::class,
             AcfFields\ModPostsFilteringFields::class,
             AcfFields\PageSectionStartField::class,

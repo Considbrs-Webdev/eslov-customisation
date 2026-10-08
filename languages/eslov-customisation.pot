@@ -280,3 +280,15 @@ msgstr ""
 #: source/php/Modules/Navigation/Navigation.php:25
 msgid "Outputs a menu or manually selected links"
 msgstr ""
+
+#: source/php/AcfFields/CategoryHideInPublicFormField.php
+msgid "Public form"
+msgstr ""
+
+#: source/php/AcfFields/CategoryHideInPublicFormField.php
+msgid "Hide in public form"
+msgstr ""
+
+#: source/php/AcfFields/CategoryHideInPublicFormField.php
+msgid "Internal category: not offered to visitors submitting through the public form."
+msgstr ""
