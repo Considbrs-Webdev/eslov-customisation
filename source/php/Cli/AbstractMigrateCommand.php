@@ -4,6 +4,12 @@ namespace EslovCustomisation\Cli;
 
 use EslovCustomisation\Migration\MigrationResult;
 
+/**
+ * Base class for the frozen LTS cutover commands (`wp eslov migrate`).
+ *
+ * The suite already ran in production. Commands stay runnable for history.
+ * Do not add subclasses for bugs found after go-live.
+ */
 abstract class AbstractMigrateCommand extends \WP_CLI_Command
 {
     protected bool $dryRun = false;
@@ -15,12 +21,33 @@ abstract class AbstractMigrateCommand extends \WP_CLI_Command
      */
     protected function parseMigrateFlags(array $assocArgs): void
     {
+        $this->warnMigrateSuiteFrozen();
         $this->dryRun = \WP_CLI\Utils\get_flag_value($assocArgs, 'dry-run', false);
         $postId = \WP_CLI\Utils\get_flag_value($assocArgs, 'post-id', null);
 
         if ($postId !== null && $postId !== '') {
             $this->postId = (int) $postId;
         }
+    }
+
+    /**
+     * Print once per process: this CLI is a finished cutover, not the place for new fixes.
+     */
+    protected function warnMigrateSuiteFrozen(): void
+    {
+        static $warned = false;
+
+        if ($warned) {
+            return;
+        }
+
+        $warned = true;
+
+        \WP_CLI::warning(
+            'FROZEN: wp eslov migrate is the completed LTS cutover and already ran in production. '
+            . 'Do not add commands here, and do not re-run migrate all to fix new breakage. '
+            . 'Fix new issues in eslov-customisation runtime code.'
+        );
     }
 
     /**

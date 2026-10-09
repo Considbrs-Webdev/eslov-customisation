@@ -1,8 +1,16 @@
 # Eslöv Customisation
 
+<<<<<<< Updated upstream
 Site-specific WordPress plugin that customises Eslöv's [municipio-deployment](https://github.com/municipio-se/municipio-deployment)
 installation. Runtime hooks, ACF fields, Blade overrides, styles and a custom Modularity module live
 here — not in the theme or in forked plugins.
+=======
+Site-specific WordPress plugin for Eslöv's live standard Municipio site.
+
+**`wp eslov migrate` is frozen.** It is the record of the completed LTS cutover and already ran in production. Keep the commands. Do not add new ones, and do not re-run `migrate all` to fix bugs found after go-live.
+
+New breakage goes in `Customisations/` (hooks, views, CSS) or as a narrow data repair that is not registered in `MigrationRegistry`. Log those fixes under Post-cutover breakage in the site repo's `.cursor/plans/db-migration.md`.
+>>>>>>> Stashed changes
 
 ## Installation
 
@@ -12,10 +20,39 @@ composer install
 ddev wp plugin activate eslov-customisation
 ```
 
+<<<<<<< Updated upstream
 ## Adding a customisation
 
 `source/php/Customisations/` holds permanent hooks and filters that adapt Municipio and its plugins
 to Eslöv's needs. A subset are legacy-data shims that display unmigrated LTS rows the new way.
+=======
+## WP-CLI (frozen — do not run against production to fix new bugs)
+
+```bash
+ddev wp eslov migrate status
+ddev wp eslov migrate all --dry-run
+ddev wp eslov migrate all
+```
+
+Individual commands (also run by `migrate all` when status is `ready`):
+
+```bash
+ddev wp eslov migrate meta-keys --dry-run
+ddev wp eslov migrate modules --post-id=123
+ddev wp eslov migrate options
+ddev wp eslov migrate fonts --dry-run
+ddev wp eslov migrate fonts --network
+ddev wp eslov migrate design-tokens --export --network
+ddev wp eslov migrate section-spacing --dry-run --network
+ddev wp eslov migrate section-text-autop --dry-run --network
+```
+
+## The frozen migrate CLI
+
+`source/php/Cli/Migrate/` and `source/php/Migration/` stay in the repo so the cutover can be read and, if someone explicitly asks, re-run. Running a command prints a FROZEN warning. Do not add commands for newly found bugs.
+
+## Adding a runtime shim
+>>>>>>> Stashed changes
 
 1. Create a class in `source/php/Customisations/`.
 2. Register hooks in `__construct()`.

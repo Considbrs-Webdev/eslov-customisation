@@ -9,6 +9,7 @@ customises Eslöv's [municipio-deployment](https://github.com/municipio-se/munic
 installation (the current Municipio platform). It holds two distinct kinds of code — keep them
 separate:
 
+<<<<<<< Updated upstream
 - **One-time migrations** (`source/php/Migration/` + `source/php/Cli/Migrate/`) — idempotent DB
   transforms, run via WP-CLI, that move data from the site's old
   [municipio-lts-deployment](https://github.com/municipio-se/municipio-lts-deployment) (LTS) setup
@@ -20,6 +21,17 @@ separate:
   and its plugins to Eslöv's needs, registered in `App::registerInstances()`. Most encode a site
   preference or fix; a subset are *legacy-data shims* that display unmigrated LTS rows the new
   way.
+=======
+- **Frozen cutover CLI** (`source/php/Migration/` + `source/php/Cli/Migrate/`) — the LTS → standard
+  Municipio transforms. Production already ran them. Keep the code. Do not add commands, and do
+  not re-run `migrate all` to fix bugs found after go-live. "LTS" in this codebase means the old
+  municipio-lts-deployment source data, not the live site. The live site is standard Municipio.
+- **Runtime site code** (`source/php/Customisations/`) — where new breakage is fixed. Hooks and
+  filters registered in `App::registerInstances()`.
+
+Log new production bugs under Post-cutover breakage in the site repo's `.cursor/plans/db-migration.md`.
+Do not treat that file's phase checklist as open work.
+>>>>>>> Stashed changes
 
 ## Commands
 
@@ -65,11 +77,9 @@ wire hooks in its constructor, then add it to the array in `App.php`. There's no
 Each WP-CLI command (`source/php/Cli/Migrate/`) is a thin `AbstractMigrateCommand` subclass that
 parses flags (`--dry-run`, `--post-id`, `--network`) and delegates to a pure-PHP migrator class in
 `source/php/Migration/` (no WP-CLI coupling — testable/reusable independent of the CLI layer).
-Commands are registered by hand in `CliBootstrap::register()` (`WP_CLI::add_command`) and must
-also get an entry in `Migration/MigrationRegistry::all()` (status `scaffold`/`planned`/`ready`,
-plus `run_order` once `ready` — `AllCommand` runs everything `ready` in `run_order` sequence).
-Adding a migration means touching all three: the migrator class, the CLI command, and the registry
-entry.
+Commands are registered by hand in `CliBootstrap::register()` (`WP_CLI::add_command`) and listed
+in `Migration/MigrationRegistry::all()`. That set is frozen. Do not add a migrator, a CLI
+command, or a registry entry for a bug found after go-live.
 
 `AbstractMigrateCommand::executeAcrossSites()` is the multisite loop primitive (`--network` flag →
 `switch_to_blog`/`restore_current_blog` per site); it also network-activates the plugin itself when

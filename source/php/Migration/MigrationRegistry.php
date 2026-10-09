@@ -2,6 +2,11 @@
 
 namespace EslovCustomisation\Migration;
 
+/**
+ * Registry for the frozen LTS cutover (`wp eslov migrate`).
+ *
+ * Production already ran these tasks. Do not add entries for bugs found after go-live.
+ */
 class MigrationRegistry
 {
     /**

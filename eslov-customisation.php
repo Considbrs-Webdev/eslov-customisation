@@ -2,8 +2,13 @@
 
 /**
  * Plugin Name:       Eslöv Customisation
+<<<<<<< Updated upstream
  * Description:       DB migration CLI and runtime shims for Eslöv Municipio deployment
  * Version:           1.1.0
+=======
+ * Description:       Site customisations for Eslöv Municipio. The wp eslov migrate CLI is a frozen record of the completed LTS cutover.
+ * Version:           0.1.0
+>>>>>>> Stashed changes
  * Author:            Municipio
  * Text Domain:       eslov-customisation
  * Domain Path:       /languages

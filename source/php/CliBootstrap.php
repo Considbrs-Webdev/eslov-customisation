@@ -2,6 +2,11 @@
 
 namespace EslovCustomisation;
 
+/**
+ * Registers the frozen LTS cutover commands (`wp eslov migrate`).
+ *
+ * Production already ran this suite. Keep the commands. Do not add new ones.
+ */
 class CliBootstrap
 {
     public static function register(): void
