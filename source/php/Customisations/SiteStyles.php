@@ -2,11 +2,30 @@
 
 namespace EslovCustomisation\Customisations;
 
+use EslovCustomisation\Sites;
+
 class SiteStyles
 {
     public function __construct()
     {
         add_action('wp_enqueue_scripts', [$this, 'enqueueSiteStyles'], 100);
+        add_filter('body_class', [$this, 'addSiteBodyClass']);
+    }
+
+    /**
+     * Marks Medborgarhuset so pagination can use that blog's LTS button color.
+     *
+     * @param string[] $classes
+     *
+     * @return string[]
+     */
+    public function addSiteBodyClass(array $classes): array
+    {
+        if (Sites::currentIs('medborgarhuset')) {
+            $classes[] = 'eslov-site-medborgarhuset';
+        }
+
+        return $classes;
     }
 
     public function enqueueSiteStyles(): void
