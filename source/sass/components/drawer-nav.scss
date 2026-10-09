@@ -1,0 +1,17 @@
+/**
+ * Drawer rows have no hover: upstream sets the hover background to
+ * transparent, and the hover colour matches the resting colour.
+ * The customizer and design tokens have no nav hover control.
+ *
+ * Do not set --c-nav--item-background-color-hover. Upstream defines
+ * that custom property in terms of itself, so a new value cycles.
+ */
+@layer theme {
+  .c-drawer .c-nav--drawer .c-nav__item > .c-nav__item-wrapper {
+    transition: background-color 0.2s ease;
+  }
+
+  .c-drawer .c-nav--drawer .c-nav__item > .c-nav__item-wrapper:hover {
+    background-color: color-mix(in srgb, var(--c-nav--item-color) 8%, transparent);
+  }
+}
