@@ -11,20 +11,7 @@
     transition: background-color 0.2s ease;
   }
 
-  .c-drawer .c-nav--drawer .c-nav__text {
-    text-decoration-line: underline;
-    text-decoration-color: transparent;
-    text-decoration-thickness: 2px;
-    text-underline-offset: .25em;
-    transition: text-decoration-color 0.2s ease;
-  }
-
   .c-drawer .c-nav--drawer .c-nav__item > .c-nav__item-wrapper:hover {
     background-color: color-mix(in srgb, var(--c-nav--item-color) 8%, transparent);
-  }
-
-  .c-drawer .c-nav--drawer .c-nav__item > .c-nav__item-wrapper:hover .c-nav__text,
-  .c-drawer .c-nav--drawer .c-nav__link:focus-visible .c-nav__text {
-    text-decoration-color: currentColor;
   }
 }
