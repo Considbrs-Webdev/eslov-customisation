@@ -1,0 +1,15 @@
+/**
+ * Medborgarhuset LTS Kirki color_button_default: #bf8124 / #ffffff.
+ * Inactive pager buttons use the default filled button, whose surface is now
+ * white and disappears on the light section background.
+ */
+.eslov-site-medborgarhuset {
+  .c-pagination .c-button.c-button__filled--default {
+    --c-button--color--surface-alt: #bf8124;
+    --c-button--color--surface-contrast: #ffffff;
+    --c-button--color--surface-border: #bf8124;
+    background-color: #bf8124;
+    color: #ffffff;
+    border-color: #bf8124;
+  }
+}
