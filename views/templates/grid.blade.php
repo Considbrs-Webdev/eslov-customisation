@@ -5,8 +5,6 @@
 <!DOCTYPE html>
 <html {!! $languageAttributes !!}>
 
-@include('templates.sections.head')
-
 {{-- Content --}}
 @section('body-content')
     <div class="site-wrapper u-padding__bottom--4">
@@ -50,6 +48,8 @@
     {!! $wpFooter !!}
 @stop
 
+@include('templates.sections.component-assets')
+@include('templates.sections.head')
 
 {{-- Including body --}}
 @include('templates.sections.body', [
