@@ -5,6 +5,12 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.3] - 2026-10-21
+
+### Fixed
+
+- The WordPress admin no longer stops after the menu when a submenu has no capability.
+
 ## [1.1.2] - 2026-10-21
 
 ### Fixed
