@@ -2,13 +2,8 @@
 
 /**
  * Plugin Name:       Eslöv Customisation
-<<<<<<< Updated upstream
  * Description:       DB migration CLI and runtime shims for Eslöv Municipio deployment
- * Version:           1.1.0
-=======
- * Description:       Site customisations for Eslöv Municipio. The wp eslov migrate CLI is a frozen record of the completed LTS cutover.
- * Version:           0.1.0
->>>>>>> Stashed changes
+ * Version:           1.1.2
  * Author:            Municipio
  * Text Domain:       eslov-customisation
  * Domain Path:       /languages
@@ -22,7 +17,7 @@ if (!defined('ABSPATH')) {
 
 define('ESLOV_CUSTOMISATION_PATH', plugin_dir_path(__FILE__));
 define('ESLOV_CUSTOMISATION_URL', plugin_dir_url(__FILE__));
-define('ESLOV_CUSTOMISATION_VERSION', '1.1.0');
+define('ESLOV_CUSTOMISATION_VERSION', '1.1.2');
 
 if (!defined('ESLOV_EXTERNAL_CONTENT_SUBSITE_REVIEW')) {
     define('ESLOV_EXTERNAL_CONTENT_SUBSITE_REVIEW', true);
