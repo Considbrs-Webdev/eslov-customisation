@@ -30,14 +30,14 @@ php build.php                               # composer dump-autoload + npm insta
 php build.php --cleanup                    # also strips dev-only files (see build.php $removables)
 ```
 
-WP-CLI migration commands (run from inside `ddev`, in the plugin dir):
+WP-CLI migration commands (run from the plugin dir):
 
 ```bash
-ddev wp eslov migrate status
-ddev wp eslov migrate all --dry-run
-ddev wp eslov migrate all                  # runs all `ready` migrations, in MigrationRegistry run_order
-ddev wp eslov migrate <name> --dry-run     # every migrate command supports --dry-run
-ddev wp eslov migrate <name> --network     # multisite: loop every blog via switch_to_blog
+wp eslov migrate status
+wp eslov migrate all --dry-run
+wp eslov migrate all                  # runs all `ready` migrations, in MigrationRegistry run_order
+wp eslov migrate <name> --dry-run     # every migrate command supports --dry-run
+wp eslov migrate <name> --network     # multisite: loop every blog via switch_to_blog
 ```
 
 There is no test suite, linter, or CI config in this repo — do not invent commands for these.

@@ -11,28 +11,28 @@ New breakage goes in `Customisations/` (hooks, views, CSS) or as a narrow data r
 ```bash
 cd wp-content/plugins/eslov-customisation
 composer install
-ddev wp plugin activate eslov-customisation
+wp plugin activate eslov-customisation
 ```
 
 ## WP-CLI (frozen — do not run against production to fix new bugs)
 
 ```bash
-ddev wp eslov migrate status
-ddev wp eslov migrate all --dry-run
-ddev wp eslov migrate all
+wp eslov migrate status
+wp eslov migrate all --dry-run
+wp eslov migrate all
 ```
 
 Individual commands (also run by `migrate all` when status is `ready`):
 
 ```bash
-ddev wp eslov migrate meta-keys --dry-run
-ddev wp eslov migrate modules --post-id=123
-ddev wp eslov migrate options
-ddev wp eslov migrate fonts --dry-run
-ddev wp eslov migrate fonts --network
-ddev wp eslov migrate design-tokens --export --network
-ddev wp eslov migrate section-spacing --dry-run --network
-ddev wp eslov migrate section-text-autop --dry-run --network
+wp eslov migrate meta-keys --dry-run
+wp eslov migrate modules --post-id=123
+wp eslov migrate options
+wp eslov migrate fonts --dry-run
+wp eslov migrate fonts --network
+wp eslov migrate design-tokens --export --network
+wp eslov migrate section-spacing --dry-run --network
+wp eslov migrate section-text-autop --dry-run --network
 ```
 
 ## The frozen migrate CLI
@@ -154,22 +154,22 @@ WP-CLI commands). Design-token details are in [`config/README.md`](config/README
 ### WP-CLI
 
 ```bash
-ddev wp eslov migrate status
-ddev wp eslov migrate all --dry-run
-ddev wp eslov migrate all
+wp eslov migrate status
+wp eslov migrate all --dry-run
+wp eslov migrate all
 ```
 
 Individual commands (also run by `migrate all` when status is `ready`):
 
 ```bash
-ddev wp eslov migrate meta-keys --dry-run
-ddev wp eslov migrate modules --post-id=123
-ddev wp eslov migrate options
-ddev wp eslov migrate fonts --dry-run
-ddev wp eslov migrate fonts --network
-ddev wp eslov migrate design-tokens --export --network
-ddev wp eslov migrate section-spacing --dry-run --network
-ddev wp eslov migrate section-text-autop --dry-run --network
+wp eslov migrate meta-keys --dry-run
+wp eslov migrate modules --post-id=123
+wp eslov migrate options
+wp eslov migrate fonts --dry-run
+wp eslov migrate fonts --network
+wp eslov migrate design-tokens --export --network
+wp eslov migrate section-spacing --dry-run --network
+wp eslov migrate section-text-autop --dry-run --network
 ```
 
 ## Adding a migration
