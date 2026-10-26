@@ -9,19 +9,6 @@ customises Eslöv's [municipio-deployment](https://github.com/municipio-se/munic
 installation (the current Municipio platform). It holds two distinct kinds of code — keep them
 separate:
 
-<<<<<<< Updated upstream
-- **One-time migrations** (`source/php/Migration/` + `source/php/Cli/Migrate/`) — idempotent DB
-  transforms, run via WP-CLI, that move data from the site's old
-  [municipio-lts-deployment](https://github.com/municipio-se/municipio-lts-deployment) (LTS) setup
-  into shapes the current Municipio platform expects — meta keys, module JSON, Kirki customizer
-  mods → design tokens, classic widgets → blocks, etc. Meant to run once per environment and then
-  be retired; "LTS" throughout this codebase means "the old municipio-lts-deployment source data",
-  not a version-support policy.
-- **Customisations** (`source/php/Customisations/`) — permanent hooks/filters that adapt Municipio
-  and its plugins to Eslöv's needs, registered in `App::registerInstances()`. Most encode a site
-  preference or fix; a subset are *legacy-data shims* that display unmigrated LTS rows the new
-  way.
-=======
 - **Frozen cutover CLI** (`source/php/Migration/` + `source/php/Cli/Migrate/`) — the LTS → standard
   Municipio transforms. Production already ran them. Keep the code. Do not add commands, and do
   not re-run `migrate all` to fix bugs found after go-live. "LTS" in this codebase means the old
@@ -31,7 +18,6 @@ separate:
 
 Log new production bugs under Post-cutover breakage in the site repo's `.cursor/plans/db-migration.md`.
 Do not treat that file's phase checklist as open work.
->>>>>>> Stashed changes
 
 ## Commands
 
