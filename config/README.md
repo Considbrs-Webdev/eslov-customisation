@@ -33,10 +33,10 @@ Runtime still reads **only** `theme_mod('tokens')`. Files under `config/design-t
 Write the current blog’s `theme_mod('tokens')` to pretty-printed JSON:
 
 ```bash
-ddev wp eslov migrate design-tokens --export
-ddev wp eslov migrate design-tokens --export --network
-ddev wp eslov migrate design-tokens --export --dry-run --network
-ddev wp eslov migrate design-tokens --export --export-dir=/tmp/tokens
+wp eslov migrate design-tokens --export
+wp eslov migrate design-tokens --export --network
+wp eslov migrate design-tokens --export --dry-run --network
+wp eslov migrate design-tokens --export --export-dir=/tmp/tokens
 ```
 
 `--export` skips the migrator (`--force` / `--patches` are ignored). `--dry-run` logs the intended path and token/component key counts without writing.
@@ -100,11 +100,11 @@ Document each entry in a commit message or breakage matrix row.
 Run:
 
 ```bash
-ddev wp eslov migrate design-tokens --dry-run
-ddev wp eslov migrate design-tokens
-ddev wp eslov migrate design-tokens --force
-ddev wp eslov migrate design-tokens --network   # all multisite blogs
-ddev wp eslov migrate all --network             # every ready migration, every blog
+wp eslov migrate design-tokens --dry-run
+wp eslov migrate design-tokens
+wp eslov migrate design-tokens --force
+wp eslov migrate design-tokens --network   # all multisite blogs
+wp eslov migrate all --network             # every ready migration, every blog
 ```
 
 Use `--patches=/path/to/custom.json` to test alternate patch files.
