@@ -41,6 +41,7 @@ class App
             Customisations\MatomoTracking::class,
             AcfFields\CategoryHideInPublicFormField::class,
             Customisations\HideInternalCategoriesFromPublicForm::class,
+            Customisations\EventFormNoPastDates::class,
             AcfFields\ModNavigationFields::class,
             AcfFields\ModPostsFilteringFields::class,
             AcfFields\PageSectionStartField::class,

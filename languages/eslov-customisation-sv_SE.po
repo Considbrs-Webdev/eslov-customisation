@@ -295,3 +295,7 @@ msgstr "Dölj i publikt formulär"
 #: source/php/AcfFields/CategoryHideInPublicFormField.php
 msgid "Internal category: not offered to visitors submitting through the public form."
 msgstr "Intern kategori: erbjuds inte besökare som skickar in via det publika formuläret."
+
+#: source/php/Customisations/EventFormNoPastDates.php
+msgid "The date cannot be in the past."
+msgstr "Datumet får inte ligga i det förflutna."

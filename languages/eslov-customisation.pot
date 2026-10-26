@@ -292,3 +292,7 @@ msgstr ""
 #: source/php/AcfFields/CategoryHideInPublicFormField.php
 msgid "Internal category: not offered to visitors submitting through the public form."
 msgstr ""
+
+#: source/php/Customisations/EventFormNoPastDates.php
+msgid "The date cannot be in the past."
+msgstr ""
