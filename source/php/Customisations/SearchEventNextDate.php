@@ -10,7 +10,7 @@ namespace EslovCustomisation\Customisations;
  * The hit template renders `post_date_formatted`. For posts whose schemaData is an Event,
  * that field is replaced with the first occasion in `eventSchedule` that has not passed
  * (an occasion counts as passed once its endDate, or startDate if there is none, is behind us),
- * written like on the event page: `2026-10-30 11:11 - 11:22`. If the occasion ends on another
+ * written with the site's date format like other hits: `30 oktober 2026 11:11 - 11:22`. If the occasion ends on another
  * day the end is written in full too. If every occasion has passed, the default date is kept.
  *
  * The value is computed at index time, so it only moves on to the next occasion when the
@@ -45,7 +45,8 @@ class SearchEventNextDate
 
     private function format(int $start, ?int $end): string
     {
-        $text = (string) wp_date('Y-m-d H:i', $start);
+        $dateFormat = (string) get_option('date_format');
+        $text       = wp_date($dateFormat . ' H:i', $start);
 
         if ($end === null || $end === $start) {
             return $text;
@@ -53,7 +54,7 @@ class SearchEventNextDate
 
         $sameDay = wp_date('Y-m-d', $start) === wp_date('Y-m-d', $end);
 
-        return $text . ' - ' . wp_date($sameDay ? 'H:i' : 'Y-m-d H:i', $end);
+        return $text . ' - ' . wp_date($sameDay ? 'H:i' : $dateFormat . ' H:i', $end);
     }
 
     /**
