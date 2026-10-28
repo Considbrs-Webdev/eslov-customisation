@@ -5,6 +5,12 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- Search hits for events now show the event's next upcoming date and time, written like on the event page (`2026-10-30 11:11 - 11:22`), instead of the post date. The value is set when the event is indexed.
+
 ## [1.1.4] - 2026-10-26
 
 ### Fixed
