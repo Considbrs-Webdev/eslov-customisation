@@ -7,7 +7,7 @@ class TableLayout
 {
     public function __construct()
     {
-        add_filter('ComponentLibrary/ViewPaths', [$this, 'registerComponentViewPath']);
+        add_filter('ComponentLibrary/ViewPaths', [$this, 'registerComponentViewPath'], 20);
     }
 
     public function registerComponentViewPath(array $viewPaths): array
