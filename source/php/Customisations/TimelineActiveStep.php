@@ -11,7 +11,7 @@ class TimelineActiveStep
     public function __construct()
     {
         add_filter('ComponentLibrary/Component/Timeline/Data', [$this, 'applyStepStates']);
-        add_filter('ComponentLibrary/ViewPaths', [$this, 'registerComponentViewPath']);
+        add_filter('ComponentLibrary/ViewPaths', [$this, 'registerComponentViewPath'], 20);
     }
 
     /**
