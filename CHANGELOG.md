@@ -7,9 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-10-28
+
 ### Added
 
 - Search hits for events now show the event's next upcoming date and time, written like on the event page (`2026-10-30 11:11 - 11:22`), instead of the post date. The value is set when the event is indexed.
+
+### Fixed
+
+- Component view overrides from this plugin are now picked up reliably, because they are registered later than other view paths.
 
 ## [1.1.4] - 2026-10-26
 
