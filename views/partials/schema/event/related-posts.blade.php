@@ -18,5 +18,5 @@
     ])
         {!! $lang->relatedEventsTitle !!}
     @endtypography
-    @include('posts-list', $postsListData)
+    {!! $relatedEventsBlock !!}
 @endpaper
