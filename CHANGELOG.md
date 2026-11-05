@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.0] - 2026-11-05
+
+### Added
+
+- Event place cards show the extra location details, such as a room or other note, under the address.
+
+### Fixed
+
+- Related events on an event page render again after the theme started passing them as a finished block.
+- Passed events no longer appear in search. An event whose latest start date has passed is left out of the search index, and one that was already indexed is removed within about an hour. The event stays published.
+
 ## [1.2.1] - 2026-10-28
 
 ### Fixed
