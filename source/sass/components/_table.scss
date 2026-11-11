@@ -8,11 +8,11 @@
         margin-top: 0;
     }
 
-    .c-table__column {
+    .c-table__cell {
         min-width: 0;
     }
 
-    .c-table__head .c-table__column-content {
+    .c-table__head .c-table__cell-content {
         gap: var(--c-table--inset-padding-x);
     }
 
