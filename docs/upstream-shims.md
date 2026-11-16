@@ -60,3 +60,7 @@ cd wp-content/plugins/eslov-customisation
 ```
 
 When upgrading Municipio, grep this file for **`watch`** and **`pr-open`** rows and run **Verify removal** before deleting shims.
+
+## Removed
+
+- 2026-11-16, deployment 6.3.4 (Municipio 7.67.21): removed `MunicipioTermCacheFix` and the preloaded copy `source/php/Shim/Municipio/Helper/Term/Term.php`. The class had no `@upstream-shim` id. Upstream `Municipio\Helper\Term\Term` keeps icons and colours in separate static caches, `$termIconCache` and `$termColorCache`. That split has been in Municipio since 7.54.15.

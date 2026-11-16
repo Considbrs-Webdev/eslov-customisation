@@ -42,8 +42,6 @@ if (file_exists(ESLOV_CUSTOMISATION_PATH . 'vendor/autoload.php')) {
     require_once ESLOV_CUSTOMISATION_PATH . 'vendor/autoload.php';
 }
 
-Shim\MunicipioTermCacheFix::register();
-
 new App();
 
 add_action(

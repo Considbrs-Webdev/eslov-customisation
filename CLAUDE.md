@@ -47,7 +47,7 @@ There is no test suite, linter, or CI config in this repo — do not invent comm
 ### Bootstrap (`eslov-customisation.php`)
 
 Registers a PSR-4 autoloader for `EslovCustomisation\`, requires `vendor/autoload.php` if present,
-runs `Shim\MunicipioTermCacheFix::register()` immediately, instantiates `App` (which wires all
+instantiates `App` (which wires all
 customisations), registers the `mod-navigation` Modularity module on `init` priority 5, and — only
 when `WP_CLI` is defined — calls `CliBootstrap::register()`.
 
