@@ -44,6 +44,7 @@ class App
             Customisations\EventFormNoPastDates::class,
             AcfFields\ModNavigationFields::class,
             AcfFields\ModPostsFilteringFields::class,
+            AcfFields\PageNavigationDescriptionField::class,
             AcfFields\PageSectionStartField::class,
             AcfFields\TermRedirectToField::class,
             Customisations\SingularTaxonomyCustomizer::class,

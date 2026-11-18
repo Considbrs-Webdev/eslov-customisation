@@ -158,6 +158,15 @@ msgstr ""
 msgid "Term"
 msgstr ""
 
+#: source/php/AcfFields/PageNavigationDescriptionField.php:46
+msgctxt "Page Navigation Field Label"
+msgid "Description"
+msgstr ""
+
+#: source/php/AcfFields/PageNavigationDescriptionField.php:50
+msgid "A short description of the page to show in menus."
+msgstr ""
+
 #: source/php/AcfFields/PageSectionStartField.php:41
 msgid "Section start page"
 msgstr ""
