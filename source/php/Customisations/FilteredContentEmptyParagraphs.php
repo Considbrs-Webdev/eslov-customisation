@@ -3,19 +3,14 @@
 namespace EslovCustomisation\Customisations;
 
 /**
- * Remove empty paragraphs that wpautop adds around a one-page lead.
+ * Removes empty paragraphs that wpautop adds around a one-page lead.
  *
- * one-page.blade.php prints PostObject::getContent() directly under the H1.
- * When the post has a more tag, PostObjectWithFilteredContent marks the first
- * paragraph as `<p class="lead">` and then runs `the_excerpt`. wpautop wraps
- * the leftover `<!-- wp:paragraph -->` comments in their own paragraphs.
- * The theme strips HTML comments afterwards, which leaves `<p></p>` and the
- * gap under the title.
- *
- * The theme's removeEmptyPTag runs on the raw content, before `the_excerpt`,
- * and its pattern does not match a paragraph whose only child is a comment.
- * This filter runs on `Municipio/PostObject/getContent`, after `the_excerpt`
- * and `the_content`.
+ * @upstream-shim id=municipio-one-page-lead-empty-paragraphs
+ * @upstream-repo municipio (library/PostObject/Decorators/PostObjectWithFilteredContent.php getFilteredContent)
+ * @upstream-broken getFilteredContent calls removeEmptyPTag before the_excerpt. wpautop then wraps leftover <!-- wp:paragraph --> comments in <p>, and HtmlCommentRemoveProcessor leaves <p></p> around <p class="lead">. removeEmptyPTag does not match a paragraph whose only child is a comment. Present since one-page prints getContent() (f1a7fba, 2026-10-06).
+ * @upstream-fix-needed After the_excerpt and the_content, strip paragraphs that contain only whitespace, non-breaking spaces, or HTML comments.
+ * @remove-when Municipio strips those paragraphs after the_excerpt. Not fixed as of Municipio 7.92.18: getFilteredContent still calls removeEmptyPTag only before the_excerpt. Then delete this class and its App.php registration.
+ * @verify-removal Open a one-page with a more-tag lead and no empty paragraph blocks (local /omsorg-stod/aldre/). There is no <p></p> before or after p.lead.
  */
 class FilteredContentEmptyParagraphs
 {
