@@ -5,15 +5,16 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
-
-### Fixed
-
-- One-page leads no longer get an empty paragraph above and below the ingress. `wpautop` was wrapping the block comments around an already marked `<p class="lead">`, and those wrappers survived as blank paragraphs.
+## [1.4.0] - 2026-11-25
 
 ### Added
 
 - Questions and answers module shows Rek.ai questions that are already approved in the dashboard.
+
+### Fixed
+
+- One-page leads no longer get an empty paragraph above and below the ingress. `wpautop` was wrapping the block comments around an already marked `<p class="lead">`, and those wrappers survived as blank paragraphs.
+- A job page loads when the posting has no ethics policy. The theme sent an empty value through `wpautop` and the page stopped.
 
 ## [1.3.2] - 2026-11-24
 
