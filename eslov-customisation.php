@@ -55,14 +55,42 @@ add_action(
             ESLOV_CUSTOMISATION_PATH . 'source/php/Modules/Navigation',
             'Navigation',
         );
+
+        modularity_register_module(
+            ESLOV_CUSTOMISATION_PATH . 'source/php/Modules/Questions',
+            'Questions',
+        );
     },
     5,
+);
+
+add_action(
+    'init',
+    static function (): void {
+        $options = get_option('modularity-options');
+
+        if (!is_array($options)) {
+            return;
+        }
+
+        $enabled = $options['enabled-modules'] ?? [];
+
+        if (!is_array($enabled) || in_array('mod-questions', $enabled, true)) {
+            return;
+        }
+
+        $enabled[] = 'mod-questions';
+        $options['enabled-modules'] = array_values($enabled);
+        update_option('modularity-options', $options);
+    },
+    9,
 );
 
 add_filter(
     '/Modularity/externalViewPath',
     static function (array $paths): array {
         $paths['mod-navigation'] = ESLOV_CUSTOMISATION_PATH . 'source/php/Modules/Navigation/views';
+        $paths['mod-questions'] = ESLOV_CUSTOMISATION_PATH . 'source/php/Modules/Questions/views';
 
         return $paths;
     },

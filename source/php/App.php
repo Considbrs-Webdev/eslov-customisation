@@ -43,6 +43,7 @@ class App
             Customisations\HideInternalCategoriesFromPublicForm::class,
             Customisations\EventFormNoPastDates::class,
             AcfFields\ModNavigationFields::class,
+            AcfFields\ModQuestionsFields::class,
             AcfFields\ModPostsFilteringFields::class,
             AcfFields\PageNavigationDescriptionField::class,
             AcfFields\PageSectionStartField::class,

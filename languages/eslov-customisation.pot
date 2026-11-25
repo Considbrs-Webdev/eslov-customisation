@@ -305,3 +305,51 @@ msgstr ""
 #: source/php/Customisations/EventFormNoPastDates.php
 msgid "The date cannot be in the past."
 msgstr ""
+
+#: source/php/Modules/Questions/Questions.php
+msgid "Questions and answers"
+msgstr ""
+
+#: source/php/Modules/Questions/Questions.php
+msgid "Shows approved Rek.ai questions and answers."
+msgstr ""
+
+#: source/php/AcfFields/ModQuestionsFields.php
+msgid "Number of questions"
+msgstr ""
+
+#: source/php/AcfFields/ModQuestionsFields.php
+msgid "Only questions approved in Rek.ai are shown."
+msgstr ""
+
+#: source/php/AcfFields/ModQuestionsFields.php
+msgid "Show questions from"
+msgstr ""
+
+#: source/php/AcfFields/ModQuestionsFields.php
+msgid "Questions from this page and pages below it."
+msgstr ""
+
+#: source/php/AcfFields/ModQuestionsFields.php
+msgid "This page"
+msgstr ""
+
+#: source/php/AcfFields/ModQuestionsFields.php
+msgid "This section"
+msgstr ""
+
+#: source/php/AcfFields/ModQuestionsFields.php
+msgid "URL level"
+msgstr ""
+
+#: source/php/AcfFields/ModQuestionsFields.php
+msgid "1 is the first segment of the URL path, same as Rek.ai rootpathlevel."
+msgstr ""
+
+#: source/php/Modules/Questions/Questions.php
+msgid "Read more"
+msgstr ""
+
+#: source/php/Modules/Questions/Questions.php
+msgid "Rek.ai is not enabled on this site. Questions and answers stay hidden for visitors."
+msgstr ""

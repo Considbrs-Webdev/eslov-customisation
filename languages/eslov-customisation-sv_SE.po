@@ -308,3 +308,51 @@ msgstr "Intern kategori: erbjuds inte besökare som skickar in via det publika f
 #: source/php/Customisations/EventFormNoPastDates.php
 msgid "The date cannot be in the past."
 msgstr "Datumet får inte ligga i det förflutna."
+
+#: source/php/Modules/Questions/Questions.php
+msgid "Questions and answers"
+msgstr "Frågor och svar"
+
+#: source/php/Modules/Questions/Questions.php
+msgid "Shows approved Rek.ai questions and answers."
+msgstr "Visar godkända frågor och svar från Rek.ai."
+
+#: source/php/AcfFields/ModQuestionsFields.php
+msgid "Number of questions"
+msgstr "Antal frågor"
+
+#: source/php/AcfFields/ModQuestionsFields.php
+msgid "Only questions approved in Rek.ai are shown."
+msgstr "Bara frågor som är godkända i Rek.ai visas."
+
+#: source/php/AcfFields/ModQuestionsFields.php
+msgid "Show questions from"
+msgstr "Visa frågor från"
+
+#: source/php/AcfFields/ModQuestionsFields.php
+msgid "Questions from this page and pages below it."
+msgstr "Frågor från den här sidan och sidor under den."
+
+#: source/php/AcfFields/ModQuestionsFields.php
+msgid "This page"
+msgstr "Den här sidan"
+
+#: source/php/AcfFields/ModQuestionsFields.php
+msgid "This section"
+msgstr "Det här avsnittet"
+
+#: source/php/AcfFields/ModQuestionsFields.php
+msgid "URL level"
+msgstr "URL-nivå"
+
+#: source/php/AcfFields/ModQuestionsFields.php
+msgid "1 is the first segment of the URL path, same as Rek.ai rootpathlevel."
+msgstr "1 är första ledet i sökvägen, samma betydelse som Rek.ai:s rootpathlevel."
+
+#: source/php/Modules/Questions/Questions.php
+msgid "Read more"
+msgstr "Läs mer"
+
+#: source/php/Modules/Questions/Questions.php
+msgid "Rek.ai is not enabled on this site. Questions and answers stay hidden for visitors."
+msgstr "Rek.ai är inte aktiverat på den här webbplatsen. Frågor och svar visas inte för besökare."
