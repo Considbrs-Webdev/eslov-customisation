@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- One-page leads no longer get an empty paragraph above and below the ingress. `wpautop` was wrapping the block comments around an already marked `<p class="lead">`, and those wrappers survived as blank paragraphs.
+
 ## [1.3.2] - 2026-11-24
 
 ### Added

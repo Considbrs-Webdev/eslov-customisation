@@ -32,6 +32,7 @@ class App
             Customisations\Templates::class,
             Customisations\TopSidebarLayout::class,
             Customisations\NestedModularityShortcodes::class,
+            Customisations\FilteredContentEmptyParagraphs::class,
             Customisations\ManualInputLinkNormalize::class,
             Customisations\CustomerFeedback::class,
             Admin\CustomerFeedbackSettings::class,
