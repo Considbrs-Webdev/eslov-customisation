@@ -22,6 +22,7 @@ class App
         $classes = [
             Customisations\Config::class,
             Customisations\CustomCssCapability::class,
+            Customisations\JobPostingEthicsPolicyShim::class,
             Customisations\ContentSecurityPolicy::class,
             Customisations\Smtp::class,
             Customisations\SiteStyles::class,
