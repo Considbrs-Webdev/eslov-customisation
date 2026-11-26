@@ -356,3 +356,19 @@ msgstr "Läs mer"
 #: source/php/Modules/Questions/Questions.php
 msgid "Rek.ai is not enabled on this site. Questions and answers stay hidden for visitors."
 msgstr "Rek.ai är inte aktiverat på den här webbplatsen. Frågor och svar visas inte för besökare."
+
+#: source/php/Customisations/RevisionNotificationRecipients.php
+msgid "Revision notifications"
+msgstr "Revisionsnotiser"
+
+#: source/php/Customisations/RevisionNotificationRecipients.php
+msgid "Notifications"
+msgstr "Notiser"
+
+#: source/php/Customisations/RevisionNotificationRecipients.php
+msgid "Receive an e-mail when a revision is submitted for review"
+msgstr "Få ett e-postmeddelande när en revision skickas in för granskning"
+
+#: source/php/Customisations/RevisionNotificationRecipients.php
+msgid "If nobody is selected, all administrators and editors are notified."
+msgstr "Om ingen är vald får alla administratörer och redaktörer ett e-postmeddelande."

@@ -353,3 +353,19 @@ msgstr ""
 #: source/php/Modules/Questions/Questions.php
 msgid "Rek.ai is not enabled on this site. Questions and answers stay hidden for visitors."
 msgstr ""
+
+#: source/php/Customisations/RevisionNotificationRecipients.php
+msgid "Revision notifications"
+msgstr ""
+
+#: source/php/Customisations/RevisionNotificationRecipients.php
+msgid "Notifications"
+msgstr ""
+
+#: source/php/Customisations/RevisionNotificationRecipients.php
+msgid "Receive an e-mail when a revision is submitted for review"
+msgstr ""
+
+#: source/php/Customisations/RevisionNotificationRecipients.php
+msgid "If nobody is selected, all administrators and editors are notified."
+msgstr ""

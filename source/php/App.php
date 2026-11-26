@@ -25,6 +25,7 @@ class App
             Customisations\JobPostingEthicsPolicyShim::class,
             Customisations\ContentSecurityPolicy::class,
             Customisations\Smtp::class,
+            Customisations\RevisionNotificationRecipients::class,
             Customisations\SiteStyles::class,
             Customisations\SiteScripts::class,
             Customisations\ImageContainerQueries::class,
