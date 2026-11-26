@@ -40,6 +40,13 @@ $search-radius: var(
 }
 
 #hero-search-form {
+    // The form is absolutely positioned and centred, and the hero container has no
+    // spacing, so on mobile the pill touches the screen edges. Margins don't work
+    // here; shrink the width instead (stays centred).
+    @media (max-width: 767px) {
+        width: calc(100% - 2.5rem) !important;
+    }
+
     #hero-search-form__field {
         border-top-right-radius: 0 !important;
         border-bottom-right-radius: 0 !important;

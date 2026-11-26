@@ -37,10 +37,21 @@ class Smtp
         $phpmailer->isSMTP();
         $phpmailer->Host = constant('SMTP_HOST');
         $phpmailer->Port = constant('SMTP_PORT');
-        $phpmailer->Username = constant('SMTP_USERNAME');
-        $phpmailer->Password = constant('SMTP_PASSWORD');
-        $phpmailer->SMTPAuth = true;
-        $phpmailer->SMTPSecure = 'tls';
+
+        $username = (string) constant('SMTP_USERNAME');
+
+        if ($username === '') {
+            // Credential-less relay (e.g. a local MailPit/Mailhog catcher): plain SMTP,
+            // no auth and no STARTTLS, which such servers don't offer.
+            $phpmailer->SMTPAuth = false;
+            $phpmailer->SMTPSecure = '';
+            $phpmailer->SMTPAutoTLS = false;
+        } else {
+            $phpmailer->Username = $username;
+            $phpmailer->Password = constant('SMTP_PASSWORD');
+            $phpmailer->SMTPAuth = true;
+            $phpmailer->SMTPSecure = 'tls';
+        }
 
         $phpmailer->From = constant('SMTP_FROM');
         $phpmailer->FromName = constant('SMTP_FROM_NAME');
